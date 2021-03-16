@@ -1,2 +1,0 @@
-# Mechanic-Checker
-Mechanic Checker

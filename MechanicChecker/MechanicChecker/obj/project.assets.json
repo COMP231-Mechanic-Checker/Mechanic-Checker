@@ -11880,27 +11880,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Function\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\EMMAL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Function\\Documents\\__Mechanic Checker\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
+      "projectUniqueName": "C:\\Users\\EMMAL\\Documents\\GitHub\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
       "projectName": "MechanicChecker",
-      "projectPath": "C:\\Users\\Function\\Documents\\__Mechanic Checker\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
-      "packagesPath": "C:\\Users\\Function\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Function\\Documents\\__Mechanic Checker\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\obj\\",
+      "projectPath": "C:\\Users\\EMMAL\\Documents\\GitHub\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
+      "packagesPath": "C:\\Users\\EMMAL\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\EMMAL\\Documents\\GitHub\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Function\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\EMMAL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
@@ -11953,7 +11946,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

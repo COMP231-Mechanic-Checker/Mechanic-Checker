@@ -11880,6 +11880,7 @@
     ]
   },
   "packageFolders": {
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
     "C:\\Users\\Student\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
@@ -11907,7 +11908,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://pkgs.dev.azure.com/shaniquo-m/_packaging/shaniquo-m/nuget/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.1": {

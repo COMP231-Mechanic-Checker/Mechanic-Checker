@@ -1,0 +1,51 @@
+﻿@model null 
+@* @model Product*@
+
+@{
+    ViewData["Title"] = "SearchResultsList";
+    Layout = "_Layout";
+}
+
+<h2>SearchResultsList</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<table class="table table-sm table-striped table-bordered">
+
+    <tbody>
+
+        <!--shows each positive answer in the table below-->
+        @foreach (var r in Model.Product)//add product class
+        {
+        <tr>
+
+            <div class="card flex-row flex-wrap ">
+
+                <div class="card-header border-0 left col-sm-4">
+                    <img class="card-img-left border-rounded" src="https://images.vexels.com/media/users/3/155414/isolated/lists/6c5e852026e7fd11f79cf45a65299016-suv-car-side-view-silhouette.png" width="300px" alt="@r.Name">
+                </div>
+                <div class="card-block px-2 flex-row flex-wrap col-sm-8">
+                    <div class="card-header text-muted">
+                        <h4 class="card-title">
+                            <input type="checkbox" id="" name="" value=""> &nbsp;&nbsp;Name
+                        </h4>
+                    </div>
+                    <p class="card-text">$ 100</p>
+                    <p class="card-text">Some demo description</p>
+                    <p class="card-text">
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-primary " }) |
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-warning " }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger " })
+                    </p>
+                </div>
+
+            </div>
+        </tr>
+        }
+
+    </tbody>
+</table>
+

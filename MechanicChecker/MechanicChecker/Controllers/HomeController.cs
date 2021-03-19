@@ -15,6 +15,11 @@ namespace MechanicChecker.Controllers
             return View();
         }
 
+        public IActionResult Results()
+        {
+            return View("SearchResultsList");
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

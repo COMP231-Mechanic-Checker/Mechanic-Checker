@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using MechanicChecker.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -33,6 +35,13 @@ namespace MechanicChecker
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+            //    Configuration["Data:MechanicChecker:ConnectionString"]));
+
+            services.Add(new ServiceDescriptor(typeof(LocalProductContext), new LocalProductContext(Configuration.GetConnectionString("DefaultConnectionString"))));
+
+            //services.AddTransient<ILocalProductRepository, EFLocalProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +58,7 @@ namespace MechanicChecker
             }
 
             app.UseHttpsRedirection();
+            app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
@@ -57,6 +67,10 @@ namespace MechanicChecker
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "",
+                    template: "{controller=Search}/{action=Search}");
             });
         }
     }

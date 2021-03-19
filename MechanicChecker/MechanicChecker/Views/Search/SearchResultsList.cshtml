@@ -1,4 +1,4 @@
-﻿@model null
+﻿@model IEnumerable<MechanicChecker.Models.LocalProduct>
 @* @model Product*@@*TODO: Get the model when created*@
 
 @{
@@ -19,7 +19,7 @@
 
         <!--shows each car part/service from the product list model (recived from the controller via model) in the table below-->
         @*TODO: update the model*@
-        @foreach (var r in Model.Product)//add product class
+        @foreach (var r in Model)//add product class
         {
             <tr>
                 <td>

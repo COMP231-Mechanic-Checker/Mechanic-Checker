@@ -18,7 +18,7 @@ namespace MechanicChecker.Controllers
             return View(context.GetAllProducts());
         }
 
-        public ViewResult Search(String query) // the value gotten from the url
+        public ViewResult SearchLocalSellers(String query) // the value gotten from the url
         {
             LocalProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
 

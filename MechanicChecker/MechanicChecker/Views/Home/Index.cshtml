@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
 }
+
 
 
 
@@ -9,43 +11,42 @@
 <link href="~/css/style.css" rel="stylesheet" />
 
 
-<body>
-    <header>
-        <style>
-            body {
-                background-image: url(../images/Mechanicbackgorund.jpg);
-            }
-        </style>
+<header>
+    <style>
+        body {
+            background-image: url(../images/Mechanicbackgorund.jpg);
+        }
+    </style>
 
-    </header>
+</header>
 
 
-    <br />
-    <br />
-    <br />
+<br />
+<br />
+<br />
 
-    <div class="text-center my-5">
-        <img src="~/images/MechanicCheckerLogoSmaller.png" class="img-fluid ml-5 mr-5" alt="Mechanic Checker Logo.">
-    </div>
 
-    <div class="wrapper">
-        <div class="search_box">
-            <div class="dropdown">
-                <div class="default_option">All</div>
-                <ul>
-                    <li>All</li>
-                    <li>Local Sellers</li>
-                    <li>eBay</li>
-                    <li>Alibaba and Amazon</li>
-                </ul>
-            </div>
-            <div class="search_field">
-                <input type="text" class="input" placeholder="Search">
-                <i class="fas fa-search"></i>
-            </div>
+
+<div class="wrapper">
+    <div class="search_box">
+        <div class="dropdown">
+            <div class="default_option">All</div>
+            <ul>
+                <li>All</li>
+                <li>Local Sellers</li>
+                <li>eBay</li>
+                <li>Alibaba and Amazon</li>
+            </ul>
+        </div>
+        <div class="search_field">
+            <input type="text" class="input" placeholder="Search">
+            <a href="@Url.Action("SearchLocalSellers", "Search")">
+                <i class="fas fa-search"> </i>
+            </a>
         </div>
     </div>
-</body>
+</div>
+
 
 
 @section Scripts

@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\micha\\source\\repos\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj": {}
   },
   "projects": {
@@ -18,6 +19,22 @@
         ],
         "configFilePaths": [
           "C:\\Users\\micha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+    "C:\\Users\\16478\\Documents\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\16478\\Documents\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\16478\\Documents\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
+        "projectName": "MechanicChecker",
+        "projectPath": "C:\\Users\\16478\\Documents\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
+        "packagesPath": "C:\\Users\\16478\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\16478\\Documents\\MechanicChecker\\MechanicChecker\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\16478\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> develop-fatema
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,7 +90,11 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.407\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+>>>>>>> develop-fatema
         }
       }
     }

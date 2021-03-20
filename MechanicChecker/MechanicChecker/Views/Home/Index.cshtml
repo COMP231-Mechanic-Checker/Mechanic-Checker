@@ -1,4 +1,10 @@
-﻿@{ ViewData["Title"] = "Home Page"; }
+
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+
 
 
 
@@ -7,24 +13,21 @@
 <link href="~/css/style.css" rel="stylesheet" />
 
 
-<body>
-    <header>
-        <style>
-            body {
-                background-image: url(../images/Mechanicbackgorund.jpg);
-            }
-        </style>
+<header>
+    <style>
+        body {
+            background-image: url(../images/Mechanicbackgorund.jpg);
+        }
+    </style>
 
-    </header>
+</header>
 
 
-    <br />
-    <br />
-    <br />
+<br />
+<br />
+<br />
 
-    <div class="text-center my-5">
-        <img src="~/images/MechanicCheckerLogoSmaller.png" class="img-fluid ml-5 mr-5" alt="Mechanic Checker Logo.">
-    </div>
+
 
     <div class="wrapper">
         @using (Html.BeginForm("SearchLocalSellers", "Search", FormMethod.Get))
@@ -45,7 +48,8 @@
     </div>
 </div>}
     </div>
-</body>
+</div>
+
 
 
 @section Scripts

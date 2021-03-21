@@ -1,7 +1,9 @@
+
 ﻿@{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
+
 
 
 
@@ -27,23 +29,25 @@
 
 
 
-<div class="wrapper">
-    <div class="search_box">
-        <div class="dropdown">
-            <div class="default_option">All</div>
-            <ul>
-                <li>All</li>
-                <li>Local Sellers</li>
-                <li>eBay</li>
-                <li>Alibaba and Amazon</li>
-            </ul>
-        </div>
-        <div class="search_field">
-            <input type="text" class="input" placeholder="Search">
-            <a href="@Url.Action("SearchLocalSellers", "Search")">
-                <i class="fas fa-search"> </i>
-            </a>
-        </div>
+    <div class="wrapper">
+        @using (Html.BeginForm("SearchLocalSellers", "Search", FormMethod.Get))
+        {
+<div class="search_box">
+    <div class="dropdown">
+        <div class="default_option">All</div>
+        <ul>
+            <li>All</li>
+            <li>Local Sellers</li>
+            <li>eBay</li>
+            <li>Alibaba and Amazon</li>
+        </ul>
+    </div>
+    <div class="search_field">
+         <input type="text" class="input" id="query" name="query" placeholder="Search">
+        @*@Html.TextBox("query")*@
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>}
     </div>
 </div>
 

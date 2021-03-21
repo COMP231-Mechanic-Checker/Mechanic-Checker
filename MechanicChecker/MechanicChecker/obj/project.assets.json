@@ -12301,6 +12301,9 @@
       "packagesPath": "C:\\Users\\16478\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\16478\\Documents\\MechanicChecker\\MechanicChecker\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
         "C:\\Users\\16478\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

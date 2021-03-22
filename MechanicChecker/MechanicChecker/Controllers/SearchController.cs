@@ -10,35 +10,35 @@ namespace MechanicChecker.Controllers
     public class SearchController : Controller
     {
     
-
-
         public IActionResult Index()
         {
             LocalProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
             return View(context.GetAllProducts());
         }
 
-        public ViewResult SearchLocalSellers(String query) // the value gotten from the url
+        public ViewResult SearchLocalSellersProducts(string query) // the value gotten from the url
         {
-            LocalProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
+            SellerProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
 
-            IEnumerable<LocalProduct> listOfQueriedProducts;
-            var allProducts = context.GetAllProducts();
-          
+            IEnumerable<SellerProduct> listOfQueriedProducts;
+
+            var allSellersProducts = context.GetAllSellerProducts();
 
             if (query != null)
             {
-                listOfQueriedProducts = allProducts.Where(
-                   product =>
-                   product.Title.Contains(query) || product.Description.Contains(query)
-                   );
-            }else
-            { 
-                listOfQueriedProducts = allProducts;
-               
-            }
 
+                listOfQueriedProducts = allSellersProducts.Where(
+                   product =>
+                   product.localProduct.Title.Contains(query, StringComparison.OrdinalIgnoreCase) || product.localProduct.Description.Contains(query, StringComparison.OrdinalIgnoreCase)
+                   );
+            }
+            else
+            {
+                listOfQueriedProducts = allSellersProducts;
+
+            }
             return View("SearchResultsList", listOfQueriedProducts);
         }
+
     }
 }

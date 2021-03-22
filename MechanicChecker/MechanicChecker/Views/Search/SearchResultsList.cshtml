@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MechanicChecker.Models.LocalProduct>
+﻿@model IEnumerable<MechanicChecker.Models.SellerProduct>
 
 @{
     ViewData["Title"] = "Search Results ";
@@ -9,7 +9,6 @@
 
 
 <h2>@ViewData["Title"]</h2>
-<div class="row">
 
     <div class="row">
         <div class="col-sm-2">
@@ -26,15 +25,15 @@
                 </tr>
                 <tr id="cboxMaxPrice" hidden="hidden">
                     <td>
-                        
+
                         <br />Max Price: <br />
-                        <input type="number"  name="maxPrice" value="" style="width:100px; height:20px" />
+                        <input type="number" name="maxPrice" value="" style="width:100px; height:20px" />
                     </td>
                 </tr>
                 <tr id="cboxMinPrice" hidden="hidden">
                     <td>
                         <br />Min Price: <br />
-                        <input type="number"  name="minPrice" value="" style="width:100px; height:20px" /><br /><br />
+                        <input type="number" name="minPrice" value="" style="width:100px; height:20px" /><br /><br />
                     </td>
                 </tr>
                 <tr>
@@ -56,22 +55,22 @@
                 <tbody>
                     <!--shows each car part/service from the product list model (recived from the controller via model) in the table below-->
                     @*TODO: update the model*@
-                    @foreach (LocalProduct product in Model)//add product class
+                    @foreach (SellerProduct product in Model)//add product class
                     {
                         <tr>
                             <td>
-                                <input type="checkbox" id="@product.LocalProductId" name="@product.LocalProductId" value="@product.LocalProductId" style="width:20px; height:20px">
+                                <input type="checkbox" id="@product.localProduct.LocalProductId" name="@product.localProduct.LocalProductId" value="@product.localProduct.LocalProductId" style="width:20px; height:20px">
                                 <div class="card flex-row flex-wrap ">
 
 
                                     <div class="card-header border-0 left col-sm-4 d-flex">
-                                        <img class="card-img-left border-rounded center-block my-auto" src="@product.ImageUrl" width="200" height="200" alt="@product.Title">
+                                        <img class="card-img-left border-rounded center-block my-auto" src="@product.localProduct.ImageUrl" width="200" height="200" alt="@product.localProduct.Title">
                                     </div>
                                     <div class="card-block px-2 flex-row flex-wrap col-sm-8">
 
                                         <div class="card-header text-muted align-top">
                                             <h3 class="card-title">
-                                                @product.Title
+                                                @product.localProduct.Title
                                             </h3>
                                         </div>
 
@@ -79,13 +78,13 @@
                                             <div class="col-sm-8 align-top">
                                                 <p class="card-text h4">
                                                     @{
-                                                        if (product.Price.Contains("-") || product.Price == "0" || product.Price == "")
+                                                        if (product.localProduct.Price.Contains("-") || product.localProduct.Price == "0" || product.localProduct.Price == "")
                                                         {
                                                             <text>Contact seller for price</text>
                                                         }
                                                         else
                                                         {
-                                                            <text>$ @product.Price</text>
+                                                            <text>$ @product.localProduct.Price</text>
                                                         }
                                                     }
 
@@ -93,13 +92,13 @@
                                                 <p class="card-text">
                                                     <small class="text-muted">
                                                         @{
-                                                            if (product.Description.Length > 40)
+                                                            if (product.localProduct.Description.Length > 40)
                                                             {
-                                                                <text>@product.Description.Substring(0, 40).ToString() ...</text>
+                                                                <text>@product.localProduct.Description.Substring(0, 40).ToString() ...</text>
                                                             }
-                                                            else if (product.Description.Length < 40)
+                                                            else if (product.localProduct.Description.Length < 40)
                                                             {
-                                                                <text>@product.Description.ToString()</text>
+                                                                <text>@product.localProduct.Description.ToString()</text>
                                                             }
                                                             else
                                                             {
@@ -120,7 +119,7 @@
                                                 @*TODO: add action and controller/ url for seller website if provided*@
                                                 <a @*href="@Url.Action("Action", "Controller")"*@ href="https://www.ebay.ca/" title="click to visit the website" class="btn card-body center-block d-flex">
                                                     @*TODO: add seller logo if provided*@
-                                                    <img class="card-img-top my-auto" style="width: 8rem;" src="https://edge.alluremedia.com.au/m/l/2017/04/eBay-Logo.png" alt="Card image cap">
+                                                    <img class="card-img-top my-auto" style="width: 8rem;" src="@product.seller.CompanyLogoUrl" alt="@product.localProduct.Title">
                                                 </a>
                                             </div>
                                         </div>
@@ -148,7 +147,7 @@
                 var cbox_price = document.getElementById("cboxPrice");
                 var maxPriceInput = document.getElementById("cboxMaxPrice");
                 var minPriceInput = document.getElementById("cboxMinPrice");
-                var selected = true;             
+                var selected = true;
 
 
                 $('input[type=radio]').click(function () {
@@ -165,9 +164,11 @@
                         }
                     }
                 });
-              
-  
+
+
             });
         </script>
 
     }
+
+

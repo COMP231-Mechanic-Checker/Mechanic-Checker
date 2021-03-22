@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MASHUD\\source\\repos\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj": {}
+    "C:\\Users\\EMMAL\\Documents\\GitHub\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MASHUD\\source\\repos\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj": {
+    "C:\\Users\\EMMAL\\Documents\\GitHub\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MASHUD\\source\\repos\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
+        "projectUniqueName": "C:\\Users\\EMMAL\\Documents\\GitHub\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
         "projectName": "MechanicChecker",
-        "projectPath": "C:\\Users\\MASHUD\\source\\repos\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
-        "packagesPath": "C:\\Users\\MASHUD\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MASHUD\\source\\repos\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\obj\\",
+        "projectPath": "C:\\Users\\EMMAL\\Documents\\GitHub\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\MechanicChecker.csproj",
+        "packagesPath": "C:\\Users\\EMMAL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\EMMAL\\Documents\\GitHub\\Mechanic-Checker\\MechanicChecker\\MechanicChecker\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\MASHUD\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\EMMAL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp2.1": {
+            "targetAlias": "netcoreapp2.1",
             "projectReferences": {}
           }
         },
@@ -40,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
+          "targetAlias": "netcoreapp2.1",
           "dependencies": {
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
@@ -73,7 +72,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

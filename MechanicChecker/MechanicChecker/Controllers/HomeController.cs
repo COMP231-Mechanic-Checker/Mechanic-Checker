@@ -1,5 +1,6 @@
 ﻿using MechanicChecker.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,11 @@ namespace MechanicChecker.Controllers
     {
         public IActionResult Index()
         {
+            SellerAddressContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerAddressContext)) as SellerAddressContext;
+
+            var addressList = context.GetAllAddresses().Select(r => new { r.AddressId, r.Address }).ToList();
+            var addressSelectList = new SelectList(addressList, "AddressId", "Address");
+            ViewData["AddressList"] = addressSelectList;
             return View();
         }
 
@@ -22,7 +28,7 @@ namespace MechanicChecker.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Your application description pages.";
 
             return View();
         }

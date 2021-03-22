@@ -33,3 +33,4 @@ D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChec
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.pdb
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.genruntimeconfig.cache
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.csproj.CopyComplete
+D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Search\SearchResultsList.cshtml.g.cs

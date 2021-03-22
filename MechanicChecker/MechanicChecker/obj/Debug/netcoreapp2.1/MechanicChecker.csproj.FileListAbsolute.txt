@@ -31,3 +31,4 @@ C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\Mecha
 C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.pdb
 C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.genruntimeconfig.cache
 C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.csproj.CopyComplete
+C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Search\SearchResultsList.cshtml.g.cs

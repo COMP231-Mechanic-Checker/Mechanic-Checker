@@ -3,7 +3,6 @@
     Layout = "_Layout";
 }
 
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAWd6Xlw3397XCmkMm3IjrfLBD2eXaXhCE" type="text/javascript"></script>
 <link href="~/css/stylesearchbutton.css" rel="stylesheet" />
 <link href="~/css/style.css" rel="stylesheet" />
 
@@ -21,31 +20,13 @@
 <br />
 <br />
 <br />
-<div class="row">
-    @*<div class="col-md-3">
-            <input type="text" class="form-control" id="homeAdrress" name="homeAddress" placeholder="Enter your address">
-        </div>*@
-
-    <div class="col-md-3">
-            <select id="locationAddress" class="form-control" asp-items="ViewBag.AddressList"></select>
-        </div>
-
-        <div class="col-md-4">
-            <input type="submit" value="Get Distance" onclick="calculateDistance()" />
-        </div>
-
-    <div>
-        <div id="dvDistance"></div>
-    </div>
-</div>
-
 
 <div class="wrapper">
     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
     {
     <div class="search_box">
         <div class="input_postalcode">
-            <input type="text" class="input" id="homeAdrress" name="homeAddress" placeholder="Postal Code">
+            <input type="text" class="input" id="homeAddress" name="homeAddress" placeholder="Postal Code">
         </div>
         <div class="dropdown">
             <div class="default_option">All</div>
@@ -81,72 +62,6 @@
                 $(".dropdown ul").removeClass("active");
             });
         });
-
-        ////Calculate distance from postal code to seller address
-        //function calculateDistance() {
-        //    var locationAddress = $("SellerId ").text();
-        //    var userAddress = $("#homeAdrress").val();
-
-        //    getGoolgeMapsData(userAddress, locationAddress)
-
-        //}
-
-        //Calculate distance from postal code to seller address
-        function calculateDistance() {
-            var locationAddress = $('#locationAddress :selected').text();
-            var userAddress = $("#homeAdrress").val();
-
-            getGoolgeMapsData(userAddress, locationAddress)
-
-        }
-
-        // Calculate using drive mode
-        function getGoolgeMapsData(src, dest) {
-            var directionsDisplay;
-            var directionsService = new google.maps.DirectionsService();
-
-            var request = {
-                origin: src,
-                destination: dest,
-                travelMode: google.maps.TravelMode.DRIVING
-            };
-
-            directionsService.route(request, function (response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                }
-            });
-
-            // Calculate distance and duration
-            var service = new google.maps.DistanceMatrixService();
-            service.getDistanceMatrix({
-                origins: [src],
-                destinations: [dest],
-                travelMode: google.maps.TravelMode.DRIVING,
-                unitSystem: google.maps.UnitSystem.METRIC,
-                avoidHighways: false,
-                avoidTolls: false
-            }, function (response, status) {
-
-                if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
-                    var distance = response.rows[0].elements[0].distance.text;
-                    var duration = response.rows[0].elements[0].duration.value;
-                    var dvDistance = document.getElementById("dvDistance");
-                    duration = parseFloat(duration / 60).toFixed(2);
-                    dvDistance.innerHTML = "";
-                    dvDistance.innerHTML += "Distance: " + distance + "<br />";
-                    dvDistance.innerHTML += "Time:" + duration + " min";
-
-                    //setting localstorage data from search address and destination
-                    var gmapsData = {destination: dest, distance: distance, from: src}
-                    localStorage.setItem("gmapsInfo", JSON.stringify(gmapsData));
-
-                } else {
-                    alert("Unable to find the distance via road.");
-                }
-            });
-        }
-
     </script>
 
 }

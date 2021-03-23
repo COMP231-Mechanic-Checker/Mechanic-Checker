@@ -15,9 +15,9 @@ namespace MechanicChecker.Controllers
         {
             SellerAddressContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerAddressContext)) as SellerAddressContext;
 
-            var addressList = context.GetAllAddresses().Select(r => new { r.AddressId, r.Address }).ToList();
-            var addressSelectList = new SelectList(addressList, "AddressId", "Address");
-            ViewData["AddressList"] = addressSelectList;
+            //var addressList = context.GetAllAddresses().Select(r => new { r.AddressId, r.Address }).ToList();
+            //var addressSelectList = new SelectList(addressList, "AddressId", "Address");
+            //ViewData["AddressList"] = addressSelectList;
             return View();
         }
 

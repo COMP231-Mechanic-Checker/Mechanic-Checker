@@ -43,7 +43,7 @@ namespace MechanicChecker.Models
                             Description = reader["Description"].ToString(),
                             ImageUrl = reader["ImageUrl"].ToString(),
                             sellerId = reader["SellerId"].ToString(),
-                            ProductUrl = reader["SellerId"].ToString(),
+                            ProductUrl = reader["ProductUrl"].ToString(),
                             IsVisible = Convert.ToBoolean(reader["IsVisible"]),
                             IsQuote = Convert.ToBoolean(reader["IsQuote"])
                         });
@@ -51,8 +51,6 @@ namespace MechanicChecker.Models
                     }
                 }
             }
-            Products p = new Products();
-                p.LocalProductList = list;
             return list;
         }
     }

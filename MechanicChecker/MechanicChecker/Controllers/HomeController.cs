@@ -12,9 +12,7 @@ namespace MechanicChecker.Controllers
     {
         public IActionResult Index()
         {
-            LocalProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
-
-            return View(context.GetAllProducts());
+            return View();
         }
 
         public IActionResult Results()
@@ -22,42 +20,13 @@ namespace MechanicChecker.Controllers
             return View("SearchResultsList");
         }
 
-        public IActionResult filterRecords(object e)
-        {
-            LocalProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
-
-            return View(context.GetAllProducts());
-        }
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Your application description pages.";
 
             return View();
         }
 
-        public ViewResult SearchCategories(String query) // the value gotten from the url
-        {
-            LocalProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
-
-            IEnumerable<LocalProduct> listOfQueriedProducts;
-            var allProducts = context.GetAllProducts();
-
-
-            if (query != null)
-            {
-                listOfQueriedProducts = allProducts.Where(
-                   product =>
-                   product.Category.Contains(query) 
-                   );
-            }
-            else
-            {
-                listOfQueriedProducts = allProducts;
-
-            }
-
-            return View(listOfQueriedProducts);
-        }
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";

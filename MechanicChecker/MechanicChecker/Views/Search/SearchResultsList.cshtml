@@ -1,72 +1,270 @@
-﻿@model IEnumerable<MechanicChecker.Models.LocalProduct>
-@* @model Product*@@*TODO: Get the model when created*@
+﻿@model IEnumerable<MechanicChecker.Models.SellerProduct>
 
 @{
-    @*TODO: update the title page*@
-    ViewData["Title"] = "SearchResultsList";
+    ViewData["Title"] = "Search Results ";
     Layout = "_Layout";
+    //var sellers = new List<Seller>();
+
+    //sellers = Model.Select(m => m.seller).ToList();
+
+    var sellers = from sp in Model
+                  select new { allCompanies = sp.seller.CompanyName, selId = sp.seller.SellerId };
+
+
+    var maxPrice = from sp in Model
+                   select sp.localProduct.Price;
+
+
 }
 
-
-<h2>@ViewData["Title"]</h2>
-
+<link href="~/css/SearchListSideNav.css" rel="stylesheet" />
 
 
 
-<table class="table table-sm table-striped table-bordered">
+<div class="row">
+    <div class="col-sm-2">
 
-    <tbody>
 
-        <!--shows each car part/service from the product list model (recived from the controller via model) in the table below-->
-        @*TODO: update the model*@
-        @foreach (var r in Model)//add product class
-        {
-            <tr>
-                <td>
-                    <div class="card flex-row flex-wrap ">
+        <div class="sidenav">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <h3 class="h3 text-success ">&nbsp;&nbsp;Filter Options</h3>
+            <br />
 
-                        <div class="card-header border-0 left col-sm-4 d-flex">
-                            @*TODO: update image url*@
-                            <img class="card-img-left border-rounded center-block my-auto" src="https://images.vexels.com/media/users/3/155414/isolated/lists/6c5e852026e7fd11f79cf45a65299016-suv-car-side-view-silhouette.png" width="200" height="200" alt="Name">
-                        </div>
-                        <div class="card-block px-2 flex-row flex-wrap col-sm-8">
 
-                            <div class="card-header text-muted align-top">
-                                <h3 class="card-title">
-                                    @*TODO: Name = product name, checkbox id and name = product id*@
-                                    <input type="checkbox" id="" name="" value=""> &nbsp;&nbsp;Name
-                                </h3>
-                            </div>
+            @*category drop down list*@
+            <button class="dropdown-btn">
+                Category
+            </button>
+            <div class="dropdown-container">
+                <a href="@Url.Action("Filter", "Search", new { filterType = "parts", searchquery = @ViewBag.SearchQuery })">
+                    <input type="checkbox" id="cboxParts" name="cboxParts" value="cboxParts" style="width:20px; height:20px">&nbsp;&nbsp;Parts
+                </a>
+                <a href="@Url.Action("Filter", "Search", new { filterType = "services", searchquery = @ViewBag.SearchQuery })">
+                    <input type="checkbox" id="cboxServices" name="cboxServices" value="cboxServices" style="width:20px; height:20px">&nbsp;&nbsp;Services
+                </a>
+            </div>
 
-                            <div class="align-bottom">
-                                <div class="col-sm-4 align-top">
-                                    @*TODO: add product price*@
-                                    <p class="card-text h4">$ 100</p>
-                                    @*TODO: *@
-                                    <p class="card-text">Some demo description</p>
-                                    <p class="card-text">
-                                        @*TODO: add action and controller to switch to product details view*@
-                                        @Html.ActionLink("Click to view details", "#", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-primary " })
-                                    </p>
+            @*price drop down list*@
+            <button class="dropdown-btn">
+                Price
+            </button>
+            <div class="dropdown-container">
+                
+                @using (Html.BeginForm("Filter", "Search", FormMethod.Post))
+                {
+                <div>
+                    <br />Max Price:
+                    <br />
+                    <input type="number" name="maxPrice" value="@ViewBag.maxPrice" style="width:100px; height:20px" />
+
+                    <br />Min Price: <br />
+                    <input type="number" name="minPrice" value="@ViewBag.minPrice" style="width:100px; height:20px" /><br />
+
+                    <input name="searchquery" value="@ViewBag.SearchQuery" hidden="hidden">
+                    <input name="filterType" value="price" hidden="hidden">
+                    <button><i class="fas fa-search"></i>Submit</button>
+                </div>
+                    
+
+                }
+
+            </div>
+
+
+            @*quote drop down list*@
+            <button class="dropdown-btn">
+                Quote
+            </button>
+            <div class="dropdown-container">
+                <a href="@Url.Action("Filter", "Search", new { filterType = "quote", searchquery = @ViewBag.SearchQuery})">
+                    <input type="checkbox" id="cboxQuote" name="categoryRadioButton" value="true" style="width:20px; height:20px">&nbsp;&nbsp;Exclude Quotes
+                </a>
+            </div>
+
+
+            @*Seller drop down list*@
+            <button class="dropdown-btn">
+                Seller
+            </button>
+            <div class="dropdown-container scrollable-menu" height="120">
+                <br />
+                @foreach (var s in sellers.Distinct())
+                {
+                    <a href="@Url.Action("Filter", "Search", new { filterType = "seller", searchquery = @ViewBag.SearchQuery, sellerid = s.selId})">
+                        <input type="checkbox" id="@s.selId" name="@s.selId" value="@s.selId" style="width:20px; height:20px">&nbsp;&nbsp;@s.allCompanies (@(sellers.Where(d => d.allCompanies == s.allCompanies).Count()) items)
+                    </a>
+                }
+                <br />
+
+            </div>
+
+            <br />
+            <button class="btn btn-block" id="btnclear">
+                <a href="@Url.Action("Filter", "Search", new { searchquery = @ViewBag.SearchQuery})">
+                Clear All Filters
+                </a>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-sm-8 divPadding">
+        <h2>@ViewData["Title"] For "@ViewBag.SearchQuery"</h2>
+        <br />
+        <br />
+        <div>
+            <div class="row">
+                <div class="col-lg-8">
+                    @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
+                    {
+                        <form class="form-inline my-2 my-lg-0">
+                            <input  class="form-control mr-sm-2" type="search" name="query" placeholder="@ViewBag.SearchQuery" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    }
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Link -->
+                    <select class="form-control mr-sm-2" name="sortFilter" id="sortFilter" onchange="location = this.value;">
+                        <optgroup label="Title">
+                            <option id="A to Z" value="@Url.Action("Filter", "Search", new { filterType = "atoz", searchquery = @ViewBag.SearchQuery })">A to Z</option>
+                            <option id="Z to A" value="@Url.Action("Filter", "Search", new { filterType = "ztoa", searchquery = @ViewBag.SearchQuery })">Z to A</option>
+                        </optgroup>
+                        <optgroup label="Price">
+                            <option value="@Url.Action("Filter", "Search", new { filterType = "lowtohigh", searchquery = @ViewBag.SearchQuery })">Hightest to Lowest</option>
+                            <option value="@Url.Action("Filter", "Search", new { filterType = "hightolow", searchquery = @ViewBag.SearchQuery })">Lowest to Highest</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div>
+                <h4 class="text-muted">There are @Model.Count() results</h4>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <table height="600" class="table table-sm table-striped table-bordered scrollable-menu" style="background-color: #FFFFFF;">
+            <tbody>
+                <!--shows each car part/service from the product list model (recived from the controller via model) in the table below-->
+                @*TODO: update the model*@
+                @foreach (SellerProduct product in Model)//add product class
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="@product.localProduct.LocalProductId" name="@product.localProduct.LocalProductId" value="@product.localProduct.LocalProductId" style="width:20px; height:20px">
+                            <div class="card flex-row flex-wrap ">
+
+
+                                <div class="card-header border-0 left col-sm-4 d-flex">
+                                    <img class="card-img-left border-rounded center-block my-auto" src="@product.localProduct.ImageUrl" width="160" height="160" alt="@product.localProduct.Title">
+                                </div>
+                                <div class="card-block px-2 flex-row flex-wrap col-sm-8">
+
+                                    <div class="card-header text-muted align-top">
+                                        <h3 class="card-title">
+                                            @product.localProduct.Title
+                                        </h3>
+                                    </div>
+
+                                    <div class="align-bottom">
+                                        <div class="col-sm-8 align-top">
+                                            <p class="card-text h4">
+                                                @{
+                                                    if (product.localProduct.Price.Contains("-") || product.localProduct.Price == "0" || product.localProduct.Price == "")
+                                                    {
+                                                        <text>Contact seller for price</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>$ @product.localProduct.Price</text>
+                                                    }
+                                                }
+
+                                            </p>
+                                            <p class="card-text">
+                                                <small class="text-muted">
+                                                    @{
+                                                        if (product.localProduct.Description.Length > 30)
+                                                        {
+                                                            <text>@product.localProduct.Description.Substring(0, 30).ToString() ...</text>
+                                                        }
+                                                        else if (product.localProduct.Description.Length < 30)
+                                                        {
+                                                            <text>@product.localProduct.Description.ToString()</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>Contact seller</text>
+                                                        }
+                                                    }
+                                                </small>
+
+                                            </p>
+                                            <p class="card-text">
+                                                @*TODO: add action and controller to switch to product details view*@
+                                                @Html.ActionLink("Click to view details", "#", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " })
+                                            </p>
+                                        </div>
+
+                                        @*//add company logo*@
+                                        <div class="float-right col-sm-4 align-top d-flex" style="width: 10rem; height: 10rem">
+                                            @*TODO: add action and controller/ url for seller website if provided*@
+                                            <a @*href="@Url.Action("Action", "Controller")"*@ href="@product.seller.WebsiteUrl" title="click to visit the website" class="btn card-body center-block d-flex">
+                                                @*TODO: add seller logo if provided*@
+                                                <img class="card-img-top my-auto" style="width: 8rem;" src="@product.seller.CompanyLogoUrl" alt="@product.localProduct.Title">
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                @*//add company logo*@
-                                <div class="float-right col-sm-8 align-top d-flex" style="width: 18rem; height: 18rem">
-                                    @*TODO: add action and controller/ url for seller website if provided*@
-                                    <a href="@Url.Action("Action", "Controller")" title="click to visit the website" class="btn card-body center-block d-flex">
-                                        @*TODO: add seller logo if provided*@
-                                        <img class="card-img-top my-auto" style="width: 12rem;" src="https://edge.alluremedia.com.au/m/l/2017/04/eBay-Logo.png" alt="Card image cap">
-                                    </a>
-                                </div>
                             </div>
-                        </div>
+                        </td>
 
-                    </div>
-                </td>
+                    </tr>
+                }
 
-            </tr>
+            </tbody>
+        </table>
+        <p id="testId"></p>
+    </div>
+</div>
+
+
+
+@section Scripts
+    {
+
+    <script>
+
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
         }
+    </script>
 
-    </tbody>
-</table>
+
+}
+
 

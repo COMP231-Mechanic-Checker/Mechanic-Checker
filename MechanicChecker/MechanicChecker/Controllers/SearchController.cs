@@ -10,35 +10,35 @@ namespace MechanicChecker.Controllers
     public class SearchController : Controller
     {
     
+
+
         public IActionResult Index()
         {
             LocalProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
             return View(context.GetAllProducts());
         }
 
-        public ViewResult SearchLocalSellersProducts(string query) // the value gotten from the url
+        public ViewResult SearchLocalSellers(String query) // the value gotten from the url
         {
-            SellerProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            LocalProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
 
-            IEnumerable<SellerProduct> listOfQueriedProducts;
-
-            var allSellersProducts = context.GetAllSellerProducts();
+            IEnumerable<LocalProduct> listOfQueriedProducts;
+            var allProducts = context.GetAllProducts();
+          
 
             if (query != null)
             {
-
-                listOfQueriedProducts = allSellersProducts.Where(
+                listOfQueriedProducts = allProducts.Where(
                    product =>
-                   product.localProduct.Title.Contains(query, StringComparison.OrdinalIgnoreCase) || product.localProduct.Description.Contains(query, StringComparison.OrdinalIgnoreCase)
+                   product.Title.Contains(query) || product.Description.Contains(query)
                    );
+            }else
+            { 
+                listOfQueriedProducts = allProducts;
+               
             }
-            else
-            {
-                listOfQueriedProducts = allSellersProducts;
 
-            }
             return View("SearchResultsList", listOfQueriedProducts);
         }
-
     }
 }

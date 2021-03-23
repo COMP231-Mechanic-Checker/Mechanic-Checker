@@ -22,17 +22,17 @@
 <br />
 <br />
 <div class="row">
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="homeAdrress" name="homeAddress" placeholder="Enter your address">
-    </div>
+    @*<div class="col-md-3">
+            <input type="text" class="form-control" id="homeAdrress" name="homeAddress" placeholder="Enter your address">
+        </div>*@
 
     <div class="col-md-3">
-        <select id="locationAddress" class="form-control" asp-items="ViewBag.AddressList"></select>
-    </div>
+            <select id="locationAddress" class="form-control" asp-items="ViewBag.AddressList"></select>
+        </div>
 
-    <div class="col-md-4">
-        <input type="submit" value="Get Distance" onclick="calculateDistance()" />
-    </div>
+        <div class="col-md-4">
+            <input type="submit" value="Get Distance" onclick="calculateDistance()" />
+        </div>
 
     <div>
         <div id="dvDistance"></div>
@@ -43,29 +43,27 @@
 <div class="wrapper">
     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
     {
-        <div class="search_box">
-            <div class="input_postalcode">
-                <input type="text" class="input" placeholder="Postal Code">
-            </div>
-            <div class="search_box">
-                <div class="dropdown">
-                    <div class="default_option">All</div>
-                    <ul>
-                        <li>All</li>
-                        <li>Local Sellers</li>
-                        <li>eBay</li>
-                        <li>Alibaba and Amazon</li>
-                    </ul>
-                </div>
-                <div class="search_field">
-                    <input type="text" class="input" id="query" name="query" placeholder="Search">
-                    @*@Html.TextBox("query")*@
-                    <button><i class="fas fa-search"></i></button>
-                </div>
-            }
+    <div class="search_box">
+        <div class="input_postalcode">
+            <input type="text" class="input" id="homeAdrress" name="homeAddress" placeholder="Postal Code">
         </div>
+        <div class="dropdown">
+            <div class="default_option">All</div>
+            <ul>
+                <li>All</li>
+                <li>Local Sellers</li>
+                <li>eBay</li>
+                <li>Alibaba and Amazon</li>
+            </ul>
+        </div>
+        <div class="search_field">
+            <input type="text" class="input" id="query" name="query" placeholder="Search">
+            @*@Html.TextBox("query")*@
+            <button><i class="fas fa-search"></i></button>
+        </div>       
     </div>
-
+    }
+</div>
 
 
 @section Scripts
@@ -84,6 +82,16 @@
             });
         });
 
+        ////Calculate distance from postal code to seller address
+        //function calculateDistance() {
+        //    var locationAddress = $("SellerId ").text();
+        //    var userAddress = $("#homeAdrress").val();
+
+        //    getGoolgeMapsData(userAddress, locationAddress)
+
+        //}
+
+        //Calculate distance from postal code to seller address
         function calculateDistance() {
             var locationAddress = $('#locationAddress :selected').text();
             var userAddress = $("#homeAdrress").val();
@@ -91,6 +99,8 @@
             getGoolgeMapsData(userAddress, locationAddress)
 
         }
+
+        // Calculate using drive mode
         function getGoolgeMapsData(src, dest) {
             var directionsDisplay;
             var directionsService = new google.maps.DirectionsService();
@@ -107,7 +117,7 @@
                 }
             });
 
-            //*********DISTANCE AND DURATION**********************//
+            // Calculate distance and duration
             var service = new google.maps.DistanceMatrixService();
             service.getDistanceMatrix({
                 origins: [src],
@@ -126,6 +136,10 @@
                     dvDistance.innerHTML = "";
                     dvDistance.innerHTML += "Distance: " + distance + "<br />";
                     dvDistance.innerHTML += "Time:" + duration + " min";
+
+                    //setting localstorage data from search address and destination
+                    var gmapsData = {destination: dest, distance: distance, from: src}
+                    localStorage.setItem("gmapsInfo", JSON.stringify(gmapsData));
 
                 } else {
                     alert("Unable to find the distance via road.");

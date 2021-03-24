@@ -44,10 +44,10 @@
             </button>
             <div class="dropdown-container">
                 <a href="@Url.Action("Filter", "Search", new { filterType = "parts", searchquery = @ViewBag.SearchQuery })">
-                    <input type="checkbox" id="cboxParts" name="cboxParts" value="cboxParts" style="width:20px; height:20px">&nbsp;&nbsp;Parts
+                    <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "parts", searchquery = @ViewBag.SearchQuery })')" type="checkbox" id="cboxParts" name="cboxParts" value="cboxParts" style="width:20px; height:20px">&nbsp;&nbsp;Parts
                 </a>
                 <a href="@Url.Action("Filter", "Search", new { filterType = "services", searchquery = @ViewBag.SearchQuery })">
-                    <input type="checkbox" id="cboxServices" name="cboxServices" value="cboxServices" style="width:20px; height:20px">&nbsp;&nbsp;Services
+                    <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "services", searchquery = @ViewBag.SearchQuery })')" type="checkbox" id="cboxServices" name="cboxServices" value="cboxServices" style="width:20px; height:20px">&nbsp;&nbsp;Services
                 </a>
             </div>
 
@@ -84,7 +84,7 @@
             </button>
             <div class="dropdown-container">
                 <a href="@Url.Action("Filter", "Search", new { filterType = "quote", searchquery = @ViewBag.SearchQuery})">
-                    <input type="checkbox" id="cboxQuote" name="categoryRadioButton" value="true" style="width:20px; height:20px">&nbsp;&nbsp;Exclude Quotes
+                    <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "quote", searchquery = @ViewBag.SearchQuery})')" type="checkbox" id="cboxQuote" name="categoryRadioButton" value="true" style="width:20px; height:20px">&nbsp;&nbsp;Exclude Quotes
                 </a>
             </div>
 
@@ -98,7 +98,7 @@
                 @foreach (var s in sellers.Distinct())
                 {
                     <a href="@Url.Action("Filter", "Search", new { filterType = "seller", searchquery = @ViewBag.SearchQuery, sellerid = s.selId})">
-                        <input type="checkbox" id="@s.selId" name="@s.selId" value="@s.selId" style="width:20px; height:20px">&nbsp;&nbsp;@s.allCompanies (@(sellers.Where(d => d.allCompanies == s.allCompanies).Count()) items)
+                        <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "seller", searchquery = @ViewBag.SearchQuery, sellerid = s.selId})')" type="checkbox" id="@s.selId" name="@s.selId" value="@s.selId" style="width:20px; height:20px">&nbsp;&nbsp;@s.allCompanies (@(sellers.Where(d => d.allCompanies == s.allCompanies).Count()) items)
                     </a>
                 }
                 <br />

@@ -1,12 +1,7 @@
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
-
-
-
-
-
 
 <link href="~/css/stylesearchbutton.css" rel="stylesheet" />
 <link href="~/css/style.css" rel="stylesheet" />
@@ -26,34 +21,35 @@
 <br />
 <br />
 
-
-
 <div class="wrapper">
     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
     {
-        <div class="search_box">
-            <div class="input_postalcode">
-                <input type="text" class="input" placeholder="Postal Code">
-            </div>
-            <div class="dropdown">
-                <div class="default_option">All</div>
-                <ul>
-                    <li>All</li>
-                    <li>Local Sellers</li>
-                    <li>eBay</li>
-                    <li>Alibaba and Amazon</li>
-                </ul>
-            </div>
-            <div class="search_field">
-                <input type="text" class="input" id="query" name="query" placeholder="Search">
-                @*@Html.TextBox("query")*@
-                <button><i class="fas fa-search"></i></button>
-            </div>
-        </div>}
+    <div class="search_box">
+        <div class="input_postalcode">
+            <input type="text" class="input" id="homeAddress" name="homeAddress" placeholder="Postal Code">
+        </div>
+        <div class="dropdown">
+            <div class="default_option">All</div>
+            <ul>
+                <li>All</li>
+                <li>Local Sellers</li>
+                <li>eBay</li>
+                <li>Alibaba and Amazon</li>
+            </ul>
+        </div>
+        <div class="search_field">
+            <input type="text" class="input" id="query" name="query" placeholder="Search">
+            @*@Html.TextBox("query")*@
+            <button><i class="fas fa-search"></i></button>
+        </div>       
+    </div>
+    <!--<div class="search_field">
+         <input type="text" class="input" id="query" name="query" placeholder="Search">-->
+        @*@Html.TextBox("query")*@
+        <!--<button><i class="fas fa-search"></i></button>
+    </div>-->
+    }
 </div>
-
-
-
 
 
 @section Scripts

@@ -1,5 +1,6 @@
 ﻿using MechanicChecker.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,8 @@ namespace MechanicChecker.Controllers
     {
         public IActionResult Index()
         {
+            SellerAddressContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerAddressContext)) as SellerAddressContext;
+
             return View();
         }
 

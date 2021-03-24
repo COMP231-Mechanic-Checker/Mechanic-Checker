@@ -1,5 +1,4 @@
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\bin\Debug\netcoreapp2.1\appsettings.Development.json
-D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\bin\Debug\netcoreapp2.1\appsettings.json
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\bin\Debug\netcoreapp2.1\MechanicChecker.deps.json
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\bin\Debug\netcoreapp2.1\MechanicChecker.runtimeconfig.json
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\bin\Debug\netcoreapp2.1\MechanicChecker.runtimeconfig.dev.json
@@ -20,7 +19,6 @@ D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChec
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Home\Contact.cshtml.g.cs
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.cshtml.g.cs
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Home\Privacy.cshtml.g.cs
-D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.cshtml.g.cs
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -34,3 +32,4 @@ D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChec
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.genruntimeconfig.cache
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.csproj.CopyComplete
 D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Search\SearchResultsList.cshtml.g.cs
+D:\3409\Semester 05\Software Development Project 1\Mechanic-Checker\MechanicChecker\MechanicChecker\bin\Debug\netcoreapp2.1\appsettings.json

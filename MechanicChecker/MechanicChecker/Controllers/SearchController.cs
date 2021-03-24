@@ -35,7 +35,7 @@ namespace MechanicChecker.Controllers
             }
             else
             {
-                return View("~/Views/Home/Index.cshtml");
+               return View("~/Views/Home/Index.cshtml");
             }
             ViewBag.SearchQuery = query;
             return View("SearchResultsList", listOfQueriedProducts);

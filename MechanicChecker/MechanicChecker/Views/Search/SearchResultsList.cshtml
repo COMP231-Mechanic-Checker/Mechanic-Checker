@@ -123,13 +123,17 @@
         <br />
         <div>
             <div class="row">
+                <div class="input_postalcode">
+
+                </div>
                 <div class="col-lg-8">
                     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
                     {
-                        <form class="form-inline my-2 my-lg-0">
-                            <input  class="form-control mr-sm-2" type="search" name="query" placeholder="@ViewBag.SearchQuery" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" name="homeAddress" placeholder="Postal Code" aria-label="location">
+                        <input class="form-control mr-sm-2" type="search" name="query" placeholder="@ViewBag.SearchQuery" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
                     }
                 </div>
 

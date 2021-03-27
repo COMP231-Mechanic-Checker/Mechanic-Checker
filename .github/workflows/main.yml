@@ -27,7 +27,7 @@ jobs:
           "ConnectionStrings": {
             "DefaultConnectionString": ${{ secrets.NETCORE_APPSETTINGS_DEFAULTCONNECTIONSTRING }}
           }
-        }
+        })
         echo "APPSETTINGS_JSON_STR<<EOF" >> $GITHUB_ENV
         echo "$APPSETTINGS_JSON_STR" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV

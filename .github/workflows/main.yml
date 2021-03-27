@@ -49,7 +49,6 @@ jobs:
         dotnet publish -c Release -o site
         cd site
         zip -r ../deploy_bundle.zip *
-        cd ..
 
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v16
@@ -58,7 +57,7 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: mechanic-checker-netcore
         environment_name: Mechaniccheckernetcore-env
-        version_label: v0.0.1
+        version_label: "${{ github.run_id }}-${{ github.run_number }}-${{ github.actor }}"
         region: us-east-1
         deployment_package: MechanicChecker/MechanicChecker/deploy_bundle.zip
 

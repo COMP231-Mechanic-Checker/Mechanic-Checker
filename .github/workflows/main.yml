@@ -16,10 +16,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.1.x
-        
-    - name: Move to NET Core directory
-      run: cd MechanicChecker/MechanicChecker
-      
+  
     - name: Create appsettings.json string
       run: |
         APPSETTINGS_JSON_STR=$(cat << EOF
@@ -33,7 +30,7 @@ jobs:
         echo "APPSETTINGS_JSON_STR<<EOF" >> $GITHUB_ENV
         echo "$APPSETTINGS_JSON_STR" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
-      id: appsettings_json_str
+#       id: appsettings_json_str
       
 #     - name: Display appsettings.json string
 #       run: |
@@ -47,11 +44,13 @@ jobs:
 
     - name: Generate deployment package
       run: | 
+        mv appsettings.json MechanicChecker/MechanicChecker
+        cd MechanicChecker/MechanicChecker
         dotnet publish -c Release -o site
         cd site
         zip -r ../deploy_bundle.zip *
         cd ..
-        
+
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v16
       with:

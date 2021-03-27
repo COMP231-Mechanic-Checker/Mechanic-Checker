@@ -1,4 +1,4 @@
-name: Deploy master
+name: Deploy Mechanic Checker Netcore
 on:
   push:
     branches:
@@ -30,19 +30,14 @@ jobs:
         echo "APPSETTINGS_JSON_STR<<EOF" >> $GITHUB_ENV
         echo "$APPSETTINGS_JSON_STR" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
-#       id: appsettings_json_str
-      
-#     - name: Display appsettings.json string
-#       run: |
-#         echo "appsettings.json is: ${{ env.APPSETTINGS_JSON_STR }}"
         
-    - name: Create appsettings.json for Production
+    - name: Create appsettings.json file for Production
       uses: "finnp/create-file-action@master"
       env:
         FILE_NAME: "appsettings.json"
         FILE_DATA: ${{ env.APPSETTINGS_JSON_STR }}
 
-    - name: Generate deployment package
+    - name: Generate .NET deployment package
       run: | 
         mv appsettings.json MechanicChecker/MechanicChecker
         cd MechanicChecker/MechanicChecker
@@ -50,7 +45,7 @@ jobs:
         cd site
         zip -r ../deploy_bundle.zip *
 
-    - name: Deploy to EB
+    - name: Deploy to AWS Elastic Beanstalk
       uses: einaregilsson/beanstalk-deploy@v16
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -60,68 +55,3 @@ jobs:
         version_label: "${{ github.run_id }}-${{ github.run_number }}-${{ github.actor }}"
         region: us-east-1
         deployment_package: MechanicChecker/MechanicChecker/deploy_bundle.zip
-
-
-# name: .NET
-
-# on:
-#   push:
-#     branches: [ develop ]
-#   pull_request:
-#     branches: [ develop ]
-
-# jobs:
-#   build:
-
-#     runs-on: ubuntu-latest
-
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Setup .NET
-#       uses: actions/setup-dotnet@v1
-#       with:
-#         dotnet-version: 5.0.x
-#     - name: Restore dependencies
-#       run: dotnet restore
-#     - name: Build
-#       run: dotnet build --no-restore
-#     - name: Test
-#       run: dotnet test --no-build --verbosity normal
-
-
-# # This is a basic workflow to help you get started with Actions
-
-# name: CI
-
-# # Controls when the action will run. 
-# on:
-#   # Triggers the workflow on push or pull request events but only for the develop branch
-#   push:
-#     branches: [ develop ]
-#   pull_request:
-#     branches: [ develop ]
-
-#   # Allows you to run this workflow manually from the Actions tab
-#   workflow_dispatch:
-
-# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-# jobs:
-#   # This workflow contains a single job called "build"
-#   build:
-#     # The type of runner that the job will run on
-#     runs-on: ubuntu-latest
-
-#     # Steps represent a sequence of tasks that will be executed as part of the job
-#     steps:
-#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#       - uses: actions/checkout@v2
-
-#       # Runs a single command using the runners shell
-#       - name: Run a one-line script
-#         run: echo Hello, world!
-
-#       # Runs a set of commands using the runners shell
-#       - name: Run a multi-line script
-#         run: |
-#           echo Add other actions to build,
-#           echo test, and deploy your project.

@@ -12,6 +12,14 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v2
       
+    - uses: chrnorm/deployment-action@releases/v1
+      name: Create GitHub deployment status
+      id: deployment
+      with:
+        token: "${{ github.token }}"
+        target_url: http://mechanicchecker.us-east-1.elasticbeanstalk.com/
+        environment: production
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -55,3 +63,22 @@ jobs:
         version_label: "${{ github.run_id }}-${{ github.run_number }}-${{ github.actor }}"
         region: us-east-1
         deployment_package: MechanicChecker/MechanicChecker/deploy_bundle.zip
+        
+    - name: Update GitHub deployment status (success)
+      if: success()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: "${{ github.token }}"
+        target_url: http://mechanicchecker.us-east-1.elasticbeanstalk.com/
+        state: "success"
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+    - name: Update GitHub deployment status (failure)
+      if: failure()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: "${{ github.token }}"
+        target_url: http://mechanicchecker.us-east-1.elasticbeanstalk.com/
+        state: "failure"
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+

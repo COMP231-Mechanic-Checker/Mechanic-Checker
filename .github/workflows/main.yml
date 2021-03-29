@@ -2,7 +2,7 @@ name: Deploy Mechanic Checker Netcore
 on:
   push:
     branches:
-    - develop
+    - develop-nusrat
     
 jobs:
   build:

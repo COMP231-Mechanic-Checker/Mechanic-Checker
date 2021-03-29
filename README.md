@@ -74,6 +74,8 @@ The Mechanic Checker is hosted on [Amazon Web Services (AWS)](https://aws.amazon
 
 ## License
 
-TODO: Insert License
+The Mechanic Checker Web Application is licensed under the MIT License.
+
+See the [LICENSE](https://github.com/COMP231W21-G5/Mechanic-Checker/blob/develop/LICENSE) file for more information.
 
 

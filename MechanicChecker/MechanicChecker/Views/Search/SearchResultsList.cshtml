@@ -44,10 +44,10 @@
             </button>
             <div class="dropdown-container">
                 <a href="@Url.Action("Filter", "Search", new { filterType = "parts", searchquery = @ViewBag.SearchQuery })">
-                    <input type="checkbox" id="cboxParts" name="cboxParts" value="cboxParts" style="width:20px; height:20px">&nbsp;&nbsp;Parts
+                    <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "parts", searchquery = @ViewBag.SearchQuery })')" type="checkbox" id="cboxParts" name="cboxParts" value="cboxParts" style="width:20px; height:20px">&nbsp;&nbsp;Parts
                 </a>
                 <a href="@Url.Action("Filter", "Search", new { filterType = "services", searchquery = @ViewBag.SearchQuery })">
-                    <input type="checkbox" id="cboxServices" name="cboxServices" value="cboxServices" style="width:20px; height:20px">&nbsp;&nbsp;Services
+                    <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "services", searchquery = @ViewBag.SearchQuery })')" type="checkbox" id="cboxServices" name="cboxServices" value="cboxServices" style="width:20px; height:20px">&nbsp;&nbsp;Services
                 </a>
             </div>
 
@@ -84,7 +84,7 @@
             </button>
             <div class="dropdown-container">
                 <a href="@Url.Action("Filter", "Search", new { filterType = "quote", searchquery = @ViewBag.SearchQuery})">
-                    <input type="checkbox" id="cboxQuote" name="categoryRadioButton" value="true" style="width:20px; height:20px">&nbsp;&nbsp;Exclude Quotes
+                    <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "quote", searchquery = @ViewBag.SearchQuery})')" type="checkbox" id="cboxQuote" name="categoryRadioButton" value="true" style="width:20px; height:20px">&nbsp;&nbsp;Exclude Quotes
                 </a>
             </div>
 
@@ -98,7 +98,7 @@
                 @foreach (var s in sellers.Distinct())
                 {
                     <a href="@Url.Action("Filter", "Search", new { filterType = "seller", searchquery = @ViewBag.SearchQuery, sellerid = s.selId})">
-                        <input type="checkbox" id="@s.selId" name="@s.selId" value="@s.selId" style="width:20px; height:20px">&nbsp;&nbsp;@s.allCompanies (@(sellers.Where(d => d.allCompanies == s.allCompanies).Count()) items)
+                        <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "seller", searchquery = @ViewBag.SearchQuery, sellerid = s.selId})')" type="checkbox" id="@s.selId" name="@s.selId" value="@s.selId" style="width:20px; height:20px">&nbsp;&nbsp;@s.allCompanies (@(sellers.Where(d => d.allCompanies == s.allCompanies).Count()) items)
                     </a>
                 }
                 <br />
@@ -123,13 +123,17 @@
         <br />
         <div>
             <div class="row">
+                <div class="input_postalcode">
+
+                </div>
                 <div class="col-lg-8">
                     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
                     {
-                        <form class="form-inline my-2 my-lg-0">
-                            <input  class="form-control mr-sm-2" type="search" name="query" placeholder="@ViewBag.SearchQuery" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" name="homeAddress" placeholder="Postal Code" aria-label="location">
+                        <input class="form-control mr-sm-2" type="search" name="query" placeholder="@ViewBag.SearchQuery" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
                     }
                 </div>
 
@@ -212,9 +216,16 @@
                                                 </small>
 
                                             </p>
+
                                             <p class="card-text">
                                                 @*TODO: add action and controller to switch to product details view*@
                                                 @Html.ActionLink("Click to view details", "#", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " })
+                                            </p> 
+                                            <p class="card-text">
+                                                @if (product.distance != null)
+                                                {
+                                                    <span>@product.distance  to @product.sellerAddress.Address</span>
+                                                }
                                             </p>
                                         </div>
 

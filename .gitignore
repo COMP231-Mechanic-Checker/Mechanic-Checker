@@ -208,6 +208,9 @@ orleans.codegen.cs
 # (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
 #bower_components/
 
+#appsettings.json
+appsettings.json
+
 # RIA/Silverlight projects
 Generated_Code/
 
@@ -678,3 +681,9 @@ $RECYCLE.BIN/
 # Fody - auto-generated XML schema
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,csharp,visualstudio,aspnetcore
+MechanicChecker/MechanicChecker/obj/Debug/netcoreapp2.1/MechanicChecker.pdb
+MechanicChecker/MechanicChecker/obj/Debug/netcoreapp2.1/MechanicChecker.Views.pdb
+MechanicChecker/MechanicChecker/obj/Debug/netcoreapp2.1/MechanicChecker.Views.pdb
+MechanicChecker/MechanicChecker/obj/Debug/netcoreapp2.1/Razor/Views/Home/Index.cshtml.g.cs
+MechanicChecker/MechanicChecker/obj/Debug/netcoreapp2.1/Razor/Views/Shared/_CookieConsentPartial.cshtml.g.cs
+MechanicChecker/MechanicChecker/obj/Debug/netcoreapp2.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs

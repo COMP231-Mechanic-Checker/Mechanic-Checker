@@ -24,13 +24,17 @@ namespace MechanicChecker.Models
         {
             LocalProduct localProduct = new LocalProduct();
             Seller seller = new Seller();
+            SellerAddress sellerAddress = new SellerAddress();
             List<SellerProduct> list = new List<SellerProduct>();
 
 
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Seller Join Product on Seller.SellerId = Product.SellerId where Product.IsVisible = true", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Seller " +
+                    "Join Product on Seller.SellerId = Product.SellerId " +
+                    "Join Address on Seller.SellerId = Address.SellerId " +
+                    "where Product.IsVisible = true", conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -68,11 +72,17 @@ namespace MechanicChecker.Models
                             ApplicationDate = Convert.ToDateTime(reader["ApplicationDate"]),
                             ApprovalDate = Convert.ToDateTime(reader["ApprovalDate"])
                         };
-                        list.Add(new SellerProduct(localProduct, seller));
-
+                        sellerAddress = new SellerAddress()
+                        {
+                            AddressId = Convert.ToInt32(reader["AddressId"]),
+                            SellerId = Convert.ToInt32(reader["SellerId"]),
+                            Address = reader["Address"].ToString(),
+                            PostalCode = reader["PostalCode"].ToString(),
+                            Province = reader["Province"].ToString(),
+                            City = reader["City"].ToString()
+                        };
+                        list.Add(new SellerProduct(localProduct, seller, sellerAddress));
                     }
-
-             
                 }
             }
             return list;

@@ -10,10 +10,15 @@ namespace MechanicChecker.Models
         public LocalProduct localProduct { get; set; }
         public Seller seller { get; set; }
 
-        public SellerProduct(LocalProduct lP, Seller s)
+        public SellerAddress sellerAddress { get; set; }
+
+        public string distance { get; set; }
+
+        public SellerProduct(LocalProduct lP, Seller s, SellerAddress sa)
         {
             localProduct = lP;
             seller = s;
+            sellerAddress = sa;
         }
 
     }

@@ -1,0 +1,115 @@
+﻿@model Seller
+
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+<link href="~/css/style.css" rel="stylesheet" />
+<br />
+<br />
+<br />
+
+<body>
+    <div class="signupform">
+        <div >
+            <img src="~/images/MechanicCheckerLogoSmaller.png" alt="Mechanic Checker App Logo" height="55" width="130" class="center-block">
+        </div>
+        <h2>Welcome</h2>
+        <h3>Seller's Sign Up here</h3> 
+        <form asp-controller="Account" asp-action="SignUp" method="post">
+
+            <div class="form-group">
+                <label asp-for="UserName">Username</label>
+                <div><span asp-validation-for="UserName" class="text-danger"></span></div>
+                <input asp-for="UserName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName">First Name</label>
+                <div><span asp-validation-for="FirstName" class="text-danger"></span></div>
+                <input asp-for="FirstName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName">Last Name</label>
+                <div><span asp-validation-for="FirstName" class="text-danger"></span></div>
+                <input asp-for="LastName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <div><span asp-validation-for="Email" class="text-danger"></span></div>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="PasswordHash">Password</label>
+                <div><span asp-validation-for="PasswordHash" class="text-danger"></span></div>
+                <input asp-for="PasswordHash" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <div><span asp-validation-for="PasswordHash" class="text-danger"></span></div>
+                <input asp-for="PasswordHash" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AccountType">Choose your Account Type</label>
+                <div><span asp-validation-for="AccountType" class="text-danger"></span></div>
+                @*<input asp-for="AccountType" class="form-control" />*@
+                <select name="AccountType" id="AccountType" class="form-control">
+                    <option value="SmallMechanicStore">Small Mechanic Store</option>
+                    <option value="IndependentSeller">Independent Seller</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyName">Company Name</label>
+                <div><span asp-validation-for="CompanyName" class="text-danger"></span></div>
+                <input asp-for="CompanyName" class="form-control" />
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Address">Address</label>
+                <div><span asp-validation-for="Address" class="text-danger"></span></div>
+                <input asp-for="Address" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="City">City</label>
+                <div><span asp-validation-for="Address" class="text-danger"></span></div>
+                <input asp-for="City" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Province">Province</label>
+                <div><span asp-validation-for="Province" class="text-danger"></span></div>
+                <input asp-for="Province" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="PostalCode">Postal Code</label>
+                <div><span asp-validation-for="PostalCode" class="text-danger"></span></div>
+                <input asp-for="PostalCode" class="form-control" />
+            </div>*@
+            <div class="form-group">
+                <label asp-for="BusinessPhone">Business Phone</label>
+                <div><span asp-validation-for="BusinessPhone" class="text-danger"></span></div>
+                <input asp-for="BusinessPhone" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyLogoUrl">Company Logo</label>
+                <div><span asp-validation-for="CompanyLogoUrl" class="text-danger"></span></div>
+                <input type="file" id="myFile" name="filename" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="WebsiteUrl">Web site</label>
+                <div><span asp-validation-for="WebsiteUrl" class="text-danger"></span></div>
+                <input asp-for="WebsiteUrl" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Application">Application (Optional)</label>
+                <div><span asp-validation-for="Application" class="text-danger"></span></div>
+                <textarea id="Application" name="Application" rows="4" cols="50" class="form-control">
+                Write here the reasons for sign up with Mechanic Checker App</textarea>
+            </div>
+            <div class="form-group">
+                <button type-"sumbit">Cancel</button>
+                <button type-"submit">Sign Up</button>
+            </div>
+        </form>
+        <h5>You agree to Mechanic Checker App's terms and condiitons. </h5>
+    </div>
+</body>

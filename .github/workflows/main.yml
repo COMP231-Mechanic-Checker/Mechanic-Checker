@@ -33,6 +33,9 @@ jobs:
         { 
           "ConnectionStrings": {
             "DefaultConnectionString": ${{ secrets.NETCORE_APPSETTINGS_DEFAULTCONNECTIONSTRING }}
+          },
+          "APIKeys": {
+            "Ebay": ${{ secrets.NETCORE_APPSETTINGS_APIKEYS_EBAY }}
           }
         }
         EOF

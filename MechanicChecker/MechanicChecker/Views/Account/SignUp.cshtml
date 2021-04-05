@@ -1,7 +1,4 @@
-﻿@model Seller
-
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
@@ -18,90 +15,89 @@
         </div>
         <h2>Welcome</h2>
         <h3>Seller's Sign Up here</h3> 
-        <form asp-controller="Account" asp-action="SignUp" method="post">
+        <form controller="Account" action="SignUp.cshtml" method="post">
 
             <div class="form-group">
-                <label asp-for="UserName">Username</label>
-                <div><span asp-validation-for="UserName" class="text-danger"></span></div>
-                <input asp-for="UserName" class="form-control" />
+                <label for="UserName">Username</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text" name="UserName" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="FirstName">First Name</label>
-                <div><span asp-validation-for="FirstName" class="text-danger"></span></div>
-                <input asp-for="FirstName" class="form-control" />
+                <label for="FirstName">First Name</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text"  name="FirstName" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="LastName">Last Name</label>
-                <div><span asp-validation-for="FirstName" class="text-danger"></span></div>
-                <input asp-for="LastName" class="form-control" />
+                <label for="LastName">Last Name</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text"  name="LastName" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="Email">Email</label>
-                <div><span asp-validation-for="Email" class="text-danger"></span></div>
-                <input asp-for="Email" class="form-control" />
+                <label for="Email">Email</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text"  name="Email" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="PasswordHash">Password</label>
-                <div><span asp-validation-for="PasswordHash" class="text-danger"></span></div>
-                <input asp-for="PasswordHash" class="form-control" />
+                <label for="Password">Password</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text"  name="Password" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label>Confirm Password</label>
-                <div><span asp-validation-for="PasswordHash" class="text-danger"></span></div>
-                <input asp-for="PasswordHash" class="form-control" />
+                <label for="ConfirmPassword">Confirm Password</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="ConfirmPassword" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="AccountType">Choose your Account Type</label>
-                <div><span asp-validation-for="AccountType" class="text-danger"></span></div>
-                @*<input asp-for="AccountType" class="form-control" />*@
-                <select name="AccountType" id="AccountType" class="form-control">
+                <label for="AccountType">Choose your Account Type</label>
+                <div><span class="text-danger"></span></div>
+                <select name="AccountType" id="AccountType" class="form-control" required>
                     <option value="SmallMechanicStore">Small Mechanic Store</option>
                     <option value="IndependentSeller">Independent Seller</option>
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="CompanyName">Company Name</label>
-                <div><span asp-validation-for="CompanyName" class="text-danger"></span></div>
-                <input asp-for="CompanyName" class="form-control" />
-            </div>
-            @*<div class="form-group">
-                <label asp-for="Address">Address</label>
-                <div><span asp-validation-for="Address" class="text-danger"></span></div>
-                <input asp-for="Address" class="form-control" />
+                <label for="CompanyName">Company Name</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="CompanyName" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="City">City</label>
-                <div><span asp-validation-for="Address" class="text-danger"></span></div>
-                <input asp-for="City" class="form-control" />
+                <label for="Address">Address</label>
+                <div><span ></span></div>
+                <input type="text"  name="Address" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="Province">Province</label>
-                <div><span asp-validation-for="Province" class="text-danger"></span></div>
-                <input asp-for="Province" class="form-control" />
+                <label for="City">City</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="City" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="PostalCode">Postal Code</label>
-                <div><span asp-validation-for="PostalCode" class="text-danger"></span></div>
-                <input asp-for="PostalCode" class="form-control" />
-            </div>*@
-            <div class="form-group">
-                <label asp-for="BusinessPhone">Business Phone</label>
-                <div><span asp-validation-for="BusinessPhone" class="text-danger"></span></div>
-                <input asp-for="BusinessPhone" class="form-control" />
+                <label for="Province">Province</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="Province" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="CompanyLogoUrl">Company Logo</label>
-                <div><span asp-validation-for="CompanyLogoUrl" class="text-danger"></span></div>
-                <input type="file" id="myFile" name="filename" class="form-control">
+                <label for="PostalCode">Postal Code</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="PostalCode" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="WebsiteUrl">Web site</label>
-                <div><span asp-validation-for="WebsiteUrl" class="text-danger"></span></div>
-                <input asp-for="WebsiteUrl" class="form-control" />
+                <label for="BusinessPhone">Business Phone</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="BusinessPhone" class="form-control" required/>
             </div>
             <div class="form-group">
-                <label asp-for="Application">Application (Optional)</label>
-                <div><span asp-validation-for="Application" class="text-danger"></span></div>
+                <label for="CompanyLogo">Company Logo</label>
+                <div><span  class="text-danger"></span></div>
+                <input type="file" id="myFile" name="CompanyLogoUrl" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="WebsiteUrl">Web site</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="WebsiteUrl" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="Application">Application (Optional)</label>
+                <div><span class="text-danger"></span></div>
                 <textarea id="Application" name="Application" rows="4" cols="50" class="form-control">
                 Write here the reasons for sign up with Mechanic Checker App</textarea>
             </div>

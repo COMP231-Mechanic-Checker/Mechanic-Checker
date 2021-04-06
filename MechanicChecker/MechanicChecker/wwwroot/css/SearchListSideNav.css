@@ -65,3 +65,13 @@
 .divPadding{
     padding-left:200px;
 }
+
+table {
+    overflow-y: scroll;
+    height: 900px;
+    display: block;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

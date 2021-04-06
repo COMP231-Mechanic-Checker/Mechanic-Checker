@@ -104,3 +104,6 @@ C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\Mecha
 C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.pdb
 C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.genruntimeconfig.cache
 C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.csproj.CopyComplete
+C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Account\SignIn.cshtml.g.cs
+C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Account\SignUp.cshtml.g.cs
+C:\Sanjib\5th Semester\COMP231 Software Development Project 1 JAKE\Project\MechanicChecker\MechanicChecker\bin\Debug\netcoreapp2.1\appsettings.json

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MechanicChecker", "Mechanic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mechanicCheckerTest", "mechanicCheckerTest\mechanicCheckerTest.csproj", "{BB5B1A6D-5390-4437-80A0-D2F5B61ACEBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MechanicCheckerCoreUnitTests", "MechanicCheckerCoreUnitTests\MechanicCheckerCoreUnitTests.csproj", "{30A70154-2CA6-435C-8B81-9CA36D20A6E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BB5B1A6D-5390-4437-80A0-D2F5B61ACEBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB5B1A6D-5390-4437-80A0-D2F5B61ACEBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB5B1A6D-5390-4437-80A0-D2F5B61ACEBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30A70154-2CA6-435C-8B81-9CA36D20A6E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A70154-2CA6-435C-8B81-9CA36D20A6E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A70154-2CA6-435C-8B81-9CA36D20A6E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A70154-2CA6-435C-8B81-9CA36D20A6E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,7 @@
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
-
 
 <link href="~/css/stylesearchbutton.css" rel="stylesheet" />
 <link href="~/css/style.css" rel="stylesheet" />
@@ -22,34 +21,45 @@
 <br />
 <br />
 
-
-
 <div class="wrapper">
     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
     {
-        <div class="search_box">
-            <div class="input_postalcode">
-                <input type="text" class="input" placeholder="Postal Code">
-            </div>
-            <div class="dropdown">
-                <div class="default_option">All</div>
-                <ul>
-                    <li>All</li>
-                    <li>Local Sellers</li>
-                    <li>eBay</li>
-                    <li>Alibaba and Amazon</li>
-                </ul>
-            </div>
-            <div class="search_field">
-                <input type="text" class="input" id="query" name="query" placeholder="Search">
-                @*@Html.TextBox("query")*@
-                <button><i class="fas fa-search"></i></button>
-            </div>
-        </div>}
+    <div class="search_box">
+        <div class="input_postalcode">
+            <input type="text" class="input" id="homeAddress" name="homeAddress" placeholder="Postal Code">
+        </div>
+        <div class="dropdown">
+            <div class="default_option">All</div>
+            <ul>
+                <li data-value="0">All</li>
+                <li data-value="1">Local Sellers</li>
+                <li data-value="2">Ebay</li>
+                <li data-value="3">Amazon</li>
+                <li data-value="4">Alibaba</li>
+            </ul>
+            <input type="hidden" id="vendorFilter" name="vendorFilter" value="0">
+
+            @*<select name="vendorFilter">
+            <option value="0">All</option>
+            <option value="1">Local Sellers</option>
+            <option value="2">Ebay</option>
+            <option value="3">Amazon</option>
+            <option value="3">Alibaba</option>
+        </select>*@
+        </div>
+        <div class="search_field">
+            <input type="text" class="input" id="query" name="query" placeholder="Search" required>
+            @*@Html.TextBox("query")*@
+            <button><i class="fas fa-search"></i></button>
+        </div>       
+    </div>
+    <!--<div class="search_field">
+         <input type="text" class="input" id="query" name="query" placeholder="Search">-->
+        @*@Html.TextBox("query")*@
+        <!--<button><i class="fas fa-search"></i></button>
+    </div>-->
+    }
 </div>
-
-
-
 
 
 @section Scripts
@@ -58,13 +68,19 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
         $(document).ready(function () {
+            var vendorFilter = $("#vendorFilter");
+
             $(".default_option").click(function () {
                 $(".dropdown ul").addClass("active");
             });
             $(".dropdown ul li").click(function () {
                 var text = $(this).text();
+                var vendorOption = $(this).data("value");
+
                 $(".default_option").text(text);
                 $(".dropdown ul").removeClass("active");
+
+                vendorFilter.val(vendorOption);
             });
         });
     </script>

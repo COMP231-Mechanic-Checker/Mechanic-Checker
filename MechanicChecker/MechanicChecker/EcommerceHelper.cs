@@ -221,25 +221,31 @@ namespace MechanicChecker
                      */
                     foreach (JObject item in jsonEbayItems)
                     {
-                        LocalProduct localProduct = new LocalProduct()
+
+                        try
                         {
-                            LocalProductId = ebayItemId,
-                            Category = "Item",
-                            Title = item.SelectToken("title[0]").ToString(),
-                            Price = item.SelectToken("sellingStatus[0].convertedCurrentPrice[0].__value__").ToString(),
-                            Description = item.SelectToken("primaryCategory[0].categoryName[0]").ToString(),
-                            ImageUrl = item.SelectToken("galleryURL[0]").ToString(),
-                            sellerId = ebaySeller.SellerId.ToString(),
-                            ProductUrl = item.SelectToken("viewItemURL[0]").ToString(),
-                            IsVisible = true,
-                            IsQuote = false
-                        };
-                        Seller seller = ebaySeller;
-                        SellerAddress sellerAddress = new SellerAddress();
+                            LocalProduct localProduct = new LocalProduct()
+                            {
+                                LocalProductId = ebayItemId,
+                                Category = "Item",
+                                Title = item.SelectToken("title[0]").ToString(),
+                                Price = item.SelectToken("sellingStatus[0].convertedCurrentPrice[0].__value__").ToString(),
+                                Description = item.SelectToken("primaryCategory[0].categoryName[0]").ToString(),
+                                ImageUrl = item.SelectToken("galleryURL[0]").ToString(),
+                                sellerId = ebaySeller.SellerId.ToString(),
+                                ProductUrl = item.SelectToken("viewItemURL[0]").ToString(),
+                                IsVisible = true,
+                                IsQuote = false
+                            };
+                            Seller seller = ebaySeller;
+                            SellerAddress sellerAddress = new SellerAddress();
 
-                        list.Add(new SellerProduct(localProduct, seller, sellerAddress));
+                            list.Add(new SellerProduct(localProduct, seller, sellerAddress));
 
-                        ebayItemId += 1;
+                            ebayItemId += 1;
+                        }
+                        catch (NullReferenceException e)
+                        { continue; }
                     }
                 }
             }

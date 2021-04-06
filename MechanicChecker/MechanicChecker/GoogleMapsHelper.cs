@@ -13,7 +13,7 @@ namespace MechanicChecker
 {
     public class GoogleMapsHelper
     {        
-        public static string CalculateDistance(string source, string destination)
+        public static async Task<string> CalculateDistance(string source, string destination)
         {
             string distance = "";
             string url = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + source + "&destinations=" + destination + "&key=AIzaSyAWd6Xlw3397XCmkMm3IjrfLBD2eXaXhCE";

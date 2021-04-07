@@ -85,10 +85,10 @@ namespace MechanicChecker.Models
         }
 
         
-        public bool activateAPI(string apiService)
+        public string activateAPI(string apiService)
         {
             bool isPassed = false;
-            string command = "select * from APIKey where Service = '" + apiService + "';";
+            string command = "select APIKey, Quota from APIKey where Service = '" + apiService + "';";
 
             //send query to database
             MySqlConnection myConnection = GetConnection();
@@ -96,29 +96,35 @@ namespace MechanicChecker.Models
             myCommand.Connection = myConnection;
             myConnection.Open();
 
-            //read response
+            string returnedAPIKey = null;
+            string returnedQuota = null;
             using (var reader = myCommand.ExecuteReader())
             {
-                //Will only run if the query returns a record
+                
                 if(reader.Read())
                 {
-                    Debug.WriteLine(reader["Service"].ToString());
+                    Debug.WriteLine(reader["APIKey"].ToString());
+                    returnedAPIKey = reader["APIKey"].ToString();
+                    returnedQuota = reader["Quota"].ToString();
+
                     isPassed = true;
                 }
             }
 
-            if (isPassed.Equals(true))
+            if (Convert.ToInt32(returnedQuota) > 0)
             {
-                string stringCmd = "UPDATE APIKey SET Quota = 1 WHERE Service = '" + apiService + "';";
+                string stringCmd = "UPDATE APIKey SET Quota = Quota - 1 WHERE Service = '" + apiService + "';";
 
-                //ExecuteNonQuery Function is what allows us to update, insert and delete from the DB              
+                            
                 MySqlCommand secondCommand = new MySqlCommand(stringCmd);
                 secondCommand.Connection = myConnection;                
                 secondCommand.ExecuteNonQuery();
+                return returnedAPIKey;
+
             }
             myConnection.Close();
 
-            return isPassed;
+            return null;
         }
     }
 }

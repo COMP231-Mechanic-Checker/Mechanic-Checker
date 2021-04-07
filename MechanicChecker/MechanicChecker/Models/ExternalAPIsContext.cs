@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -81,6 +82,49 @@ namespace MechanicChecker.Models
             }
 
             return externalAPI;
+        }
+
+        
+        public bool activateAPI(string apiService)
+        {
+            bool isPassed = false;
+
+            string command = "select * from APIKey where Service = '" + apiService + "';";
+
+            //send query to database
+            MySqlConnection myConnection = GetConnection();
+            MySqlCommand myCommand = new MySqlCommand(command);
+            myCommand.Connection = myConnection;
+            myConnection.Open();
+
+            //read response
+            using (var reader = myCommand.ExecuteReader())
+            {
+                //Will only run if the query returns a record
+                if(reader.Read())
+                {
+                    Debug.WriteLine(reader["Service"].ToString());
+                    isPassed = true;
+                }
+            }
+
+
+
+            if (isPassed.Equals(true))
+            {
+                string stringCmd = "UPDATE APIKey SET IsApproved = 1 WHERE Service = '" + apiService + "';";
+
+                //ExecuteNonQuery Function is what allows us to update, insert and delete from the DB              
+                MySqlCommand secondCommand = new MySqlCommand(stringCmd);
+                secondCommand.Connection = myConnection;                
+                secondCommand.ExecuteNonQuery();
+
+            }
+            myConnection.Close();
+
+
+            return isPassed;
+
         }
     }
 }

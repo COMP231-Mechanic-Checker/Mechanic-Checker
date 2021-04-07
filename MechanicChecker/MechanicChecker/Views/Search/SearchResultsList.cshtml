@@ -60,11 +60,11 @@
                 @using (Html.BeginForm("Filter", "Search", FormMethod.Post))
                 {
                     <div>
-                        <br /><a>Max Price: </a>
+                        <br />Max Price:
                         <br />
                         <input type="number" name="maxPrice" value="@ViewBag.maxPrice" style="width:100px; height:20px" />
 
-                        <br /><a>Min Price: </a><br />
+                        <br />Min Price: <br />
                         <input type="number" name="minPrice" value="@ViewBag.minPrice" style="width:100px; height:20px" /><br />
 
                         <input name="searchquery" value="@ViewBag.SearchQuery" hidden="hidden">
@@ -126,22 +126,21 @@
                 <div class="input_postalcode">
 
                 </div>
-                <div class="col">
+                <div class="col-lg-8">
                     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
                     {
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" name="homeAddress" placeholder="Postal Code" value="@ViewBag.PostalCode"aria-label="location">
-                        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" value="@ViewBag.SearchQuery" aria-label="Search" required>
-                        <select name="vendorFilter">
-                            <option value="0">All</option>
-                            <option value="1">Local Sellers</option>
-                            <option value="2">Ebay</option>
-                            <option value="3">Amazon</option>
-                            <option value="4">Alibaba</option>
-                        </select>
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" name="homeAddress" placeholder="Postal Code" value="@ViewBag.PostalCode" aria-label="location">
+                            <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" value="@ViewBag.SearchQuery" aria-label="Search" required>
+                            <select name="vendorFilter">
+                                <option value="0">All</option>
+                                <option value="1">Local Sellers</option>
+                                <option value="2">Ebay</option>
+                                <option value="3">Amazon</option>
+                                <option value="4">Alibaba</option>
+                            </select>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
                     }
                 </div>
 
@@ -167,14 +166,13 @@
 
         <br />
         <br />
-        <table height="600" class="table table-sm table-striped table-bordered " style="background-color: #FFFFFF;">
+        <table height="600" class="table table-sm table-striped table-bordered scrollable-menu" style="background-color: #FFFFFF;">
             <tbody>
                 <!--shows each car part/service from the product list model (recived from the controller via model) in the table below-->
                 @*TODO: update the model*@
                 @foreach (SellerProduct product in Model)//add product class
                 {
                     <tr>
-
                         <td>
                             <input type="checkbox" id="@product.localProduct.LocalProductId" name="@product.localProduct.LocalProductId" value="@product.localProduct.LocalProductId" style="width:20px; height:20px">
                             <div class="card flex-row flex-wrap ">
@@ -209,11 +207,11 @@
                                             <p class="card-text">
                                                 <small class="text-muted">
                                                     @{
-                                                        if (product.localProduct.Description.Length > 25)
+                                                        if (product.localProduct.Description.Length > 30)
                                                         {
-                                                            <text>@product.localProduct.Description.Substring(0, 25).ToString() ...</text>
+                                                            <text>@product.localProduct.Description.Substring(0, 30).ToString() ...</text>
                                                         }
-                                                        else if (product.localProduct.Description.Length < 25)
+                                                        else if (product.localProduct.Description.Length < 30)
                                                         {
                                                             <text>@product.localProduct.Description.ToString()</text>
                                                         }

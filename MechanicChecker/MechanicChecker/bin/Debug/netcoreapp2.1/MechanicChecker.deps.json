@@ -138,8 +138,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.7.0",
+            "fileVersion": "2.1.7.18340"
           }
         },
         "compile": {
@@ -153,8 +153,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Connections.Abstractions.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18207"
           }
         },
         "compile": {
@@ -178,8 +178,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -193,8 +193,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Abstractions.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -207,8 +207,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.ApiExplorer.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -234,8 +234,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Core.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -249,8 +249,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Cors.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -265,8 +265,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.DataAnnotations.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -280,8 +280,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Formatters.Json.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -297,8 +297,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Localization.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -317,8 +317,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Razor.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -331,8 +331,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.RazorPages.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -350,8 +350,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.TagHelpers.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -371,8 +371,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.ViewFeatures.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
           }
         },
         "compile": {
@@ -398,8 +398,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Server.IISIntegration.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.7.0",
+            "fileVersion": "2.1.7.18340"
           }
         },
         "compile": {
@@ -415,8 +415,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Server.Kestrel.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18207"
           }
         },
         "compile": {
@@ -440,8 +440,8 @@
         },
         "runtime": {
           "lib/netcoreapp2.1/Microsoft.AspNetCore.Server.Kestrel.Core.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18207"
           }
         },
         "compile": {
@@ -455,8 +455,8 @@
         },
         "runtime": {
           "lib/netcoreapp2.1/Microsoft.AspNetCore.Server.Kestrel.Https.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18207"
           }
         },
         "compile": {
@@ -469,8 +469,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18207"
           }
         },
         "compile": {
@@ -485,8 +485,8 @@
         },
         "runtime": {
           "lib/netcoreapp2.1/Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18207"
           }
         },
         "compile": {
@@ -497,6 +497,15 @@
         "dependencies": {
           "Microsoft.CodeAnalysis.CSharp": "2.8.0",
           "Microsoft.CodeAnalysis.Workspaces.Common": "2.8.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.CodeAnalysis.CSharp.Workspaces.dll": {
+            "assemblyVersion": "2.8.0.0",
+            "fileVersion": "2.8.0.62830"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.CodeAnalysis.CSharp.Workspaces.dll": {}
         }
       },
       "Microsoft.CodeAnalysis.Workspaces.Common/2.8.0": {
@@ -508,6 +517,15 @@
           "System.ObjectModel": "4.3.0",
           "System.Text.RegularExpressions": "4.3.0",
           "System.Threading.Tasks.Parallel": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.CodeAnalysis.Workspaces.dll": {
+            "assemblyVersion": "2.8.0.0",
+            "fileVersion": "2.8.0.62830"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.CodeAnalysis.Workspaces.dll": {}
         }
       },
       "Microsoft.DotNet.PlatformAbstractions/2.1.0": {
@@ -546,8 +564,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.14.0",
+            "fileVersion": "2.1.14.19284"
           }
         },
         "compile": {
@@ -557,8 +575,8 @@
       "Microsoft.EntityFrameworkCore.Abstractions/2.1.14": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.14.0",
+            "fileVersion": "2.1.14.19284"
           }
         },
         "compile": {
@@ -573,8 +591,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.14.0",
+            "fileVersion": "2.1.14.19284"
           }
         },
         "compile": {
@@ -587,8 +605,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Relational.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.14.0",
+            "fileVersion": "2.1.14.19284"
           }
         },
         "compile": {
@@ -602,8 +620,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.dll": {
-            "assemblyVersion": "2.1.1.0",
-            "fileVersion": "2.1.1.18157"
+            "assemblyVersion": "2.1.14.0",
+            "fileVersion": "2.1.14.19284"
           }
         },
         "compile": {
@@ -640,17 +658,44 @@
           "Microsoft.AspNetCore.Http.Abstractions": "2.1.1",
           "Microsoft.AspNetCore.Http.Extensions": "2.1.1",
           "Microsoft.Extensions.FileProviders.Physical": "2.1.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.BrowserLink.dll": {
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.18157"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.BrowserLink.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration/2.1.10": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "2.1.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore": "2.1.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.dll": {
+            "assemblyVersion": "2.1.10.0",
+            "fileVersion": "2.1.10.19267"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.Contracts/2.1.10": {
         "dependencies": {
           "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll": {
+            "assemblyVersion": "2.1.10.0",
+            "fileVersion": "2.1.10.19267"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.Core/2.1.10": {
@@ -658,16 +703,43 @@
           "Microsoft.Extensions.DependencyInjection": "2.1.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Templating": "2.1.10",
           "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll": {
+            "assemblyVersion": "2.1.10.0",
+            "fileVersion": "2.1.10.19267"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.Design/2.1.10": {
         "dependencies": {
           "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": "2.1.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/dotnet-aspnet-codegenerator-design.dll": {
+            "assemblyVersion": "2.1.10.0",
+            "fileVersion": "2.1.10.19267"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/dotnet-aspnet-codegenerator-design.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore/2.1.10": {
         "dependencies": {
           "Microsoft.VisualStudio.Web.CodeGeneration.Core": "2.1.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll": {
+            "assemblyVersion": "2.1.10.0",
+            "fileVersion": "2.1.10.19267"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.Templating/2.1.10": {
@@ -675,6 +747,15 @@
           "Microsoft.AspNetCore.Razor.Language": "2.1.1",
           "Microsoft.CodeAnalysis.CSharp": "2.8.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Utils": "2.1.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll": {
+            "assemblyVersion": "2.1.10.0",
+            "fileVersion": "2.1.10.19267"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.Utils/2.1.10": {
@@ -683,11 +764,29 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Contracts": "2.1.10",
           "Newtonsoft.Json": "11.0.2",
           "NuGet.Frameworks": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll": {
+            "assemblyVersion": "2.1.10.0",
+            "fileVersion": "2.1.10.19267"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGenerators.Mvc/2.1.10": {
         "dependencies": {
           "Microsoft.VisualStudio.Web.CodeGeneration": "2.1.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll": {
+            "assemblyVersion": "2.1.10.0",
+            "fileVersion": "2.1.10.19267"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll": {}
         }
       },
       "MySql.Data/8.0.23": {
@@ -726,6 +825,15 @@
       "NuGet.Frameworks/4.7.0": {
         "dependencies": {
           "NETStandard.Library": "2.0.3"
+        },
+        "runtime": {
+          "lib/netstandard1.6/NuGet.Frameworks.dll": {
+            "assemblyVersion": "4.7.0.5",
+            "fileVersion": "4.7.0.5148"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.6/NuGet.Frameworks.dll": {}
         }
       },
       "Remotion.Linq/2.2.0": {
@@ -792,6 +900,15 @@
         "dependencies": {
           "System.Reflection": "4.3.0",
           "System.Runtime": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.0/System.Composition.AttributedModel.dll": {
+            "assemblyVersion": "1.0.31.0",
+            "fileVersion": "4.6.24705.1"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.0/System.Composition.AttributedModel.dll": {}
         }
       },
       "System.Composition.Convention/1.0.31": {
@@ -808,6 +925,15 @@
           "System.Resources.ResourceManager": "4.3.0",
           "System.Runtime": "4.3.0",
           "System.Threading": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.0/System.Composition.Convention.dll": {
+            "assemblyVersion": "1.0.31.0",
+            "fileVersion": "4.6.24705.1"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.0/System.Composition.Convention.dll": {}
         }
       },
       "System.Composition.Hosting/1.0.31": {
@@ -825,6 +951,15 @@
           "System.Resources.ResourceManager": "4.3.0",
           "System.Runtime": "4.3.0",
           "System.Threading": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.0/System.Composition.Hosting.dll": {
+            "assemblyVersion": "1.0.31.0",
+            "fileVersion": "4.6.24705.1"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.0/System.Composition.Hosting.dll": {}
         }
       },
       "System.Composition.Runtime/1.0.31": {
@@ -837,6 +972,15 @@
           "System.Reflection": "4.3.0",
           "System.Resources.ResourceManager": "4.3.0",
           "System.Runtime": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.0/System.Composition.Runtime.dll": {
+            "assemblyVersion": "1.0.31.0",
+            "fileVersion": "4.6.24705.1"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.0/System.Composition.Runtime.dll": {}
         }
       },
       "System.Composition.TypedParts/1.0.31": {
@@ -855,6 +999,15 @@
           "System.Resources.ResourceManager": "4.3.0",
           "System.Runtime": "4.3.0",
           "System.Runtime.Extensions": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.0/System.Composition.TypedParts.dll": {
+            "assemblyVersion": "1.0.31.0",
+            "fileVersion": "4.6.24705.1"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.0/System.Composition.TypedParts.dll": {}
         }
       },
       "System.Configuration.ConfigurationManager/4.4.1": {
@@ -871,7 +1024,17 @@
           "ref/netstandard2.0/System.Configuration.ConfigurationManager.dll": {}
         }
       },
-      "System.Diagnostics.DiagnosticSource/4.5.1": {},
+      "System.Diagnostics.DiagnosticSource/4.5.1": {
+        "runtime": {
+          "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {
+            "assemblyVersion": "4.0.3.1",
+            "fileVersion": "4.6.26919.2"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {}
+        }
+      },
       "System.Interactive.Async/3.1.1": {
         "dependencies": {
           "NETStandard.Library": "2.0.3"
@@ -889,12 +1052,12 @@
       "System.IO.Pipelines/4.5.3": {
         "runtime": {
           "lib/netcoreapp2.1/System.IO.Pipelines.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.6.26515.6"
+            "assemblyVersion": "4.0.0.1",
+            "fileVersion": "4.6.27129.4"
           }
         },
         "compile": {
-          "ref/netstandard1.3/System.IO.Pipelines.dll": {}
+          "lib/netcoreapp2.1/System.IO.Pipelines.dll": {}
         }
       },
       "System.Linq.Parallel/4.3.0": {
@@ -928,8 +1091,8 @@
       "System.Runtime.CompilerServices.Unsafe/4.5.2": {
         "runtime": {
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
-            "assemblyVersion": "4.0.4.0",
-            "fileVersion": "0.0.0.0"
+            "assemblyVersion": "4.0.4.1",
+            "fileVersion": "4.6.26919.2"
           }
         },
         "compile": {
@@ -2564,7 +2727,6 @@
           "ref/netcoreapp2.1/System.Data.dll": {},
           "ref/netcoreapp2.1/System.Diagnostics.Contracts.dll": {},
           "ref/netcoreapp2.1/System.Diagnostics.Debug.dll": {},
-          "ref/netcoreapp2.1/System.Diagnostics.DiagnosticSource.dll": {},
           "ref/netcoreapp2.1/System.Diagnostics.FileVersionInfo.dll": {},
           "ref/netcoreapp2.1/System.Diagnostics.Process.dll": {},
           "ref/netcoreapp2.1/System.Diagnostics.StackTrace.dll": {},

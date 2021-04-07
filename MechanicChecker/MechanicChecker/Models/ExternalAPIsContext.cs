@@ -109,7 +109,7 @@ namespace MechanicChecker.Models
 
             if (isPassed.Equals(true))
             {
-                string stringCmd = "UPDATE APIKey SET IsApproved = 1 WHERE Service = '" + apiService + "';";
+                string stringCmd = "UPDATE APIKey SET Quota = 1 WHERE Service = '" + apiService + "';";
 
                 //ExecuteNonQuery Function is what allows us to update, insert and delete from the DB              
                 MySqlCommand secondCommand = new MySqlCommand(stringCmd);

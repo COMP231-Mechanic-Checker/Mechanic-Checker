@@ -88,7 +88,6 @@ namespace MechanicChecker.Models
         public bool activateAPI(string apiService)
         {
             bool isPassed = false;
-
             string command = "select * from APIKey where Service = '" + apiService + "';";
 
             //send query to database
@@ -108,8 +107,6 @@ namespace MechanicChecker.Models
                 }
             }
 
-
-
             if (isPassed.Equals(true))
             {
                 string stringCmd = "UPDATE APIKey SET IsApproved = 1 WHERE Service = '" + apiService + "';";
@@ -118,13 +115,10 @@ namespace MechanicChecker.Models
                 MySqlCommand secondCommand = new MySqlCommand(stringCmd);
                 secondCommand.Connection = myConnection;                
                 secondCommand.ExecuteNonQuery();
-
             }
             myConnection.Close();
 
-
             return isPassed;
-
         }
     }
 }

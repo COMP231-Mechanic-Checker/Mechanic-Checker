@@ -7,6 +7,7 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="~/css/style.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -29,8 +30,11 @@
         <div style="background-color: #FFFFFF;">
             <div class="text-center my-5">
                 <img src="~/images/MechanicCheckerLogoSmaller.png" class="img-fluid ml-5 mr-5" alt="Mechanic Checker Logo.">
+
+
             </div>
         </div>
+
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -47,13 +51,22 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="LocalSeller" asp-action="Index">SELLER LOGIN</a></li>
                 </ul>
+                <div class="navbarbtn">
+                    <a class="btn btn-primary btn-lg" asp-action="SignUp" asp-controller="Account">Sign Up</a>
+                    <a class="btn btn-primary btn-lg" asp-action="SignIn" asp-controller="Account">Sign in</a>
+                    @*<button class="btn btn-primary btn-lg" asp-action="SignUp" asp-controller="Account">Sign Up</button>
+                        <button class="btn btn-primary btn-lg" asp-action="SignIn" asp-controller="Account">Sign in</button>*@
+                </div>
             </div>
         </div>
+
+
     </nav>
 
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
+<<<<<<< HEAD
         <br/>
         <br/>
         <br/>
@@ -61,19 +74,38 @@
         <br/>
         <br/>
         <br/>
+=======
+        </br>the
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+>>>>>>> develop
 
         @RenderBody()
 
     </div>
-    <footer style="
+    <footer class="footer">
+       
+        <style>
+            .footer {
+                display: block;
+                position: fixed;
+                left: 0;
+                bottom: 0;
                 width: 100%;
-                height: 20px; /* Height of the footer */
-                background: #008000;
+                background-color: #008000;
                 color: white;
+                height: 20px;
                 text-align: center;
-        ">
+            }
+        </style> 
+  
         <p>&copy; 2021 - MechanicChecker</p>
     </footer>
+
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

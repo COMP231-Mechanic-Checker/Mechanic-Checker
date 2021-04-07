@@ -21,7 +21,11 @@ namespace MechanicChecker
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        /*
+         * Allows variable to be accessed from any class.
+         * Needed to get the secret keys from appsettings.json based on class context
+         */
+        internal static IConfiguration Configuration { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)

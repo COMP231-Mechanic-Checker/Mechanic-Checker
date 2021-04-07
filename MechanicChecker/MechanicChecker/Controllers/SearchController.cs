@@ -142,5 +142,75 @@ namespace MechanicChecker.Controllers
             ViewBag.SearchQuery = query;
             return View("SearchResultsList", listOfQueriedProducts);
         }
+
+
+
+        public ViewResult SearchViewDetails(int id)
+        {
+            SellerProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+
+            List<SellerProduct> listOfQueriedProducts = new List<SellerProduct>(); ;
+            List<SellerProduct> queryFilteredResults = new List<SellerProduct>();
+            List<SellerProduct> resultsWithAddress = new List<SellerProduct>();
+            List<SellerProduct> ecommerceProducts = new List<SellerProduct>();
+
+            var allSellersProducts = context.GetAllSellerProducts();
+
+            //if (!string.IsNullOrEmpty(homeAddress) || !string.IsNullOrEmpty(query))
+            //{
+                // get local seller products
+                //if (query != null && vendorFilter != null && (Convert.ToInt32(vendorFilter) == 0 || Convert.ToInt32(vendorFilter) == 1))
+                //{
+
+                   var SelectedLocalProduct = allSellersProducts.First(
+                                       product =>
+                                       product.localProduct.LocalProductId ==id).ToList();
+
+
+
+
+            //}
+
+            // get major retailer ecommerce store products
+            //if (query != null && vendorFilter != null && Convert.ToInt32(vendorFilter) >= 0)
+            //    {
+            //        ecommerceProducts = await EcommerceHelper.GetProductsFromEcommerceSite(vendorFilter, query);
+            //    }
+
+            //    //check if home address is there
+            //    if (homeAddress != null && Regex.Match(homeAddress, @"^([ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ])\ ?([0-9][ABCEGHJKLMNPRSTVWXYZ][0-9])$", RegexOptions.IgnoreCase).Success)
+            //    {
+            //        //if query is present, then take query filtered result, else take all products
+            //        List<SellerProduct> items = new List<SellerProduct>();
+            //        items = query != null ? queryFilteredResults : allSellersProducts.ToList();
+            //        //sorting first by distance then by address
+            //        items = items.OrderBy(x => x.distance).ThenBy(i => i.sellerAddress.Address).ToList();
+            //        //loop all the products
+            //        Parallel.ForEach<SellerProduct>(items, (item) =>
+            //        {
+            //            //for each product, call google api to calculate distance from the user entered location
+            //            var distance = GoogleMapsHelper.CalculateDistance(homeAddress, item.sellerAddress.Address);
+            //            //set returned value to the property
+            //            item.distance = distance.Result;
+
+            //            resultsWithAddress.Add(item);
+            //        });
+
+            //        listOfQueriedProducts = resultsWithAddress;
+            //    }
+            //    else
+            //    {
+            //        listOfQueriedProducts = queryFilteredResults;
+            //    }
+
+            //    // combine the local sellers and major retailer ecommerce store products results
+            //    listOfQueriedProducts.AddRange(ecommerceProducts);
+            //}
+
+            //ViewBag.PostalCode = homeAddress;
+            //ViewBag.SearchQuery = query;
+            return View("SearchViewDetails"/*, listOfQueriedProducts*/);
+
+        }
     }
 }

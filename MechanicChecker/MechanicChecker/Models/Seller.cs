@@ -27,5 +27,6 @@ namespace MechanicChecker.Models
         public string Application { get; set; }
         public DateTime ApplicationDate { get; set; }
         public DateTime ApprovalDate { get; set; }
+    
     }
 }

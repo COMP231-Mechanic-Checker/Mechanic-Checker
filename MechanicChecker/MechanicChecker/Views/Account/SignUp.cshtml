@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+<link href="~/css/style.css" rel="stylesheet" />
+<br />
+<br />
+<br />
+
+<body>
+    <div class="signupform">
+        <div >
+            <img src="~/images/MechanicCheckerLogoSmaller.png" alt="Mechanic Checker App Logo" height="55" width="130" class="center-block">
+        </div>
+        <h2>Welcome</h2>
+        <h3>Seller's Sign Up here</h3> 
+        <form controller="Account" action="SignUp.cshtml" method="post">
+
+            <div class="form-group">
+                <label for="UserName">Username</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text" name="UserName" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="FirstName">First Name</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text"  name="FirstName" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="LastName">Last Name</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text"  name="LastName" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text"  name="Email" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <div><span class="text-danger"></span></div>
+                <input  type="text"  name="Password" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="ConfirmPassword">Confirm Password</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="ConfirmPassword" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="AccountType">Choose your Account Type</label>
+                <div><span class="text-danger"></span></div>
+                <select name="AccountType" id="AccountType" class="form-control" required>
+                    <option value="SmallMechanicStore">Small Mechanic Store</option>
+                    <option value="IndependentSeller">Independent Seller</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="CompanyName">Company Name</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="CompanyName" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="Address">Address</label>
+                <div><span ></span></div>
+                <input type="text"  name="Address" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="City">City</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="City" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="Province">Province</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="Province" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="PostalCode">Postal Code</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="PostalCode" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="BusinessPhone">Business Phone</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="BusinessPhone" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="CompanyLogo">Company Logo</label>
+                <div><span  class="text-danger"></span></div>
+                <input type="file" id="myFile" name="CompanyLogoUrl" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="WebsiteUrl">Web site (Optional)</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text"  name="WebsiteUrl" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="Application">Application (Optional)</label>
+                <div><span class="text-danger"></span></div>
+                <textarea id="Application" name="Application" rows="4" cols="50" class="form-control">
+                Write here the reasons for sign up with Mechanic Checker App</textarea>
+            </div>
+            <div class="form-group">
+                <button type-"sumbit">Cancel</button>
+                <button type-"submit">Sign Up</button>
+            </div>
+        </form>
+        <h5>You agree to Mechanic Checker App's terms and condiitons. </h5>
+    </div>
+</body>

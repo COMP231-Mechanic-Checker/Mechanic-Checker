@@ -11,8 +11,8 @@ namespace MechanicChecker.Controllers
     public class LocalSellerController : Controller
     {
         //global variables for the list of all the products belonging to the seller, and context
-        private static List<SellerProduct> currentSellerProducts = new List<SellerProduct>();
-        SellerProductContext context;
+        private List<SellerProduct> currentSellerProducts = new List<SellerProduct>();
+        private SellerProductContext context;
 
         // GET: LocalSellerController
         public ActionResult Index()
@@ -31,6 +31,9 @@ namespace MechanicChecker.Controllers
         {
             try
             {
+
+                context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+                currentSellerProducts = (List<SellerProduct>)context.GetAllSellerProducts();
                 IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
                 if (keyword != null)
                 {
@@ -38,7 +41,6 @@ namespace MechanicChecker.Controllers
                        product =>
                        product.localProduct.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) || product.localProduct.Description.Contains(keyword, StringComparison.OrdinalIgnoreCase)
                        );
-                    
                 }
                 else
                 {

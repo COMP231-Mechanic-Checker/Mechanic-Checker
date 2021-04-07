@@ -104,8 +104,8 @@ C:\Users\shani\Documents\GitHub_Projects\Mechanic-Checker\MechanicChecker\Mechan
 C:\Users\shani\Documents\GitHub_Projects\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.genruntimeconfig.cache
 C:\Users\shani\Documents\GitHub_Projects\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.csproj.CopyComplete
 C:\Users\shani\Documents\GitHub_Projects\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_SellerLayout.cshtml.g.cs
-C:\Users\shani\Documents\GitHub_Projects\Mechanic-Checker\MechanicChecker\MechanicChecker\bin\Debug\netcoreapp2.1\appsettings.json
 C:\Users\shani\Documents\GitHub_Projects\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\MechanicChecker.csproj.CoreCompileInputs.cache
 C:\Users\shani\Documents\GitHub_Projects\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\LocalSeller\SellerLandingPage.cshtml.g.cs
 C:\Users\shani\Desktop\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\LocalSeller\SellerLandingPage.cshtml.g.cs
 C:\Users\shani\Desktop\Mechanic-Checker\MechanicChecker\MechanicChecker\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_SellerLayout.cshtml.g.cs
+C:\Users\shani\Documents\GitHub_Projects\Mechanic-Checker\MechanicChecker\MechanicChecker\bin\Debug\netcoreapp2.1\appsettings.json

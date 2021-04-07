@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Seller Landing Page";
     Layout = "~/Views/Shared/_SellerLayout.cshtml";
+    ViewData["SellerName"] = Model.Select(n => n.seller.FirstName + " " + n.seller.LastName).FirstOrDefault();
 }
 
 <style>
@@ -24,67 +25,68 @@
     <p>
         <a asp-action="Create" class="btn btn-group-lg btn-success ">Create New</a>
     </p>
+    @if(Model.Count() > 0){ 
+        <table class="table img-rounded" style="background-color:rgba(255,255,255,0.95); ">
+            <thead>
+                <tr>
+                    <th>
+                        Image
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.localProduct.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.localProduct.Category)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.localProduct.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.localProduct.Price)
+                    </th>
+                    <th>
 
-    <table class="table img-rounded" style="background-color:rgba(255,255,255,0.95); ">
-        <thead>
-            <tr>
-                <th>
-                    Image
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.localProduct.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.localProduct.Category)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.localProduct.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.localProduct.Price)
-                </th>
-                <th>
-
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                if (Model is Object)
-                {
-
-                
-                    @foreach (var item in Model)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model is Object)
                     {
-                        <tr>
-                            <td>
-                                <img class="img-fluid img-thumbnail" width="100" src="@item.localProduct.ImageUrl" alt="@item.localProduct.Title">
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.localProduct.Title)
 
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.localProduct.Category)
-                            </td>
-                            <td>
-                                @{
-                                    var desc = item.localProduct.Description.Substring(0, Math.Min(20, item.localProduct.Description.Length)) + "...";
-                                }
-                                @Html.DisplayFor(modelItem => desc)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.localProduct.Price)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " }) |
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-warning " }) |
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger " })
-                            </td>
-                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img class="img-fluid img-thumbnail" width="100" src="@item.localProduct.ImageUrl" alt="@item.localProduct.Title">
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.localProduct.Title)
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.localProduct.Category)
+                                </td>
+                                <td>
+                                    @{
+                                        var desc = item.localProduct.Description.Substring(0, Math.Min(20, item.localProduct.Description.Length)) + "...";
+                                    }
+                                    @Html.DisplayFor(modelItem => desc)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.localProduct.Price)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " }) |
+                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-warning " }) |
+                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger " })
+                                </td>
+                            </tr>
+                        }
                     }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    }
 </div>

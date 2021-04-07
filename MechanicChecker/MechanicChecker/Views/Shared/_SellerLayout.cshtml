@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="col-sm-8 justify-content-center">
-                    <form asp-action="SearchProducts" class="navbar-form form-horizontal" method="post" style="" >
+                    <form asp-controller="LocalSeller"  asp-action="SearchProducts" class="navbar-form form-horizontal" method="post" style="" >
                         <div class="form-group">
                             <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Search">
                         </div>
@@ -110,8 +110,8 @@
                             Welcome @ViewData["SellerName"]
                         </button>
                         <div class="dropdown-content dropdown-menu-right">
-                            <a  asp-controller="Home" asp-action="Index">View Account</a>
-                            <a  asp-controller="Home" asp-action="Index">View Products</a>
+                            <a  asp-controller="LocalSeller"  asp-action="Index">View Account</a>
+                            <a  asp-controller="LocalSeller"  asp-action="Index">View Products</a>
                             <a  asp-controller="Home" asp-action="Index">Logout</a>
                         </div>
                     </div>

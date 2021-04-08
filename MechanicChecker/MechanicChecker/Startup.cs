@@ -47,6 +47,7 @@ namespace MechanicChecker
             services.Add(new ServiceDescriptor(typeof(SellerProductContext), new SellerProductContext(Configuration.GetConnectionString("DefaultConnectionString"))));
             services.Add(new ServiceDescriptor(typeof(SellerAddressContext), new SellerAddressContext(Configuration.GetConnectionString("DefaultConnectionString"))));
             services.Add(new ServiceDescriptor(typeof(ExternalAPIsContext), new ExternalAPIsContext(Configuration.GetConnectionString("DefaultConnectionString"))));
+            services.Add(new ServiceDescriptor(typeof(SellerContext), new SellerContext(Configuration.GetConnectionString("DefaultConnectionString"))));
 
             //services.AddTransient<ILocalProductRepository, EFLocalProductRepository>();
         }

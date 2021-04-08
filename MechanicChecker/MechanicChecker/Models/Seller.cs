@@ -27,6 +27,8 @@ namespace MechanicChecker.Models
         public string Application { get; set; }
         public DateTime ApplicationDate { get; set; }
         public DateTime ApprovalDate { get; set; }
-    
+        public string ActivationCode { get; set; }
+        public string ResetPasswordCode { get; set; }
+
     }
 }

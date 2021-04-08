@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 
-namespace MechanicChecker
+namespace MechanicChecker.AWS
 {
     public class AmazonS3Uploader
     {

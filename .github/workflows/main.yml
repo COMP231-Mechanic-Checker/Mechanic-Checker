@@ -35,7 +35,8 @@ jobs:
             "DefaultConnectionString": ${{ secrets.NETCORE_APPSETTINGS_DEFAULTCONNECTIONSTRING }}
           },
           "APIKeys": {
-            "Ebay": ${{ secrets.NETCORE_APPSETTINGS_APIKEYS_EBAY }}
+            "Ebay": ${{ secrets.NETCORE_APPSETTINGS_APIKEYS_EBAY }},
+            "SendGrid": ${{ secrets.NETCORE_APPSETTINGS_APIKEYS_SENDGRID }}
           }
         }
         EOF
@@ -49,6 +50,28 @@ jobs:
       env:
         FILE_NAME: "appsettings.json"
         FILE_DATA: ${{ env.APPSETTINGS_JSON_STR }}
+
+    - name: Create AWS web.config string
+      run: |
+        AWSWEBCONFIG_JSON_STR=$(cat << EOF
+        <?xml version="1.0" encoding="utf-8"?>
+        <configuration>
+          <appSettings>
+            <add key="AWSAccessKey" value="${{ secrets.AWS_ACCESS_KEY_ID }}"/>
+            <add key="AWSSecretKey" value="${{ secrets.AWS_SECRET_ACCESS_KEY }}"/>
+          </appSettings>
+        </configuration>
+        EOF
+        )
+        echo "AWSWEBCONFIG_JSON_STR<<EOF" >> $GITHUB_ENV
+        echo "$AWSWEBCONFIG_JSON_STR" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
+
+    - name: Create AWS web.config file for Production
+      uses: "finnp/create-file-action@master"
+      env:
+        FILE_NAME: "web.config"
+        FILE_DATA: ${{ env.AWSWEBCONFIG_JSON_STR }}
 
     - name: Generate .NET deployment package
       run: | 

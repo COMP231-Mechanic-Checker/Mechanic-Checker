@@ -13,8 +13,6 @@ namespace MechanicChecker.Controllers
     {
         public IActionResult Index()
         {
-            SellerAddressContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerAddressContext)) as SellerAddressContext;
-
             return View();
         }
 

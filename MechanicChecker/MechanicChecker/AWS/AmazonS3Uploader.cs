@@ -1,10 +1,12 @@
-﻿using Amazon.S3;
+using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+
 
 namespace MechanicChecker
 {
@@ -12,10 +14,8 @@ namespace MechanicChecker
     {
         public static string folder = "seller";
         private string bucketName = "mechanic.checker";
-        // private string keyName = string.Format("{0}/{1}", folder, filename);
-        //private string filePath = "C:\\Users\\EMMAL\\Documents\\Laptop Stuff\\Pictures\\b.jpg";
 
-        public void UploadFile(string filepath, string filename)
+        public void UploadFile(string filename, IFormFile readStream)
         {
             string keyName = string.Format("{0}/{1}", folder, filename);
             var client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1);
@@ -23,20 +23,13 @@ namespace MechanicChecker
 
             try
             {
-                TransferUtilityUploadRequest transferUtilityUploadRequest = new TransferUtilityUploadRequest
+                var transferUtilityUploadRequest = new TransferUtilityUploadRequest
                 {
                     BucketName = bucketName,
                     Key = keyName,
-                    FilePath = filepath
+                    InputStream = readStream.OpenReadStream()
                 };
                 transferUtility.Upload(transferUtilityUploadRequest);
-                GetPreSignedUrlRequest request = new GetPreSignedUrlRequest();
-                request.BucketName = bucketName;
-                request.Key = keyName;
-                request.Expires = DateTime.Now.AddHours(11);
-                request.Protocol = Protocol.HTTP;
-                string url = client.GetPreSignedURL(request);
-                Console.WriteLine(url);
             }
             catch (AmazonS3Exception amazonS3Exception)
             {

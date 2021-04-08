@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "SearchViewDetails";
+    Layout = "_Layout";
+}
+
+
+<link href="~/css/StyleSeachViewDetails.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+
+
+@*<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:FormView ID="productDetail" runat="server" ItemType="WingtipToys.Models.Product" SelectMethod="GetProduct" RenderOuterTable="false">*@
+<div class="wrapper w3-card w3-margin">
+    
+       
+
+            @*Update here*@
+            @*<h1><%#:Item.ProductName %></h1>*@
+            <div class="w3-content">
+                <br />
+                <h1>Steering</h1>
+
+                <br />
+
+                <table>
+                    <tr>
+                        <td>
+                            @*Update the imagepath and Product Name placement*@
+                            @*<img src="~/images/<%#:Item.ImagePath %>" style="border:solid; height:300px" alt="<%#:Item.ProductName %>" />*@
+                            <img src="~/images/steering.jpg" alt="Auto Parts Logo" height="170" width="170" class="center-block">
+                            <br />
+                        </td>
+                       
+                        <td>&nbsp;</td>
+                        <td style="vertical-align: top; text-align:left;">
+                            @*Update here*@
+                            @*<b>Description:</b><br /><%#:Item.Description %>*@
+                            <span>
+                                <b>Description:</b><br /> Super Rare Genuine TRD Emblem 3 Spokes MOMO Steering Wheel oem used KBA70068<Description>
+                            </span>
+
+                            <br />
+                            @*Update here*@
+                            <span><b>Category:</b> Auto Parts </span>
+
+                            <br />
+                            @*Update here*@
+                            @*<span><b>Price:</b>&nbsp;<%#: String.Format("{0:c}", Item.UnitPrice) %></span>*@
+                            <span><b>Price:</b> $180.00</span>
+
+                            @*Update here*@
+                            @*<span><b>Price:</b>&nbsp;<%#: String.Format("{0:c}", Item.UnitPrice) %></span>*@
+                            <span><br /><b>Distance:</b> 1 km</span>
+
+                            <br />
+
+                            @*Update the imagepath of API source/ Company logo*@
+                            @*<img src="~/images/<%#:Item.ImagePath %>" style="border:solid; height:300px" alt="<%#:Item.ProductName %>" />*@
+                            <img src="~/images/eBay.png" alt="eBay Logo" style="float: right;" height="50" width="70" class="rg">
+                            <br />
+                           
+                            @*Update here*@
+                            <span><button class="btn btn-primary" >Visit Site</button></span>
+
+
+                            <br />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        
+    </div>
+@*</div>*@
+
+@*</asp:FormView>
+    </asp:Content>*@
+
+
+
+
+
+
+
+
+@*<div class="signinform">
+
+        <h2>Welcome</h2>
+        <h3>Seller's Sign In here</h3>
+        <div class="text-danger"></div>
+        <form action="SignIn.cshtml" controller="Account" method="post">
+            <input type="hidden" />
+            <div class="form-group">
+                <label for="Username">Username</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text" name="UserName" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <div><span class="text-danger"></span></div>
+                <input type="text" name="Password" class="form-control" required />
+            </div>
+            <button class="btn btn-primary" type="submit">Sign In</button>
+        </form>
+        <h5>Reser your password? </h5>
+    </div>*@
+
+<br />
+<br />
+<br />>

@@ -11,7 +11,7 @@
 <br />
 
 <div class="signinform">
-    <h3>@ViewData["SignIn"]</h3>
+    <h3>@TempData["SignIn"]</h3>
     <div>
         <img src="~/images/MechanicCheckerLogoSmaller.png" alt="Mechanic Checker App Logo" height="55" width="130" class="center-block">
     </div>
@@ -32,9 +32,9 @@
         </div>
         <button class="btn btn-primary" asp-controller="LocalSeller" asp-action="Index" type="submit">Sign In</button>
     </form>
-    <h5>Reser your password? </h5>
+    <h5><a asp-controller="Account" asp-action="ResetPassword" method="post">Reset your password? </a></h5>
 </div>
 
 <br />
 <br />
-<br />>
+<br />

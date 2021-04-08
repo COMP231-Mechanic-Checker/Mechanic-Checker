@@ -20,5 +20,16 @@ namespace MechanicChecker.Helper
             Response response = await client.SendEmailAsync(msg);
             return response;
         }
+
+        public static async Task<Response> SendResetPasswordEmail(string resetPasswordLink, string toName, string toEmail)
+        {
+            var client = new SendGridClient(sendgridAPIKey);
+            var from = new EmailAddress("mechanicchecker@outlook.com", "Mechanic Checker");
+            var to = new EmailAddress(toEmail, toName);
+
+            var msg = MailHelper.CreateSingleTemplateEmail(from, to, "d-8a2852521a1c47578f046c1ef0ca0cf7", new { name = toName, link = resetPasswordLink });
+            var response = await client.SendEmailAsync(msg);
+            return response;
+        }
     }
 }

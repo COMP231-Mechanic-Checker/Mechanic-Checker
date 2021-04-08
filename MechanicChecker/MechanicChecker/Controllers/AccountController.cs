@@ -14,6 +14,7 @@ namespace MechanicChecker.Controllers
 {
     public class AccountController : Controller
     {
+        [HttpGet]
         public IActionResult SignIn()
         {
             return View("SignIn");
@@ -29,6 +30,7 @@ namespace MechanicChecker.Controllers
         [HttpPost]
         public IActionResult SignUp(IFormCollection formCollection)
         {
+            //TODO: Need form validation
 
             string hostUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             string websiteUrl = hostUrl + "/Account/ActivateEmail/";
@@ -45,18 +47,15 @@ namespace MechanicChecker.Controllers
             if (context.saveSeller(newSeller))
             {
 
-                //TODO: Send email and return confirmation page
+                _ = EmailSender.SendActivationEmail(activationLink, toName, email);
+                TempData["SignIn"] = "Congrats your account has been created! Check your email to verify your email account";
 
-                var sdfsad = EmailSender.SendActivationEmail(activationLink, toName, email);
-                ViewData["SignIn"] = "Congrats your account has been created! Check your email to verify your email account";
-
-                return View("SignIn");
+                return RedirectToAction("SignIn");
             }
             else
             {
-                ViewData["PostSignUp"] = "Unfortunately your account has not been created. Please try again";
-
-                //TODO: Do not send email and return a message/page that something went wrong with signup
+                //TODO: Need useful error messages to tell the user what is wrong
+                ViewData["PostSignUp"] = "Something went wrong! Please create your account again";
                 return View("SignUp");
 
             }
@@ -68,19 +67,92 @@ namespace MechanicChecker.Controllers
 
             if (context.activateSellerAccount(id))
             {
-                ViewData["SignIn"] = "Congrats! Your account email has been verified";
+                TempData["SignIn"] = "Congrats! Your account email has been verified";
 
                 //Return Confirmation Message
-                return View("SignIn");
+                return RedirectToAction("SignIn");
             }
             else
             {
-                ViewData["SignIn"] = "Please Try Again your account email has not been verified";
+                TempData["SignIn"] = "Something went wrong! Please check your activation email again";
 
                 //Return Error Message
-                return View("SignIn");
+                return RedirectToAction("SignIn");
             }
 
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            return View("ResetPassword");
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword(IFormCollection formCollection)
+        {
+            SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            int codeLength = 30;
+            string resetPasswordCode = Utility.RandomString(codeLength);
+
+            string hostUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
+            string websiteUrl = hostUrl + "/Account/UpdatePassword/";
+
+            string resetPasswordLink = websiteUrl + resetPasswordCode;
+
+            string sellerEmail = formCollection["Email"].ToString().Trim();
+            
+            string sellerName;
+            
+            if (context.verifyUserByEmail(sellerEmail, out sellerName))
+            {
+
+                context.updateResetPasswordCode(resetPasswordCode, sellerEmail);
+                // send email and return confirmation page
+                _ = EmailSender.SendResetPasswordEmail(resetPasswordLink, sellerName, sellerEmail);
+                TempData["SignIn"] = "A reset password link has been sent to the email address you entered";
+
+                return RedirectToAction("SignIn");
+            }
+            else
+            {
+                TempData["ResetPassword"] = "This email address is not associated with Mechanic Checker";
+
+                return View("ResetPassword");
+            }
+
+        }
+
+        [HttpGet]
+        public IActionResult UpdatePassword(string id) //value gotten from the url
+        {
+            ViewBag.id = id;
+            return View("UpdatePassword");
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePassword(IFormCollection formCollection)
+        {
+
+            SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+
+            string resetId = formCollection["resetCode"];
+
+            string password = formCollection["password"];
+            string encryptedPassword = Utility.encryptPassword(password);
+
+            if (context.updatePassword(encryptedPassword, resetId))
+            {
+                TempData["SignIn"] = "Congrats! Your password has been updated";
+                return RedirectToAction("SignIn");
+            }
+            else
+            {
+                TempData["SignIn"] = "Something went wrong! Please check your password reset email again";
+
+                //Return Error Message
+                return RedirectToAction("SignIn");
+            }
         }
 
         public Seller RegisterSeller(IFormCollection formCollection)

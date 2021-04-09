@@ -11,7 +11,7 @@
         <a onclick="history.back()" class="previous">&laquo; Previous</a>
         <br />
         <h1>@Model.localProduct.Title</h1>
-        <span><img src="@Model.seller.CompanyLogoUrl" style="float: right;" height="60" width="80" class="rg"></span>
+        <span><img src="@Model.seller.CompanyLogoUrl" style="float: right;" height="200" width="200" class="rg"></span>
         <table>
             <tr>
                 <td>
@@ -21,28 +21,58 @@
 
                 <td>&nbsp;</td>
                 <td style="vertical-align: top; text-align:left;">
+                    @if (Model.localProduct.Description != "")
+                    {
+                        <b>Description:</b>
+                        <br />
+                        <span>@Model.localProduct.Description</span>
+                    }
 
-                    <b>Description:</b>
+                    @if (Model.localProduct.Category != "")
+                    {
+                        <span><br /><b>Category:</b> @Model.localProduct.Category </span>
+                    }
+
+                    @if (Model.localProduct.Price != "")
+                    {
+                        <span><br /><b>Price:</b> @Model.localProduct.Price</span>
+                    }
+
+                    @if (Model.distance != "")
+                    {
+                        <span><br /><b>Distance:</b> @(Model.distance)</span>
+                    }
+
+                    @if (Model.seller.CompanyName != "")
+                    {
+                        <span><br /><b>Company Name:</b> @Model.seller.CompanyName</span>
+                    }
+
+                    @if (Model.sellerAddress.Address != "")
+                    {
+                        <span><br /><b>Company Address:</b> @Model.sellerAddress.Address</span>
+                    }
+
+                    @if (Model.seller.BusinessPhone != "")
+                    {
+                        <span><br /><b>Phone:</b> @Model.seller.BusinessPhone</span>
+                    }
+
+                    @if (Model.seller.AccountType != "")
+                    {
+                        <span><br /><b>Account Type:</b> @Model.seller.AccountType</span>
+                    }
                     <br />
-                    <span>@Model.localProduct.Description</span>
-
-                    <span><br /><b>Category:</b> @Model.localProduct.Category </span>
-
-                    <span><br /><b>Price:</b> @Model.localProduct.Price</span>
-
-                    <span><br /><b>Distance:</b> @(Model.distance ?? "-")</span>
-
-                    <span><br /><b>Company Name:</b> @Model.seller.CompanyName</span>
-
-                    <span><br /><b>Company Address:</b> @Model.sellerAddress.Address</span>
-
-                    <span><br /><b>Phone:</b> @Model.seller.BusinessPhone</span>
-
-                    <span><br /><b>Account Type:</b> @Model.seller.AccountType</span>
                     <br />
-                    <br />
-                    <span><a href="@Model.localProduct.ProductUrl" class="btn btn-primary">Product link</a></span>
-                    <span><a href="@Model.seller.WebsiteUrl" target="_blank" class="btn btn-primary">Company Web Site</a></span>
+                    @if (Model.localProduct.ProductUrl != "")
+                    {
+                        <span><a href="@Model.localProduct.ProductUrl" class="btn btn-primary">Product link</a></span>
+                    }
+
+                    @if (Model.seller.WebsiteUrl != "")
+                    {
+                        <span><a href="@Model.seller.WebsiteUrl" target="_blank" class="btn btn-primary">Company Web Site</a></span>
+                    }
                     <br />
                     <br />
                 </td>

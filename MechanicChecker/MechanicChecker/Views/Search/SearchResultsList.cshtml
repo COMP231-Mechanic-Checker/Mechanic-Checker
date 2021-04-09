@@ -242,9 +242,7 @@
                                             @{ string output2 = Newtonsoft.Json.JsonConvert.SerializeObject(product).ToString();}
                                             @using (Html.BeginForm("Details", "Search"))
                                             {
-
                                                 <input type="text" hidden="hidden" name="spr" value="@output2" />
-
                                                 <input type="submit" value="Click to view details" />
                                             }
                                             @*new code end*@
@@ -259,11 +257,7 @@
                                                     <span>@product.distance  to @product.sellerAddress.Address</span>
                                                 }
                                             </p>
-
-
-
                                         </div>
-
                                         @*//add company logo*@
                                         <div class="float-right col-sm-4 align-top d-flex" style="width: 10rem; height: 10rem">
                                             @*TODO: add action and controller/ url for seller website if provided*@

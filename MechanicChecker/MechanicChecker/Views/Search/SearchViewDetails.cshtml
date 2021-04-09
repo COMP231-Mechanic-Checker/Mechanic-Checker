@@ -1,0 +1,52 @@
+﻿@model SellerProduct;
+
+<link href="~/css/StyleSeachViewDetails.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<div class="wrapper w3-card w3-margin">
+
+    <div class="w3-content">
+        <br />
+        <br />
+        <a onclick="history.back()" class="previous">&laquo; Previous</a>
+        <br />
+        <h1>@Model.localProduct.Title</h1>
+        <span><img src="@Model.seller.CompanyLogoUrl" style="float: right;" height="60" width="80" class="rg"></span>
+        <table>
+            <tr>
+                <td>
+                    <img src="@Model.localProduct.ImageUrl" style="border:solid; height:300px" alt="<@Model.localProduct.Title" />
+                    <br />
+                </td>
+
+                <td>&nbsp;</td>
+                <td style="vertical-align: top; text-align:left;">
+
+                    <b>Description:</b>
+                    <br />
+                    <span>@Model.localProduct.Description</span>
+
+                    <span><br /><b>Category:</b> @Model.localProduct.Category </span>
+
+                    <span><br /><b>Price:</b> @Model.localProduct.Price</span>
+
+                    <span><br /><b>Distance:</b> @(Model.distance ?? "-")</span>
+
+                    <span><br /><b>Company Name:</b> @Model.seller.CompanyName</span>
+
+                    <span><br /><b>Company Address:</b> @Model.sellerAddress.Address</span>
+
+                    <span><br /><b>Phone:</b> @Model.seller.BusinessPhone</span>
+
+                    <span><br /><b>Account Type:</b> @Model.seller.AccountType</span>
+                    <br />
+                    <br />
+                    <span><a href="@Model.localProduct.ProductUrl" class="btn btn-primary">Product link</a></span>
+                    <span><a href="@Model.seller.WebsiteUrl" target="_blank" class="btn btn-primary">Company Web Site</a></span>
+                    <br />
+                    <br />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

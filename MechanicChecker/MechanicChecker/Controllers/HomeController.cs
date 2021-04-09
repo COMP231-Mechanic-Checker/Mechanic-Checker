@@ -13,15 +13,14 @@ namespace MechanicChecker.Controllers
     {
         public IActionResult Index()
         {
-<<<<<<< Updated upstream
-=======
+
             SellerAddressContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerAddressContext)) as SellerAddressContext;
             ExternalAPIsContext eContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
 
             //var data = eContext.activateAPI("DeveloperAPI Ebay");
             //Debug.WriteLine("API " + data);
 
->>>>>>> Stashed changes
+
             return View();
         }
 

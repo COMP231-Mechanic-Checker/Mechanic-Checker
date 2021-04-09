@@ -142,5 +142,13 @@ namespace MechanicChecker.Controllers
             ViewBag.SearchQuery = query;
             return View("SearchResultsList", listOfQueriedProducts);
         }
+
+        [HttpPost]
+        public ActionResult Details(string spr)
+        {
+            //deserilizing the product from JSON to SellerProduct
+            //SellerProduct product = Newtonsoft.Json.JsonConvert.DeserializeObject(spr) as SellerProduct;
+            return View("ProductDetails", spr);
+        }
     }
 }

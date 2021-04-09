@@ -223,17 +223,45 @@
                                                 </small>
 
                                             </p>
-
+                                            <!--old code start.-->
+                                            <!--<p class="card-text">-->
+                                            @*TODO: add action and controller to switch to product details view*@
+                                            <!--@Html.ActionLink("Click to view details", "#", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " })
+                                            </p>
                                             <p class="card-text">
-                                                @*TODO: add action and controller to switch to product details view*@
-                                                @Html.ActionLink("Click to view details", "#", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " })
-                                            </p> 
+                                                @if (product.distance != null)
+                                                {
+                                                    <span>@product.distance  to @product.sellerAddress.Address</span>
+                                                }
+                                            </p>-->
+                                           
+                                            
+                                            
+                                            
+                                            @*New code start*@
+                                            @{ string output2 = Newtonsoft.Json.JsonConvert.SerializeObject(product).ToString();}
+                                            @using (Html.BeginForm("Details", "Search"))
+                                            {
+
+                                                <input type="text" hidden="hidden" name="spr" value="@output2" />
+
+                                                <input type="submit" value="Click to view details" />
+                                            }
+                                            @*new code end*@
+
+
+                                            @*<p>
+                                                  @Newtonsoft.Json.JsonConvert.DeserializeObject(output).ToString()
+                                            </p>*@
                                             <p class="card-text">
                                                 @if (product.distance != null)
                                                 {
                                                     <span>@product.distance  to @product.sellerAddress.Address</span>
                                                 }
                                             </p>
+
+
+
                                         </div>
 
                                         @*//add company logo*@

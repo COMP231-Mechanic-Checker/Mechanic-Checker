@@ -10,6 +10,7 @@
         <br />
         <a onclick="history.back()" class="previous">&laquo; Previous</a>
         <br />
+        <br />
         <h1>@Model.localProduct.Title</h1>
         <span><img src="@Model.seller.CompanyLogoUrl" style="float: right;" height="200" width="200" class="rg"></span>
         <table>
@@ -38,7 +39,7 @@
                         <span><br /><b>Price:</b> @Model.localProduct.Price</span>
                     }
 
-                    @if (Model.distance != "")
+                    @if (Model.distance != null)
                     {
                         <span><br /><b>Distance:</b> @(Model.distance)</span>
                     }

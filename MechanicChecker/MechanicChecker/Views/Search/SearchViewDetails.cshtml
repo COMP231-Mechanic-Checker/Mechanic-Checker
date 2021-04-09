@@ -9,9 +9,6 @@
 
 
 
-
-@*<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:FormView ID="productDetail" runat="server" ItemType="WingtipToys.Models.Product" SelectMethod="GetProduct" RenderOuterTable="false">*@
 <div class="wrapper w3-card w3-margin">
     
        
@@ -22,14 +19,14 @@
                 <br />
                 <h1>Steering</h1>
 
-                <br />
+      
 
                 <table>
                     <tr>
                         <td>
                             @*Update the imagepath and Product Name placement*@
                             @*<img src="~/images/<%#:Item.ImagePath %>" style="border:solid; height:300px" alt="<%#:Item.ProductName %>" />*@
-                            <img src="~/images/steering.jpg" alt="Auto Parts Logo" height="170" width="170" class="center-block">
+                            <img src="~/images/steering.jpg" alt="Auto Parts Logo" height="240" width="240" class="center-block">
                             <br />
                         </td>
                        
@@ -51,20 +48,32 @@
                             <span><b>Price:</b> $180.00</span>
 
                             @*Update here*@
-                            @*<span><b>Price:</b>&nbsp;<%#: String.Format("{0:c}", Item.UnitPrice) %></span>*@
                             <span><br /><b>Distance:</b> 1 km</span>
 
-                            <br />
+                            @*Update here*@
+                            <span><br /><b>Company Name:</b> eBay</span>
+
+                            @*Update here*@
+                            <span><br /><b>Company Address:</b>2640 Midland Ave, Toronto, ON, M1P2PS </span>
+
+                            @*Update here*@
+                            <span><br /><b>Phone:</b> 6473853056</span>
+
+                            @*Update here*@
+                            <span><br /><b>Account Type:</b> Big box store</span>
+
 
                             @*Update the imagepath of API source/ Company logo*@
                             @*<img src="~/images/<%#:Item.ImagePath %>" style="border:solid; height:300px" alt="<%#:Item.ProductName %>" />*@
                             <img src="~/images/eBay.png" alt="eBay Logo" style="float: right;" height="50" width="70" class="rg">
                             <br />
-                           
+
                             @*Update here*@
-                            <span><button class="btn btn-primary" >Visit Site</button></span>
+                            <span><button class="btn btn-primary">Product link</button></span>
 
-
+                            @*Update here*@
+                            <span><button class="btn btn-primary">Company Web Site</button></span>
+                            <br />
                             <br />
                         </td>
                     </tr>
@@ -72,40 +81,7 @@
             </div>
         
     </div>
-@*</div>*@
-
-@*</asp:FormView>
-    </asp:Content>*@
 
 
 
 
-
-
-
-
-@*<div class="signinform">
-
-        <h2>Welcome</h2>
-        <h3>Seller's Sign In here</h3>
-        <div class="text-danger"></div>
-        <form action="SignIn.cshtml" controller="Account" method="post">
-            <input type="hidden" />
-            <div class="form-group">
-                <label for="Username">Username</label>
-                <div><span class="text-danger"></span></div>
-                <input type="text" name="UserName" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="Password">Password</label>
-                <div><span class="text-danger"></span></div>
-                <input type="text" name="Password" class="form-control" required />
-            </div>
-            <button class="btn btn-primary" type="submit">Sign In</button>
-        </form>
-        <h5>Reser your password? </h5>
-    </div>*@
-
-<br />
-<br />
-<br />>

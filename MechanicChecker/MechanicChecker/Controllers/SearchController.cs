@@ -142,5 +142,12 @@ namespace MechanicChecker.Controllers
             ViewBag.SearchQuery = query;
             return View("SearchResultsList", listOfQueriedProducts);
         }
+
+        public IActionResult SearchViewDetails()
+        {
+            return View("SearchViewDetails");
+        }
+
     }
+
 }

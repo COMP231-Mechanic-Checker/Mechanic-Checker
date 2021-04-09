@@ -226,7 +226,7 @@
 
                                             <p class="card-text">
                                                 @*TODO: add action and controller to switch to product details view*@
-                                                @Html.ActionLink("Click to view details", "#", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " })
+                                                @Html.ActionLink("Click to view details", "SearchViewDetails", "Search", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " })
                                             </p> 
                                             <p class="card-text">
                                                 @if (product.distance != null)

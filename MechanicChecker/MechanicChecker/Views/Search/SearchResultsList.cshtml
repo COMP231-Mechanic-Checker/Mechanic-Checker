@@ -190,7 +190,7 @@
                             @if (ViewBag.FilterType == "hightolow")
                             {
 
-                                <option name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "hightolow" })">Lowest to Highest</option>
+                                <option selected name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "hightolow" })">Lowest to Highest</option>
                             }
                             else
                             {

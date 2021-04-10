@@ -21,5 +21,9 @@ namespace MechanicChecker.Models
             sellerAddress = sa;
         }
 
+        internal object ToList()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,87 +1,83 @@
-﻿@{
-    ViewData["Title"] = "SearchViewDetails";
-    Layout = "_Layout";
-}
-
+﻿@model SellerProduct;
 
 <link href="~/css/StyleSeachViewDetails.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-
-
 <div class="wrapper w3-card w3-margin">
-    
-       
 
-            @*Update here*@
-            @*<h1><%#:Item.ProductName %></h1>*@
-            <div class="w3-content">
-                <br />
-                <h1>Steering</h1>
+    <div class="w3-content">
+        <br />
+        <br />
+        <a onclick="history.back()" class="previous">&laquo; Previous</a>
+        <br />
+        <br />
+        <h1>@Model.localProduct.Title</h1>
+        <span><img src="@Model.seller.CompanyLogoUrl" style="float: right;" height="200" width="200" class="rg"></span>
+        <table>
+            <tr>
+                <td>
+                    <img src="@Model.localProduct.ImageUrl" style="border:solid; height:300px" alt="<@Model.localProduct.Title" />
+                    <br />
+                </td>
 
-      
+                <td>&nbsp;</td>
+                <td style="vertical-align: top; text-align:left;">
+                    @if (Model.localProduct.Description != "")
+                    {
+                        <b>Description:</b>
+                        <br />
+                        <span>@Model.localProduct.Description</span>
+                    }
 
-                <table>
-                    <tr>
-                        <td>
-                            @*Update the imagepath and Product Name placement*@
-                            @*<img src="~/images/<%#:Item.ImagePath %>" style="border:solid; height:300px" alt="<%#:Item.ProductName %>" />*@
-                            <img src="~/images/steering.jpg" alt="Auto Parts Logo" height="240" width="240" class="center-block">
-                            <br />
-                        </td>
-                       
-                        <td>&nbsp;</td>
-                        <td style="vertical-align: top; text-align:left;">
-                            @*Update here*@
-                            @*<b>Description:</b><br /><%#:Item.Description %>*@
-                            <span>
-                                <b>Description:</b><br /> Super Rare Genuine TRD Emblem 3 Spokes MOMO Steering Wheel oem used KBA70068<Description>
-                            </span>
+                    @if (Model.localProduct.Category != "")
+                    {
+                        <span><br /><b>Category:</b> @Model.localProduct.Category </span>
+                    }
 
-                            <br />
-                            @*Update here*@
-                            <span><b>Category:</b> Auto Parts </span>
+                    @if (Model.localProduct.Price != "")
+                    {
+                        <span><br /><b>Price:</b> @Model.localProduct.Price</span>
+                    }
 
-                            <br />
-                            @*Update here*@
-                            @*<span><b>Price:</b>&nbsp;<%#: String.Format("{0:c}", Item.UnitPrice) %></span>*@
-                            <span><b>Price:</b> $180.00</span>
+                    @if (Model.distance != null)
+                    {
+                        <span><br /><b>Distance:</b> @(Model.distance)</span>
+                    }
 
-                            @*Update here*@
-                            <span><br /><b>Distance:</b> 1 km</span>
+                    @if (Model.seller.CompanyName != "")
+                    {
+                        <span><br /><b>Company Name:</b> @Model.seller.CompanyName</span>
+                    }
 
-                            @*Update here*@
-                            <span><br /><b>Company Name:</b> eBay</span>
+                    @if (Model.sellerAddress.Address != "")
+                    {
+                        <span><br /><b>Company Address:</b> @Model.sellerAddress.Address</span>
+                    }
 
-                            @*Update here*@
-                            <span><br /><b>Company Address:</b>2640 Midland Ave, Toronto, ON, M1P2PS </span>
+                    @if (Model.seller.BusinessPhone != "")
+                    {
+                        <span><br /><b>Phone:</b> @Model.seller.BusinessPhone</span>
+                    }
 
-                            @*Update here*@
-                            <span><br /><b>Phone:</b> 6473853056</span>
+                    @if (Model.seller.AccountType != "")
+                    {
+                        <span><br /><b>Account Type:</b> @Model.seller.AccountType</span>
+                    }
+                    <br />
+                    <br />
+                    @if (Model.localProduct.ProductUrl != "")
+                    {
+                        <span><a href="@Model.localProduct.ProductUrl" class="btn btn-primary">Product link</a></span>
+                    }
 
-                            @*Update here*@
-                            <span><br /><b>Account Type:</b> Big box store</span>
-
-
-                            @*Update the imagepath of API source/ Company logo*@
-                            @*<img src="~/images/<%#:Item.ImagePath %>" style="border:solid; height:300px" alt="<%#:Item.ProductName %>" />*@
-                            <img src="~/images/eBay.png" alt="eBay Logo" style="float: right;" height="50" width="70" class="rg">
-                            <br />
-
-                            @*Update here*@
-                            <span><button class="btn btn-primary">Product link</button></span>
-
-                            @*Update here*@
-                            <span><button class="btn btn-primary">Company Web Site</button></span>
-                            <br />
-                            <br />
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        
+                    @if (Model.seller.WebsiteUrl != "")
+                    {
+                        <span><a href="@Model.seller.WebsiteUrl" target="_blank" class="btn btn-primary">Company Web Site</a></span>
+                    }
+                    <br />
+                    <br />
+                </td>
+            </tr>
+        </table>
     </div>
-
-
-
-
+</div>

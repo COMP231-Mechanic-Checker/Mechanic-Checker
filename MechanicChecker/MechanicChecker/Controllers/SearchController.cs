@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MechanicChecker.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace MechanicChecker.Controllers
 {
@@ -123,11 +124,14 @@ namespace MechanicChecker.Controllers
             return View("SearchResultsList", listOfProducts.ToList());
         }
 
-        public IActionResult SearchViewDetails()
+        [HttpPost]
+        public ActionResult Details(string spr)
         {
-            return View("SearchViewDetails");
-        }
 
+            //deserilizing the product from JSON to SellerProduct
+            SellerProduct product = JsonConvert.DeserializeObject<SellerProduct>(spr);
+            return View("SearchViewDetails", product);
+        }
     }
 
 }

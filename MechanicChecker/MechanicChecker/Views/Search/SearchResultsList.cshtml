@@ -43,11 +43,11 @@
                 Category
             </button>
             <div class="dropdown-container">
-                <a href="@Url.Action("Filter", "Search", new { filterType = "parts", searchquery = @ViewBag.SearchQuery })">
-                    <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "parts", searchquery = @ViewBag.SearchQuery })')" type="checkbox" id="cboxParts" name="cboxParts" value="cboxParts" style="width:20px; height:20px">&nbsp;&nbsp;Parts
+                <a href="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery,filterType = "parts"})">
+                    <input onclick="window.location.assign('@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "parts"})')" type="checkbox" id="cboxParts" name="cboxParts" value="cboxParts" style="width:20px; height:20px">&nbsp;&nbsp;Parts
                 </a>
-                <a href="@Url.Action("Filter", "Search", new { filterType = "services", searchquery = @ViewBag.SearchQuery })">
-                    <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "services", searchquery = @ViewBag.SearchQuery })')" type="checkbox" id="cboxServices" name="cboxServices" value="cboxServices" style="width:20px; height:20px">&nbsp;&nbsp;Services
+                <a href="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery,filterType = "services"})">
+                    <input onclick="window.location.assign('@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "services"})')" type="checkbox" id="cboxServices" name="cboxServices" value="cboxServices" style="width:20px; height:20px">&nbsp;&nbsp;Services
                 </a>
             </div>
 
@@ -56,22 +56,25 @@
                 Price
             </button>
             <div class="dropdown-container">
-                
-                @using (Html.BeginForm("Filter", "Search", FormMethod.Post))
+
+                @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
                 {
-                <div>
-                    <br />Max Price:
-                    <br />
-                    <input type="number" name="maxPrice" value="@ViewBag.maxPrice" style="width:100px; height:20px" />
+                    <form>
+                        <div>
+                            <br />Max Price:
+                            <br />
+                            <input type="number" name="maxPrice" value="@ViewBag.maxPrice" style="width:100px; height:20px" />
 
-                    <br />Min Price: <br />
-                    <input type="number" name="minPrice" value="@ViewBag.minPrice" style="width:100px; height:20px" /><br />
+                            <br />Min Price: <br />
+                            <input type="number" name="minPrice" value="@ViewBag.minPrice" style="width:100px; height:20px" /><br />
 
-                    <input name="searchquery" value="@ViewBag.SearchQuery" hidden="hidden">
-                    <input name="filterType" value="price" hidden="hidden">
-                    <button><i class="fas fa-search"></i>Submit</button>
-                </div>
-                    
+                            <input name="query" value="@ViewBag.SearchQuery" hidden="hidden">
+                            <input name="filterType" value="price" hidden="hidden">
+                            <input name="homeAddress" value="@ViewBag.PostalCode" hidden="hidden">
+                            <input name="vendorFilter" value="@ViewBag.VendorFilter" hidden="hidden">
+                            <button><i class="fas fa-search"></i>Submit</button>
+                        </div>
+                    </form>
 
                 }
 
@@ -83,8 +86,8 @@
                 Quote
             </button>
             <div class="dropdown-container">
-                <a href="@Url.Action("Filter", "Search", new { filterType = "quote", searchquery = @ViewBag.SearchQuery})">
-                    <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "quote", searchquery = @ViewBag.SearchQuery})')" type="checkbox" id="cboxQuote" name="categoryRadioButton" value="true" style="width:20px; height:20px">&nbsp;&nbsp;Exclude Quotes
+                <a href="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "quote"})">
+                    <input onclick="window.location.assign('@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "quote"})')" type="checkbox" id="cboxQuote" name="categoryRadioButton" value="true" style="width:20px; height:20px">&nbsp;&nbsp;Exclude Quotes
                 </a>
             </div>
 
@@ -97,8 +100,8 @@
                 <br />
                 @foreach (var s in sellers.Distinct())
                 {
-                    <a href="@Url.Action("Filter", "Search", new { filterType = "seller", searchquery = @ViewBag.SearchQuery, sellerid = s.selId})">
-                        <input onclick="window.location.assign('@Url.Action("Filter", "Search", new { filterType = "seller", searchquery = @ViewBag.SearchQuery, sellerid = s.selId})')" type="checkbox" id="@s.selId" name="@s.selId" value="@s.selId" style="width:20px; height:20px">&nbsp;&nbsp;@s.allCompanies (@(sellers.Where(d => d.allCompanies == s.allCompanies).Count()) items)
+                    <a href="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "seller", seller = s.allCompanies})">
+                        <input onclick="window.location.assign('@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "seller", seller = s.allCompanies})')" type="checkbox" id="@s.selId" name="@s.selId" value="@s.selId" style="width:20px; height:20px">&nbsp;&nbsp;@s.allCompanies (@(sellers.Where(d => d.allCompanies == s.allCompanies).Count()) items)
                     </a>
                 }
                 <br />
@@ -107,8 +110,8 @@
 
             <br />
             <button class="btn btn-block" id="btnclear">
-                <a href="@Url.Action("Filter", "Search", new { searchquery = @ViewBag.SearchQuery})">
-                Clear All Filters
+                <a href="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = ""})">
+                    Clear All Filters
                 </a>
             </button>
 
@@ -129,31 +132,73 @@
                 <div class="col-lg-8">
                     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
                     {
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" name="homeAddress" placeholder="Postal Code" value="@ViewBag.PostalCode"aria-label="location">
-                        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" value="@ViewBag.SearchQuery" aria-label="Search" required>
-                        <select name="vendorFilter">
-                            <option value="0">All</option>
-                            <option value="1">Local Sellers</option>
-                            <option value="2">Ebay</option>
-                            <option value="3">Amazon</option>
-                            <option value="4">Alibaba</option>
-                        </select>
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" name="homeAddress" placeholder="Postal Code" value="@ViewBag.PostalCode" aria-label="location">
+                            <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" value="@ViewBag.SearchQuery" aria-label="Search" required>
+                            <select name="vendorFilter">
+                                <option value="0">All</option>
+                                <option value="1">Local Sellers</option>
+                                <option value="2">Ebay</option>
+                                <option value="3">Amazon</option>
+                                <option value="4">Alibaba</option>
+                            </select>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
                     }
                 </div>
 
                 <div class="col-lg-4">
                     <!-- Link -->
-                    <select class="form-control mr-sm-2" name="sortFilter" id="sortFilter" onchange="location = this.value;">
+                    <select class="form-control mr-sm-2" name="filterType" id="filterType" onchange="location = this.value;">
+                        <option>Filter your product</option>
                         <optgroup label="Title">
-                            <option id="A to Z" value="@Url.Action("Filter", "Search", new { filterType = "atoz", searchquery = @ViewBag.SearchQuery })">A to Z</option>
-                            <option id="Z to A" value="@Url.Action("Filter", "Search", new { filterType = "ztoa", searchquery = @ViewBag.SearchQuery })">Z to A</option>
+                            @if (ViewBag.FilterType == "atoz")
+                            {
+                                <option selected id="A to Z" name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "atoz"})">A to Z</option>
+
+                            }
+                            else
+                            {
+                                <option id="A to Z" name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "atoz"})">A to Z</option>
+
+                            }
+                            @if (ViewBag.FilterType == "ztoa")
+                            {
+
+                                <option selected id="Z to A" name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "ztoa"})">Z to A</option>
+                            }
+                            else
+                            {
+                                <option id="Z to A" name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "ztoa"})">Z to A</option>
+
+                            }
+
                         </optgroup>
                         <optgroup label="Price">
-                            <option value="@Url.Action("Filter", "Search", new { filterType = "lowtohigh", searchquery = @ViewBag.SearchQuery })">Hightest to Lowest</option>
-                            <option value="@Url.Action("Filter", "Search", new { filterType = "hightolow", searchquery = @ViewBag.SearchQuery })">Lowest to Highest</option>
+                            @if (ViewBag.FilterType == "lowtohigh")
+                            {
+
+                                <option selected name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "lowtohigh" })">Hightest to Lowest</option>
+                            }
+                            else
+                            {
+
+                                <option name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "lowtohigh" })">Hightest to Lowest</option>
+
+                            }
+
+                            @if (ViewBag.FilterType == "hightolow")
+                            {
+
+                                <option name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "hightolow" })">Lowest to Highest</option>
+                            }
+                            else
+                            {
+
+                                <option name="filterType" value="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "hightolow" })">Lowest to Highest</option>
+
+                            }
+
                         </optgroup>
                     </select>
                 </div>
@@ -227,7 +272,7 @@
                                             <p class="card-text">
                                                 @*TODO: add action and controller to switch to product details view*@
                                                 @Html.ActionLink("Click to view details", "SearchViewDetails", "Search", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " })
-                                            </p> 
+                                            </p>
                                             <p class="card-text">
                                                 @if (product.distance != null)
                                                 {

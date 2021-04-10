@@ -16,70 +16,7 @@ namespace MechanicChecker.Controllers
             return View(context.GetAllProducts());
         }
 
-        public ViewResult Filter(string filterType, double minPrice, double maxPrice, string searchquery, string sellerid)
-        {
-            SellerProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
-
-            IEnumerable<SellerProduct> listOfQueriedProducts;
-            IEnumerable<SellerProduct> listOfOriginalQueriedProducts;
-
-            var allSellersProducts = context.GetAllSellerProducts();
-
-            if (searchquery != null)
-            {
-                listOfOriginalQueriedProducts = allSellersProducts.Where(
-                   product =>
-                   product.localProduct.Title.Contains(searchquery, StringComparison.OrdinalIgnoreCase) || product.localProduct.Description.Contains(searchquery, StringComparison.OrdinalIgnoreCase)
-                   );
-            }
-            else
-            {
-                listOfOriginalQueriedProducts = allSellersProducts;
-            }
-
-            switch (filterType)
-            {
-                case "atoz":
-                    listOfQueriedProducts = listOfOriginalQueriedProducts.OrderBy(p => p.localProduct.Title);
-                    break;
-                case "ztoa":
-                    listOfQueriedProducts = listOfOriginalQueriedProducts.OrderByDescending(p => p.localProduct.Title);
-                    break;
-                case "lowtohigh":
-                    listOfQueriedProducts = listOfOriginalQueriedProducts.Where(p => !p.localProduct.Price.Equals("")).OrderByDescending(p =>
-                    Convert.ToDouble(p.localProduct.Price));
-                    break;
-                case "hightolow":
-                    listOfQueriedProducts = listOfOriginalQueriedProducts.Where(p => !p.localProduct.Price.Equals("")).OrderBy(p =>
-                    Convert.ToDouble(p.localProduct.Price));
-                    break;
-                case "parts":
-                    listOfQueriedProducts = listOfOriginalQueriedProducts.Where(p => p.localProduct.Category.Contains("Item"));
-                    break;
-                case "services":
-                    listOfQueriedProducts = listOfOriginalQueriedProducts.Where(p => p.localProduct.Category.Contains("Service"));
-                    break;
-                case "price":
-                    listOfQueriedProducts = listOfOriginalQueriedProducts.Where(p => !p.localProduct.Price.Equals("")
-                    && Convert.ToDouble(p.localProduct.Price) > minPrice &&
-                    Convert.ToDouble(p.localProduct.Price) < maxPrice);
-                    break;
-                case "seller":
-                    listOfQueriedProducts = listOfOriginalQueriedProducts.Where(p => p.localProduct.sellerId.Equals(sellerid));
-                    break;
-                case "quote":
-                    listOfQueriedProducts = listOfOriginalQueriedProducts.Where(p => p.localProduct.IsQuote.Equals(false));
-                    break;
-                default:
-                    listOfQueriedProducts = listOfOriginalQueriedProducts;
-                    break;
-            }
-
-            ViewBag.SearchQuery = searchquery;
-            return View("SearchResultsList", listOfQueriedProducts);
-        }
-
-        public async Task<ViewResult> SearchLocalSellersProducts(string homeAddress, string vendorFilter, string query) // the value gotten from the url
+        public async Task<ViewResult> SearchLocalSellersProducts(string homeAddress, string vendorFilter, string query, string filterType, double minPrice, double maxPrice, string seller)
         {
             SellerProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
 
@@ -138,9 +75,52 @@ namespace MechanicChecker.Controllers
                 listOfQueriedProducts.AddRange(ecommerceProducts);
             }
 
+            IEnumerable<SellerProduct> listOfProducts = listOfQueriedProducts.AsQueryable();
+
+            switch (filterType)
+            {
+                case "atoz":
+                    listOfProducts = listOfProducts.OrderBy(p => p.localProduct.Title);
+                    break;
+                case "ztoa":
+                    listOfProducts = listOfProducts.OrderByDescending(p => p.localProduct.Title);
+                    break;
+                case "lowtohigh":
+                    listOfProducts = listOfProducts.Where(p => !p.localProduct.Price.Equals("")).OrderByDescending(p =>
+                    Convert.ToDouble(p.localProduct.Price));
+                    break;
+                case "hightolow":
+                    listOfProducts = listOfProducts.Where(p => !p.localProduct.Price.Equals("")).OrderBy(p =>
+                    Convert.ToDouble(p.localProduct.Price));
+                    break;
+                case "parts":
+                    listOfProducts = listOfProducts.Where(p => p.localProduct.Category.Contains("Item"));
+                    break;
+                case "services":
+                    listOfProducts = listOfProducts.Where(p => p.localProduct.Category.Contains("Service"));
+                    break;
+                case "price":
+                    listOfProducts = listOfProducts.Where(p => !p.localProduct.Price.Equals("")
+                    && Convert.ToDouble(p.localProduct.Price) > minPrice &&
+                    Convert.ToDouble(p.localProduct.Price) < maxPrice);
+                    break;
+                case "seller":
+                    listOfProducts = listOfProducts.Where(p => p.seller.CompanyName.Equals(seller));
+                    break;
+                case "quote":
+                    listOfProducts = listOfProducts.Where(p => p.localProduct.IsQuote.Equals(true));
+                    break;
+                default:
+                    listOfProducts = listOfProducts;
+                    break;
+            }
+
             ViewBag.PostalCode = homeAddress;
             ViewBag.SearchQuery = query;
-            return View("SearchResultsList", listOfQueriedProducts);
+            ViewBag.VendorFilter = vendorFilter;
+            ViewBag.FilterType = filterType;
+   
+            return View("SearchResultsList", listOfProducts.ToList());
         }
 
         public IActionResult SearchViewDetails()

@@ -153,4 +153,5 @@ namespace MechanicChecker.Controllers
             return View("SearchViewDetails", product);
         }
     }
+
 }

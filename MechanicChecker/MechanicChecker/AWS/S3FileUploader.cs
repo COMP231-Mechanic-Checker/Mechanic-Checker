@@ -11,7 +11,7 @@ namespace MechanicChecker.AWS
     {
         private int filenameLength = 50;
         private string awsS3BucketUrl = "https://s3.amazonaws.com/mechanic.checker/seller/";
-        public string value(IFormFile file)
+        public string value(IFormFile file,string bucketName)
         {
             string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             char[] stringChars = new char[filenameLength];
@@ -23,9 +23,8 @@ namespace MechanicChecker.AWS
             }
 
             var finalString = new String(stringChars) + Path.GetExtension(file.FileName);
-
             AmazonS3Uploader amazonS3 = new AmazonS3Uploader();
-            amazonS3.UploadFile(finalString, file);
+            amazonS3.UploadFile(finalString, file,bucketName);
             string awsS3ImageUrl = awsS3BucketUrl + finalString;
 
             return awsS3ImageUrl;

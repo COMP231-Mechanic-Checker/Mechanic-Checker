@@ -148,6 +148,12 @@ namespace MechanicChecker.Controllers
             return View("SearchViewDetails");
         }
 
+        public IActionResult SearchCompareTwoParts()
+        {
+            return View("SearchCompareTwoParts");
+        }
+
+
     }
 
 }

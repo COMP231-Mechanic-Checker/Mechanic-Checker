@@ -15,13 +15,17 @@ namespace MechanicChecker.Controllers
         private SellerProductContext context;
 
         // GET: LocalSellerController
-        public ActionResult Index()
+        public ActionResult Index(string userName)
         {
-            context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
-            currentSellerProducts = (List<SellerProduct>)context.GetAllSellerProducts();
-            return View("SellerLandingPage", currentSellerProducts);
-        }
 
+            SellerProductContext sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            SellerContext sellerContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+
+            Seller seller = sellerContext.GetSeller(userName);
+            var allSellerProducts = sellerProductContext.GetAllSellerProducts();
+            var sellerProducts = allSellerProducts.Where(p => p.seller.UserName.Equals(seller.UserName));
+            return View("../LocalSeller/SellerLandingPage", sellerProducts);
+        }
 
 
 

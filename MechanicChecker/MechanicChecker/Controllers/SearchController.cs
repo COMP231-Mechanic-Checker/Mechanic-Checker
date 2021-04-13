@@ -20,6 +20,8 @@ namespace MechanicChecker.Controllers
         public async Task<ViewResult> SearchLocalSellersProducts(string homeAddress, string vendorFilter, string query, string filterType, double minPrice, double maxPrice, string seller)
         {
             SellerProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            SellerContext contextSeller = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
 
             List<SellerProduct> listOfQueriedProducts = new List<SellerProduct>(); ;
             List<SellerProduct> queryFilteredResults = new List<SellerProduct>();
@@ -43,7 +45,7 @@ namespace MechanicChecker.Controllers
                 // get major retailer ecommerce store products
                 if (query != null && vendorFilter != null && Convert.ToInt32(vendorFilter) >= 0)
                 {
-                    ecommerceProducts = await EcommerceHelper.GetProductsFromEcommerceSite(vendorFilter, query);
+                    ecommerceProducts = await EcommerceHelper.GetProductsFromEcommerceSite(contextSeller, contextAPIs, vendorFilter, query);
                 }
 
                 //check if home address is there
@@ -58,9 +60,9 @@ namespace MechanicChecker.Controllers
                     Parallel.ForEach<SellerProduct>(items, (item) =>
                     {
                         //for each product, call google api to calculate distance from the user entered location
-                        var distance = GoogleMapsHelper.CalculateDistance(homeAddress, item.sellerAddress.Address);
+                        var distance = GoogleMapsHelper.CalculateDistance(contextAPIs, homeAddress, item.sellerAddress.Address);
                         //set returned value to the property
-                        item.distance = distance.Result;
+                        item.distance = distance;
 
                         resultsWithAddress.Add(item);
                     });

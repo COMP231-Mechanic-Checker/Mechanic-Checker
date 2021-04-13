@@ -34,9 +34,11 @@ jobs:
           "ConnectionStrings": {
             "DefaultConnectionString": ${{ secrets.NETCORE_APPSETTINGS_DEFAULTCONNECTIONSTRING }}
           },
-          "APIKeys": {
-            "Ebay": ${{ secrets.NETCORE_APPSETTINGS_APIKEYS_EBAY }},
-            "SendGrid": ${{ secrets.NETCORE_APPSETTINGS_APIKEYS_SENDGRID }}
+          "APIKeyOwners": {
+            "GoogleMaps":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_GOOGLEMAPS }},
+            "Ebay":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_EBAY }},
+            "Amazon":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_AMAZON }},
+            "SendGrid":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_SENDGRID }}
           }
         }
         EOF

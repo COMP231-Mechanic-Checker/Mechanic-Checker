@@ -64,6 +64,7 @@ namespace MechanicChecker.Controllers
             string hostUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             string websiteUrl = hostUrl + "/Account/ActivateEmail/";
             SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
 
             Seller newSeller = RegisterSeller(formCollection);
 
@@ -76,7 +77,7 @@ namespace MechanicChecker.Controllers
             if (context.saveSeller(newSeller))
             {
 
-                _ = EmailSender.SendActivationEmail(activationLink, toName, email);
+                _ = EmailSender.SendActivationEmail(contextAPIs, activationLink, toName, email);
                 TempData["SignIn"] = "Congrats your account has been created! Check your email to verify your email account";
 
                 return RedirectToAction("SignIn");
@@ -121,6 +122,7 @@ namespace MechanicChecker.Controllers
         public IActionResult ResetPassword(IFormCollection formCollection)
         {
             SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
             int codeLength = 30;
             string resetPasswordCode = Utility.RandomString(codeLength);
 
@@ -138,7 +140,8 @@ namespace MechanicChecker.Controllers
 
                 context.updateResetPasswordCode(resetPasswordCode, sellerEmail);
                 // send email and return confirmation page
-                _ = EmailSender.SendResetPasswordEmail(resetPasswordLink, sellerName, sellerEmail);
+                _ = EmailSender.SendResetPasswordEmail(contextAPIs, resetPasswordLink, sellerName, sellerEmail);
+
                 TempData["SignIn"] = "A reset password link has been sent to the email address you entered";
 
                 return RedirectToAction("SignIn");

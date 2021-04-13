@@ -1,0 +1,45 @@
+﻿body {
+}
+
+.cd-products-wrapper {
+    overflow-x: auto;
+/*     this fixes the buggy scrolling on webkit browsers - mobile devices only - when overflow property is applied 
+    -webkit-overflow-scrolling: touch;*/
+float: left;
+}
+
+.cd-products-table .features {
+    /* fixed left column - product properties list */
+ /*   position: absolute;*/
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 120px;
+    float: left;
+}
+
+.cd-products-columns {
+    /* products list wrapper */
+    width: 1200px; /* single column width * products number */
+    margin-left: 120px; /* .features width */
+}
+
+@media only screen and (min-width: 1170px) {
+    .cd-products-table.top-fixed .cd-products-columns > li {
+        padding-top: 160px;
+    }
+
+    .cd-products-table.top-fixed .top-info {
+        height: 160px;
+        position: fixed;
+        top: 0;
+    }
+
+   /*     .cd-products-table.top-fixed .top-info h3 {
+            transform: translateY(-116px);
+        }
+
+        .cd-products-table.top-fixed .top-info img {
+            transform: translateY(-62px) scale(0.4);
+        }*/
+}

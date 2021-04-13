@@ -20,6 +20,35 @@ namespace MechanicChecker.Controllers
             return View("SignIn");
         }
 
+        [HttpPost]
+        public IActionResult SignIn(string userId, string password)
+        {
+            //SellerProductContext sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            SellerContext sellerContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+
+            Seller validSeller = sellerContext.GetSeller(userId);
+
+            Utility u = new Utility();
+            bool isValidSeller = u.verifyPassword(password, validSeller.PasswordHash);
+
+            if (isValidSeller)
+            {
+                //var allSellerProducts = sellerProductContext.GetAllSellerProducts();
+                //var validSellerProducts = allSellerProducts.Where(p => p.seller.UserName.Equals(validSeller.UserName));
+                HttpContext.Session.SetString("username", validSeller.UserName);
+                HttpContext.Session.SetString("firstname", validSeller.FirstName);
+                HttpContext.Session.SetString("lastname", validSeller.LastName);
+                ViewBag.UserName = validSeller.UserName;
+                //return RedirectToAction("Index","LocalSeller",new { validSeller.UserName });
+                return RedirectToAction("Index", "LocalSeller", new { validSeller.UserName });
+            }
+            else
+            {
+                ViewBag.Error = "Username or password is invalid.";
+                return View("../Account/SignIn");
+            }
+
+        }
 
         [HttpGet]
         public IActionResult SignUp()
@@ -35,6 +64,7 @@ namespace MechanicChecker.Controllers
             string hostUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             string websiteUrl = hostUrl + "/Account/ActivateEmail/";
             SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
 
             Seller newSeller = RegisterSeller(formCollection);
 
@@ -47,7 +77,7 @@ namespace MechanicChecker.Controllers
             if (context.saveSeller(newSeller))
             {
 
-                _ = EmailSender.SendActivationEmail(activationLink, toName, email);
+                _ = EmailSender.SendActivationEmail(contextAPIs, activationLink, toName, email);
                 TempData["SignIn"] = "Congrats your account has been created! Check your email to verify your email account";
 
                 return RedirectToAction("SignIn");
@@ -92,6 +122,7 @@ namespace MechanicChecker.Controllers
         public IActionResult ResetPassword(IFormCollection formCollection)
         {
             SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
             int codeLength = 30;
             string resetPasswordCode = Utility.RandomString(codeLength);
 
@@ -109,7 +140,8 @@ namespace MechanicChecker.Controllers
 
                 context.updateResetPasswordCode(resetPasswordCode, sellerEmail);
                 // send email and return confirmation page
-                _ = EmailSender.SendResetPasswordEmail(resetPasswordLink, sellerName, sellerEmail);
+                _ = EmailSender.SendResetPasswordEmail(contextAPIs, resetPasswordLink, sellerName, sellerEmail);
+
                 TempData["SignIn"] = "A reset password link has been sent to the email address you entered";
 
                 return RedirectToAction("SignIn");
@@ -165,7 +197,7 @@ namespace MechanicChecker.Controllers
             // if something goes wrong uploading to s3 use placeholder company logo url
             try
             {
-                awsS3CompanyLogoUrl = s3Upload.value(companyImgStream);
+                awsS3CompanyLogoUrl = s3Upload.value(companyImgStream, "seller");
             }
             catch(Exception e)
             {
@@ -194,6 +226,14 @@ namespace MechanicChecker.Controllers
                 ActivationCode = Guid.NewGuid().ToString()
             };
             return newSeller;
+        }
+        public IActionResult SignOut()
+        {
+            HttpContext.Session.Remove("username");
+            HttpContext.Session.Remove("firstname");
+            HttpContext.Session.Remove("lastname");
+            return RedirectToAction("Index", "Home");
+
         }
 
     }

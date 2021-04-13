@@ -18,6 +18,56 @@
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
 </head>
+<style>
+    /* Style The Dropdown Button */
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #f1f1f1
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>
 <body style="
         background-image: url(../images/Mechanicbackgorund.jpg);
         background-position: center center;
@@ -46,17 +96,53 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">MechanicChecker</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-                <div class="navbarbtn">
-                    <a class="btn btn-primary btn-lg" asp-action="SignUp" asp-controller="Account">Sign Up</a>
-                    <a class="btn btn-primary btn-lg" asp-action="SignIn" asp-controller="Account">Sign in</a>
-                    @*<button class="btn btn-primary btn-lg" asp-action="SignUp" asp-controller="Account">Sign Up</button>
-                        <button class="btn btn-primary btn-lg" asp-action="SignIn" asp-controller="Account">Sign in</button>*@
-                </div>
+                @if (Context.Session.GetString("username") == null)
+                {
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    </ul>
+                    <div class="navbarbtn">
+
+                        <a class="btn btn-primary btn-lg" asp-action="SignUp" asp-controller="Account">Sign Up</a>
+                        <a class="btn btn-primary btn-lg" asp-action="SignIn" asp-controller="Account">Sign in</a>
+                    </div>
+
+                }
+                else
+                {
+                    if (Context.Request.Path.ToString().Contains("/LocalSeller"))
+                    {
+                    <div class="col-sm-8 justify-content-center">
+                        <form asp-controller="LocalSeller" asp-action="SearchProducts" class="navbar-form form-horizontal" method="post" style="">
+                            <div class="form-group">
+                                <input type="text" hidden="hidden" name="username" value="@Context.Session.GetString("username")" />
+                                <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default" value="keyword">Submit</button>
+                        </form>
+                    </div>
+                    }
+                    <div class="col-sm">
+                        <div class="dropdown inline-block navbar-btn col" style="">
+                            <button class="btn btn-success">
+                                <img src="~/images/contact-icon.png" width="12" height="15"> &nbsp;
+                                @*@ViewData["SellerName"]*@
+                                @Context.Session.GetString("firstname")&nbsp;@Context.Session.GetString("lastname")
+                            </button>
+                            <div class="dropdown-content dropdown-menu-right">
+                                @*<a asp-controller="LocalSeller" asp-action="Index">View Account</a>
+                        <a asp-controller="LocalSeller" asp-action="Index">View Products</a>
+                        <a asp-controller="Account" asp-action="SignOut">Logout</a>*@
+                                <a href="@Url.Action("Index", "LocalSeller", new { userName = Context.Session.GetString("username") })">View Account</a>
+                                <a href="@Url.Action("Index", "LocalSeller", new { userName = Context.Session.GetString("username") })">View Products</a>
+                                <a asp-controller="Account" asp-action="SignOut">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
             </div>
         </div>
 

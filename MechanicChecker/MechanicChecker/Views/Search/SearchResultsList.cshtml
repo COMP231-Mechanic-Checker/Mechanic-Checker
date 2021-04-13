@@ -22,7 +22,12 @@
 
 
 <div class="row">
+    <div class="row" style="float:right">
+        <button type="submit" action="SearchCompareTwoParts" contoller="Search">Compare 2 Parts or Services</button>
+       <br /> <label>2 items selected</label>
+    </div>
     <div class="col-sm-2">
+        <br />
 
 
         <div class="sidenav">
@@ -36,6 +41,7 @@
             <br />
             <h3 class="h3 text-success ">&nbsp;&nbsp;Filter Options</h3>
             <br />
+
 
 
             @*category drop down list*@
@@ -87,7 +93,7 @@
             </button>
             <div class="dropdown-container">
                 <a href="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "quote"})">
-                    <input onclick="window.location.assign('@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "quote"})')" type="checkbox" id="cboxQuote" name="categoryRadioButton" value="true" style="width:20px; height:20px">&nbsp;&nbsp;Exclude Quotes
+                    <input onclick="window.location.assign('@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "quote"})')" type="checkbox" id="cboxQuote" name="categoryRadioButton" value="true" style="width:20px; height:20px">&nbsp;&nbsp;Show Only Quotes
                 </a>
             </div>
 
@@ -136,11 +142,47 @@
                             <input class="form-control mr-sm-2" type="search" name="homeAddress" placeholder="Postal Code" value="@ViewBag.PostalCode" aria-label="location">
                             <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" value="@ViewBag.SearchQuery" aria-label="Search" required>
                             <select name="vendorFilter">
-                                <option value="0">All</option>
-                                <option value="1">Local Sellers</option>
-                                <option value="2">Ebay</option>
-                                <option value="3">Amazon</option>
-                                <option value="4">Alibaba</option>
+                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 0)
+                                {
+                                    <option selected value="0"> All </option>
+                                }
+                                else
+                                {
+                                    <option value="0"> All </option>
+                                }
+                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 1)
+                                {
+                                    <option selected value="1">Local Sellers</option>
+                                }
+                                else
+                                {
+                                    <option value="1">Local Sellers</option>
+                                }
+                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 2)
+                                {
+                                    <option selected value="2">Ebay</option>
+                                }
+                                else
+                                {
+                                    <option value="2">Ebay</option>
+                                }
+                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 3)
+                                {
+                                    <option selected value="3">Amazon</option>
+                                }
+                                else
+                                {
+                                    <option value="3">Amazon</option>
+                                }
+                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 4)
+                                {
+                                    <option selected value="4">Alibaba</option>
+                                }
+                                else
+                                {
+                                    <option value="4">Alibaba</option>
+                                }
+
                             </select>
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
@@ -279,10 +321,6 @@
                                                     <span>@product.distance  to @product.sellerAddress.Address</span>
                                                 }
                                             </p>-->
-                                           
-                                            
-                                            
-                                            
                                             @*New code start*@
                                             @{ string output2 = Newtonsoft.Json.JsonConvert.SerializeObject(product).ToString();}
                                             @using (Html.BeginForm("Details", "Search"))
@@ -294,8 +332,8 @@
 
 
                                             @*<p>
-                                                  @Newtonsoft.Json.JsonConvert.DeserializeObject(output).ToString()
-                                            </p>*@
+                                                      @Newtonsoft.Json.JsonConvert.DeserializeObject(output).ToString()
+                                                </p>*@
                                             <p class="card-text">
                                                 @if (product.distance != null)
                                                 {

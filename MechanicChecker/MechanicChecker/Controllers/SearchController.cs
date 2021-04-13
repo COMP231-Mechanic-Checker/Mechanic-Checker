@@ -120,27 +120,25 @@ namespace MechanicChecker.Controllers
             ViewBag.SearchQuery = query;
             ViewBag.VendorFilter = vendorFilter;
             ViewBag.FilterType = filterType;
-   
+
             return View("SearchResultsList", listOfProducts.ToList());
         }
 
         [HttpPost]
         public ActionResult Details(string spr)
         {
-
-<<<<<<< HEAD
-        public IActionResult SearchCompareTwoParts()
-        {
-            return View("SearchCompareTwoParts");
-        }
-
-
-=======
             //deserilizing the product from JSON to SellerProduct
             SellerProduct product = JsonConvert.DeserializeObject<SellerProduct>(spr);
             return View("SearchViewDetails", product);
         }
->>>>>>> develop
+
+
+    public IActionResult SearchCompareTwoParts()
+    {
+        return View("SearchCompareTwoParts");
+    }
+
     }
 
 }
+

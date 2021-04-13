@@ -31,7 +31,7 @@ namespace MechanicChecker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SearchProducts(string keyword)
+        public ActionResult SearchProducts(string username, string keyword)
         {
             try
             {
@@ -43,7 +43,8 @@ namespace MechanicChecker.Controllers
                 {
                     searchedSellerProducts = currentSellerProducts.Where(
                        product =>
-                       product.localProduct.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) || product.localProduct.Description.Contains(keyword, StringComparison.OrdinalIgnoreCase)
+                       (product.localProduct.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) || product.localProduct.Description.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                            && product.seller.UserName.Equals(username)
                        );
                 }
                 else

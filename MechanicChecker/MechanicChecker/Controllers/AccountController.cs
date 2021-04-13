@@ -165,7 +165,7 @@ namespace MechanicChecker.Controllers
             // if something goes wrong uploading to s3 use placeholder company logo url
             try
             {
-                awsS3CompanyLogoUrl = s3Upload.value(companyImgStream);
+                awsS3CompanyLogoUrl = s3Upload.value(companyImgStream, "seller");
             }
             catch(Exception e)
             {

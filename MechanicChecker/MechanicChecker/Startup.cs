@@ -48,7 +48,7 @@ namespace MechanicChecker
             services.Add(new ServiceDescriptor(typeof(SellerAddressContext), new SellerAddressContext(Configuration.GetConnectionString("DefaultConnectionString"))));
             services.Add(new ServiceDescriptor(typeof(ExternalAPIsContext), new ExternalAPIsContext(Configuration.GetConnectionString("DefaultConnectionString"))));
             services.Add(new ServiceDescriptor(typeof(SellerContext), new SellerContext(Configuration.GetConnectionString("DefaultConnectionString"))));
-
+            services.AddSession();
             //services.AddTransient<ILocalProductRepository, EFLocalProductRepository>();
         }
 
@@ -64,10 +64,11 @@ namespace MechanicChecker
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>

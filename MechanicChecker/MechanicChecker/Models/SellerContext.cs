@@ -171,5 +171,47 @@ namespace MechanicChecker.Models
             return isPassed;
         }
 
+        public Seller GetSeller(string userId)
+        {
+            Seller seller = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Seller " +
+                    "where Username = '" + userId + "' or Email = '" + userId + "';", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        seller = new Seller()
+                        {
+                            AccountType = reader["AccountType"].ToString(),
+                            Application = reader["Application"].ToString(),
+                            ApprovalDate = DateTime.Now,
+                            BusinessPhone = reader["BusinessPhone"].ToString(),
+                            CompanyLogoUrl = reader["CompanyLogoUrl"].ToString(),
+                            CompanyName = reader["CompanyName"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            IsApproved = Convert.ToBoolean(reader["IsApproved"]),
+                            UserName = reader["Username"].ToString(),
+                            WebsiteUrl = reader["WebsiteUrl"].ToString(),
+                            ActivationCode = reader["ActivationCode"].ToString(),
+                            PasswordHash = reader["PasswordHash"].ToString(),
+                            ApplicationDate = DateTime.Now,
+                            SellerId = Convert.ToInt32(reader["SellerId"]),
+                            ResetPasswordCode = reader["ResetPasswordCode"].ToString()
+                        };
+
+                    }
+                }
+            }
+
+            return seller;
+        }
+
     }
 }

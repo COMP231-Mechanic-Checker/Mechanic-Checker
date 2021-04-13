@@ -24,40 +24,40 @@
 <div class="wrapper">
     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
     {
-    <div class="search_box">
-        <div class="input_postalcode">
-            <input type="text" class="input" id="homeAddress" name="homeAddress" placeholder="Postal Code">
-        </div>
-        <div class="dropdown">
-            <div class="default_option">All</div>
-            <ul>
-                <li data-value="0">All</li>
-                <li data-value="1">Local Sellers</li>
-                <li data-value="2">Ebay</li>
-                <li data-value="3">Amazon</li>
-                <li data-value="4">Alibaba</li>
-            </ul>
-            <input type="hidden" id="vendorFilter" name="vendorFilter" value="0">
+        <div class="search_box">
+            <div class="input_postalcode">
+                <input type="text" class="input" id="homeAddress" name="homeAddress" placeholder="Postal Code">
+            </div>
+            <div class="dropdown">
+                <div class="default_option">All</div>
+                <ul>
+                    <li data-value="0">All</li>
+                    <li data-value="1">Local Sellers</li>
+                    <li data-value="2">Ebay</li>
+                    <li data-value="3">Amazon</li>
+                    <li data-value="4">Alibaba</li>
+                </ul>
+                <input type="hidden" id="vendorFilter" name="vendorFilter" value="0">
 
-            @*<select name="vendorFilter">
-            <option value="0">All</option>
-            <option value="1">Local Sellers</option>
-            <option value="2">Ebay</option>
-            <option value="3">Amazon</option>
-            <option value="3">Alibaba</option>
-        </select>*@
+                @*<select name="vendorFilter">
+                        <option value="0">All</option>
+                        <option value="1">Local Sellers</option>
+                        <option value="2">Ebay</option>
+                        <option value="3">Amazon</option>
+                        <option value="3">Alibaba</option>
+                    </select>*@
+            </div>
+            <div class="search_field">
+                <input type="text" class="input" id="query" name="query" placeholder="Search" required>
+                @*@Html.TextBox("query")*@
+                <button><i class="fas fa-search"></i></button>
+            </div>
         </div>
-        <div class="search_field">
-            <input type="text" class="input" id="query" name="query" placeholder="Search" required>
-            @*@Html.TextBox("query")*@
-            <button><i class="fas fa-search"></i></button>
-        </div>       
-    </div>
-    <!--<div class="search_field">
-         <input type="text" class="input" id="query" name="query" placeholder="Search">-->
+        <!--<div class="search_field">
+             <input type="text" class="input" id="query" name="query" placeholder="Search">-->
         @*@Html.TextBox("query")*@
         <!--<button><i class="fas fa-search"></i></button>
-    </div>-->
+        </div>-->
     }
 </div>
 
@@ -86,3 +86,4 @@
     </script>
 
 }
+

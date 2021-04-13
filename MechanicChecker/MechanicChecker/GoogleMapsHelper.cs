@@ -8,16 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using MechanicChecker.Models;
 
 namespace MechanicChecker
 {
     public class GoogleMapsHelper
-    {        
-        public static async Task<string> CalculateDistance(string source, string destination)
+    {
+        public static string CalculateDistance(ExternalAPIsContext contextAPIs, string source, string destination)
         {
+            string apiKeyOwner = Startup.Configuration.GetSection("APIKeyOwners")["GoogleMaps"];
+            ExternalAPIs googleMapsAPI = contextAPIs.GetApiByService("DeveloperAPI GoogleMaps", apiKeyOwner);
+
+            // we assume that the key is active and quota is sufficient since we have unlimited quota for this for the next 2 months
+            string googleMapsAPIKey = googleMapsAPI.APIKey;
+
             string distance = "";
-            string url = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + source + "&destinations=" + destination + "&key=AIzaSyAWd6Xlw3397XCmkMm3IjrfLBD2eXaXhCE";
+            string url = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + source + "&destinations=" + destination + "&key=" + googleMapsAPIKey;
             WebRequest request = WebRequest.Create(url);
+            contextAPIs.activateAPI("DeveloperAPI GoogleMaps", apiKeyOwner); // reduce quota by 1
+
             using (WebResponse response = (HttpWebResponse)request.GetResponse())
             {
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))

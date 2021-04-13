@@ -49,10 +49,10 @@ namespace MechanicChecker.Models
                 }
             }
 
-        return list;
+            return list;
         }
 
-        public ExternalAPIs GetApiByService(string apiName)
+        public ExternalAPIs GetApiByService(string apiName, string keyOwner)
         {
             //List<ExternalAPIs> list = new List<ExternalAPIs>();
             ExternalAPIs externalAPI = null;
@@ -60,7 +60,8 @@ namespace MechanicChecker.Models
             using (MySqlConnection connec = GetConnection())
             {
                 connec.Open();
-                MySqlCommand comd = new MySqlCommand("select * from APIKey where Service = '" + apiName + "'", connec);
+                MySqlCommand comd = new MySqlCommand("select * from APIKey where Service = '" + apiName +
+                "' AND KeyOwner = '" + keyOwner + "';", connec);
 
                 using (var reader = comd.ExecuteReader())
                 {
@@ -72,11 +73,21 @@ namespace MechanicChecker.Models
                             Service = reader["Service"].ToString(),
                             APIKey = reader["APIKey"].ToString(),
                             KeyOwner = reader["KeyOwner"].ToString(),
+                            IsEnabled = Convert.ToBoolean(reader["IsEnabled"]),
                             Quota = Convert.ToInt32(reader["Quota"]),
                             ActiveDate = Convert.ToDateTime(reader["ActiveDate"].ToString()),
-                            ExpireDate = Convert.ToDateTime(reader["ExpireDate"].ToString()),
                             APIHost = reader["APIHost"].ToString()
                         };
+
+                        try
+                        {
+                            externalAPI.ExpireDate = Convert.ToDateTime(reader["ExpireDate"].ToString());
+                        }
+                        catch (Exception e)
+                        {
+                            externalAPI.ExpireDate = null;
+                        }
+
                     }
                 }
             }
@@ -84,11 +95,12 @@ namespace MechanicChecker.Models
             return externalAPI;
         }
 
-        
-        public string activateAPI(string apiService)
+
+        public void activateAPI(string apiService, string keyOwner)
         {
             bool isPassed = false;
-            string command = "select APIKey, Quota from APIKey where Service = '" + apiService + "';";
+            string command = "select APIKey, Quota from APIKey where Service = '" + apiService +
+                "' AND KeyOwner = '" + keyOwner + "';";
 
             //send query to database
             MySqlConnection myConnection = GetConnection();
@@ -100,8 +112,8 @@ namespace MechanicChecker.Models
             string returnedQuota = null;
             using (var reader = myCommand.ExecuteReader())
             {
-                
-                if(reader.Read())
+
+                if (reader.Read())
                 {
                     Debug.WriteLine(reader["APIKey"].ToString());
                     returnedAPIKey = reader["APIKey"].ToString();
@@ -111,20 +123,17 @@ namespace MechanicChecker.Models
                 }
             }
 
-            if (Convert.ToInt32(returnedQuota) > 0)
+            if (isPassed && Convert.ToInt32(returnedQuota) > 0)
             {
-                string stringCmd = "UPDATE APIKey SET Quota = Quota - 1 WHERE Service = '" + apiService + "';";
+                string stringCmd = "UPDATE APIKey SET Quota = Quota - 1 WHERE Service = '" + apiService +
+                "' AND KeyOwner = '" + keyOwner + "';";
 
-                            
                 MySqlCommand secondCommand = new MySqlCommand(stringCmd);
-                secondCommand.Connection = myConnection;                
+                secondCommand.Connection = myConnection;
                 secondCommand.ExecuteNonQuery();
-                return returnedAPIKey;
 
             }
             myConnection.Close();
-
-            return null;
         }
     }
 }

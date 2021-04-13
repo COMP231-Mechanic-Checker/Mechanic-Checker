@@ -6,35 +6,40 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using MechanicChecker.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace MechanicChecker
 {
     public class EcommerceHelper
     {
-        public static async Task<List<SellerProduct>> GetProductsFromEcommerceSite(string siteType, string query)
+        public static async Task<List<SellerProduct>> GetProductsFromEcommerceSite(SellerContext contextSeller, ExternalAPIsContext contextAPIs, string siteType, string query)
         {
-            switch(siteType)
+            switch (siteType)
             {
                 case "0":
-                    return await GetAllEcommerceProducts(query);
+                    return await GetAllEcommerceProducts(contextSeller, contextAPIs, query);
                 case "2":
-                    return await GetEbayProducts(query);
+                    return await GetEbayProducts(contextSeller, contextAPIs, query);
+                case "3":
+                    return await GetAmazonProducts(contextSeller, contextAPIs, query);
                 default:
                     return new List<SellerProduct>();
             }
 
         }
 
-        public static async Task<List<SellerProduct>> GetAllEcommerceProducts(string query)
+        public static async Task<List<SellerProduct>> GetAllEcommerceProducts(SellerContext contextSeller, ExternalAPIsContext contextAPIs, string query)
         {
             List<SellerProduct> list = new List<SellerProduct>();
 
             await Task.WhenAll(
                     // call all ecommerce apis
-                    GetEbayProducts(query)
+                    GetEbayProducts(contextSeller, contextAPIs, query),
+                    GetAmazonProducts(contextSeller, contextAPIs, query)
                     )
                     // add to output list whenever an api call is done
-                    .ContinueWith(apiRes => 
+                    .ContinueWith(apiRes =>
                     {
                         foreach (var apiItems in apiRes.Result)
                         {
@@ -45,7 +50,134 @@ namespace MechanicChecker
             return list;
         }
 
-        public static async Task<List<SellerProduct>> GetEbayProducts(string query)
+        public static async Task<List<SellerProduct>> GetAmazonProducts(SellerContext contextSeller, ExternalAPIsContext contextAPIs, string query)
+        {
+            /* 
+             * Send search request for products using the RapidAPI Axesso Amazon API. 
+             * 
+             * RapidAPI Axesso Amazon API Documentation: https://rapidapi.com/axesso/api/axesso-amazon-data-service1
+             * RapidAPI Axesso API General Documentation (Amazon): http://api-doc.axesso.de/#api-Amazon
+             * Access to use any RapidAPI API requires registration to RapidAPI: https://rapidapi.com/
+             * 
+             * The specific API function used is searchByKeywordAsin: 
+             * https://rapidapi.com/axesso/api/axesso-amazon-data-service1?endpoint=apiendpoint_9cca468a-ea41-4ab8-9412-605b486a6111
+             * 
+             * There are 2 API Keys required:
+             * x-rapidapi-key
+             * x-rapidapi-host
+             */
+
+            Seller amazonSeller = contextSeller.GetSellerByCompanyName("Amazon");
+            string apiKeyOwner = Startup.Configuration.GetSection("APIKeyOwners")["Amazon"];
+            ExternalAPIs amazonAPI = contextAPIs.GetApiByService("RapidAPI Amazon", apiKeyOwner);
+            List<SellerProduct> list = new List<SellerProduct>(); // assume no items will be returned
+
+            if (amazonAPI.IsEnabled && amazonAPI.Quota > 0)
+            {
+                string amazonRapidAPIEndpoint = "https://axesso-axesso-amazon-data-service-v1.p.rapidapi.com/amz/amazon-search-by-keyword-asin?";
+
+                string rapidAPIKey = amazonAPI.APIKey;
+                string rapidAPIHost = amazonAPI.APIHost;
+
+                string automotiveKeyword = "automotive";
+
+                Dictionary<string, string> amazonParameters = new Dictionary<string, string>()
+                {
+                    //{"x-rapidapi-key", rapidAPIKey},
+                    //{"x-rapidapi-host", rapidAPIHost},
+                    {"domainCode", "ca"},
+                    {"keyword", automotiveKeyword + " " + query},
+                    {"sortBy", "relevanceblender"},
+                    {"page", "1"},
+                };
+                FormUrlEncodedContent encodedAmazonParameters = new FormUrlEncodedContent(amazonParameters);
+
+                string url = amazonRapidAPIEndpoint + encodedAmazonParameters.ReadAsStringAsync().Result;
+
+                // get amazon products
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("x-rapidapi-key", rapidAPIKey);
+                client.DefaultRequestHeaders.Add("x-rapidapi-host", rapidAPIHost);
+                client.DefaultRequestHeaders.Add("useQueryString", "true");
+                HttpResponseMessage response = await client.GetAsync(url);
+                contextAPIs.activateAPI("RapidAPI Amazon", apiKeyOwner); // reduce quota by 1
+
+                /* Parse JSON request to SellerProducts */
+                if (response.IsSuccessStatusCode)
+                {
+                    /*
+                     * Newtonsoft.Json.Linq
+                     * JToken Hierarchy
+                     * Refer to: 
+                     * https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_Linq_JToken.htm
+                     * 
+                     * JToken is abstract. Allows ability to handle any type of JSON input.
+                     */
+                    string jsonAmazonRes = await response.Content.ReadAsStringAsync();
+                    JToken jsonAmazonResObj = JsonConvert.DeserializeObject<JToken>(jsonAmazonRes);
+                    JToken jsonAmazonItems = null;
+                    try
+                    {
+                        jsonAmazonItems = jsonAmazonResObj["searchProductDetails"];
+
+                        // void the returned items if there is nothing automobile-related in them
+                        string topCategory = jsonAmazonResObj.SelectToken("categories[0]").ToString();
+                        if (!topCategory.Contains(automotiveKeyword, StringComparison.OrdinalIgnoreCase))
+                        {
+                            jsonAmazonItems = null;
+                        }
+                    }
+                    catch (NullReferenceException e)
+                    { }
+
+                    if (jsonAmazonItems is object) // check if any items were returned
+                    {
+                        int amazonItemId = 1;
+                        /*
+                         * JObject is use here instead of JToken since we know we're iterating through item objects.
+                         * JToken would also work, but JObject is more specific.
+                         */
+                        foreach (JObject item in jsonAmazonItems)
+                        {
+                            try
+                            {
+                                LocalProduct localProduct = new LocalProduct()
+                                {
+                                    LocalProductId = amazonItemId,
+                                    Category = "Item",
+                                    Title = item.SelectToken("productDescription").ToString(),
+                                    Price = item.SelectToken("price").ToString(),
+                                    Description = item.SelectToken("productRating").ToString(),
+                                    ImageUrl = item.SelectToken("imgUrl").ToString(),
+                                    sellerId = amazonSeller.SellerId.ToString(),
+                                    ProductUrl = "https://amazon.ca/" + item.SelectToken("dpUrl").ToString(),
+                                    IsVisible = true,
+                                    IsQuote = false
+                                };
+
+                                if (localProduct.Description is null)
+                                {
+                                    localProduct.Description = "";
+                                }
+
+                                Seller seller = amazonSeller;
+                                SellerAddress sellerAddress = new SellerAddress();
+
+                                list.Add(new SellerProduct(localProduct, seller, sellerAddress));
+
+                                amazonItemId += 1;
+                            }
+                            catch (NullReferenceException e)
+                            { continue; }
+                        }
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        public static async Task<List<SellerProduct>> GetEbayProducts(SellerContext contextSeller, ExternalAPIsContext contextAPIs, string query)
         {
             /* 
              * Send search request for products using the Ebay Finding API.
@@ -61,194 +193,182 @@ namespace MechanicChecker
              * The App ID, e.g. SECURITY-APPNAME, is the API key needed for the Ebay Finding API.
              */
 
-            string ebayFindingAPIEndpoint = "https://svcs.ebay.com/services/search/FindingService/v1?";
+            Seller ebaySeller = contextSeller.GetSellerByCompanyName("Ebay");
+            string apiKeyOwner = Startup.Configuration.GetSection("APIKeyOwners")["Ebay"];
+            ExternalAPIs ebayAPI = contextAPIs.GetApiByService("DeveloperAPI Ebay", apiKeyOwner);
+            List<SellerProduct> list = new List<SellerProduct>();
 
-            /*
-             * Query parameters for Ebay Finding API
-             */
-
-            // App ID / SECURITY-APPNAME
-            string ebayAPIKey = Startup.Configuration.GetSection("APIKeys")["Ebay"];
-
-            /*
-             * EBAY-ENCA refers to Ebay Canada
-             * Refer to: https://developer.ebay.com/devzone/finding/CallRef/Enums/GlobalIdList.html
-             */
-            string globalId = "EBAY-ENCA";
-
-            /*
-             * The specific API function used is findItemsAdvanced
-             * Refer to: https://developer.ebay.com/devzone/finding/CallRef/findItemsAdvanced.html
-             */
-            string operationName = "findItemsAdvanced";
-
-            // version of the Ebay Finding API to use
-            string serviceVersion = "1.13.0";
-
-            /*
-             * How the items returned in the JSON are sorted in the items array
-             * Refer to: https://developer.ebay.com/devzone/finding/CallRef/extra/fnditmsadvncd.rqst.srtordr.html
-             */
-            string sortOrder = "BestMatch";
-
-            /*
-             * Determines the subset of items returned.
-             * Refer to: https://developer.ebay.com/devzone/finding/CallRef/types/PaginationInput.html
-             */
-            string paginationInputPageNumber = (1).ToString();
-            string paginationInputEntriesPerPage = (100).ToString();
-
-            /*
-             * 6000 refers to the Automotive category when the context is Ebay Canada
-             * Refer to: https://ir.ebaystatic.com/pictures/aw/pics/catchanges/2021/CA_Category_Changes_May2021.pdf
-             * Pg. 21
-             */
-            string categoryId = (6000).ToString();
-
-            /*
-             * Option to use the searcy query on item descriptions
-             * Refer to: https://developer.ebay.com/devzone/finding/CallRef/findItemsAdvanced.html#sampledescription
-             */
-            string descriptionSearch = (true).ToString();
-
-            Dictionary<string, string> ebayParameters = new Dictionary<string, string>()
+            if (ebayAPI.IsEnabled && ebayAPI.Quota > 0)
             {
-                {"SECURITY-APPNAME", ebayAPIKey},
-                {"GLOBAL-ID", globalId},
-                {"OPERATION-NAME", operationName},
-                {"SERVICE-VERSION", serviceVersion},
-                {"RESPONSE-DATA-FORMAT", "JSON"},
-                {"keywords", query},
-                {"sortOrder", sortOrder},
-                {"paginationInput.pageNumber", paginationInputPageNumber},
-                {"paginationInput.entriesPerPage", paginationInputEntriesPerPage},
-                {"categoryId", categoryId},
-                {"descriptionSearch", descriptionSearch},
+                string ebayFindingAPIEndpoint = "https://svcs.ebay.com/services/search/FindingService/v1?";
 
                 /*
-                 * Parameters that can be used to further filter items.
-                 * The additional parameters fall under the itemFilter option.
-                 * Refer to: https://developer.ebay.com/devzone/finding/CallRef/types/ItemFilterType.html
-                 * 
-                 * listedIn:
-                 * Restrict listings based on location specified
-                 * 
-                 * currency:
-                 * Restrict listings based on currency listed
-                 * Refer to: https://developer.ebay.com/devzone/finding/CallRef/Enums/currencyIdList.html
-                 * 
-                 * listingType:
-                 * Restrict listings based on type of listing, e.g. fixed price, auction
+                 * Query parameters for Ebay Finding API
                  */
-                {"itemFilter(0).name", "listedIn"},
-                {"itemFilter(0).value", globalId},
-                {"itemFilter(1).name", "currency"},
-                {"itemFilter(1).value", "CAD"},
-                {"itemFilter(2).name", "listingType"},
-                {"itemFilter(2).value", "fixedPrice"},
+
+                // App ID / SECURITY-APPNAME
+                string ebayAPIKey = ebayAPI.APIKey;
 
                 /*
-                 * Parameters that can be used to get additional information from the API call.
-                 * The additional parameters fall under the outputSelector option.
-                 * Refer to: https://developer.ebay.com/devzone/finding/CallRef/types/OutputSelectorType.html
-                 * 
-                 * sellerInfo:
-                 * Additional info about the seller for each item.
-                 * 
-                 * pictureURLLarge:
-                 * Provides URL images with size 400x400
+                 * EBAY-ENCA refers to Ebay Canada
+                 * Refer to: https://developer.ebay.com/devzone/finding/CallRef/Enums/GlobalIdList.html
                  */
-                {"outputSelector(0)", "sellerInfo"},
-                {"outputSelector(1)", "pictureURLLarge"}
-            };
-            FormUrlEncodedContent encodedEbayParameters = new FormUrlEncodedContent(ebayParameters);
+                string globalId = "EBAY-ENCA";
 
-            string url = ebayFindingAPIEndpoint + encodedEbayParameters.ReadAsStringAsync().Result;
-
-            // get ebay products
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
-
-            List<SellerProduct> list = new List<SellerProduct>(); 
-            /* Parse JSON request to SellerProducts */
-            if (response.IsSuccessStatusCode)
-            {
                 /*
-                 * Newtonsoft.Json.Linq
-                 * JToken Hierarchy
-                 * Refer to: 
-                 * https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_Linq_JToken.htm
-                 * 
-                 * JToken is abstract. Allows ability to handle any type of JSON input.
+                 * The specific API function used is findItemsAdvanced
+                 * Refer to: https://developer.ebay.com/devzone/finding/CallRef/findItemsAdvanced.html
                  */
-                string jsonEbayRes = await response.Content.ReadAsStringAsync();
-                JToken jsonEbayResObj = JsonConvert.DeserializeObject<JToken>(jsonEbayRes);
-                JToken jsonEbayItems = null;
-                try
+                string operationName = "findItemsAdvanced";
+
+                // version of the Ebay Finding API to use
+                string serviceVersion = "1.13.0";
+
+                /*
+                 * How the items returned in the JSON are sorted in the items array
+                 * Refer to: https://developer.ebay.com/devzone/finding/CallRef/extra/fnditmsadvncd.rqst.srtordr.html
+                 */
+                string sortOrder = "BestMatch";
+
+                /*
+                 * Determines the subset of items returned.
+                 * Refer to: https://developer.ebay.com/devzone/finding/CallRef/types/PaginationInput.html
+                 */
+                string paginationInputPageNumber = (1).ToString();
+                string paginationInputEntriesPerPage = (100).ToString();
+
+                /*
+                 * 6000 refers to the Automotive category when the context is Ebay Canada
+                 * Refer to: https://ir.ebaystatic.com/pictures/aw/pics/catchanges/2021/CA_Category_Changes_May2021.pdf
+                 * Pg. 21
+                 */
+                string categoryId = (6000).ToString();
+
+                /*
+                 * Option to use the searcy query on item descriptions
+                 * Refer to: https://developer.ebay.com/devzone/finding/CallRef/findItemsAdvanced.html#sampledescription
+                 */
+                string descriptionSearch = (true).ToString();
+
+                Dictionary<string, string> ebayParameters = new Dictionary<string, string>()
                 {
-                    jsonEbayItems = jsonEbayResObj["findItemsAdvancedResponse"][0]["searchResult"][0]["item"];
-                }
-                catch(NullReferenceException e)
-                { }
+                    {"SECURITY-APPNAME", ebayAPIKey},
+                    {"GLOBAL-ID", globalId},
+                    {"OPERATION-NAME", operationName},
+                    {"SERVICE-VERSION", serviceVersion},
+                    {"RESPONSE-DATA-FORMAT", "JSON"},
+                    {"keywords", query},
+                    {"sortOrder", sortOrder},
+                    {"paginationInput.pageNumber", paginationInputPageNumber},
+                    {"paginationInput.entriesPerPage", paginationInputEntriesPerPage},
+                    {"categoryId", categoryId},
+                    {"descriptionSearch", descriptionSearch},
 
-                if (jsonEbayItems is object) // check if any items were returned
-                {
-                    list = new List<SellerProduct>();
-
-                    Seller ebaySeller = new Seller()
-                    {
-                        SellerId = 1,
-                        UserName = "MajorRetailer_Ebay",
-                        FirstName = "Pierre",
-                        LastName = "Omidyar",
-                        Email = "mechaniccheckerebay@gmail.com",
-                        PasswordHash = null,
-                        AccountType = "Store",
-                        IsApproved = true,
-                        CompanyName = "Ebay",
-                        BusinessPhone = "8869619253",
-                        CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/seller/ebay-logo-1-1200x630-margin.png",
-                        WebsiteUrl = "https://www.ebay.ca/",
-                        Application = "This Major Retailer is approved automatically.",
-                        ApplicationDate = Convert.ToDateTime("2021-04-02 21:08:47"),
-                        ApprovalDate = Convert.ToDateTime("2021-04-02 21:08:47")
-                    };
-
-                    int ebayItemId = 1;
                     /*
-                     * JObject is use here instead of JToken since we know we're iterating through item objects.
-                     * JToken would also work, but JObject is more specific.
+                     * Parameters that can be used to further filter items.
+                     * The additional parameters fall under the itemFilter option.
+                     * Refer to: https://developer.ebay.com/devzone/finding/CallRef/types/ItemFilterType.html
+                     * 
+                     * listedIn:
+                     * Restrict listings based on location specified
+                     * 
+                     * currency:
+                     * Restrict listings based on currency listed
+                     * Refer to: https://developer.ebay.com/devzone/finding/CallRef/Enums/currencyIdList.html
+                     * 
+                     * listingType:
+                     * Restrict listings based on type of listing, e.g. fixed price, auction
                      */
-                    foreach (JObject item in jsonEbayItems)
+                    {"itemFilter(0).name", "listedIn"},
+                    {"itemFilter(0).value", globalId},
+                    {"itemFilter(1).name", "currency"},
+                    {"itemFilter(1).value", "CAD"},
+                    {"itemFilter(2).name", "listingType"},
+                    {"itemFilter(2).value", "fixedPrice"},
+
+                    /*
+                     * Parameters that can be used to get additional information from the API call.
+                     * The additional parameters fall under the outputSelector option.
+                     * Refer to: https://developer.ebay.com/devzone/finding/CallRef/types/OutputSelectorType.html
+                     * 
+                     * sellerInfo:
+                     * Additional info about the seller for each item.
+                     * 
+                     * pictureURLLarge:
+                     * Provides URL images with size 400x400
+                     */
+                    {"outputSelector(0)", "sellerInfo"},
+                    {"outputSelector(1)", "pictureURLLarge"}
+                };
+                FormUrlEncodedContent encodedEbayParameters = new FormUrlEncodedContent(ebayParameters);
+
+                string url = ebayFindingAPIEndpoint + encodedEbayParameters.ReadAsStringAsync().Result;
+
+                // get ebay products
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(url);
+                contextAPIs.activateAPI("DeveloperAPI Ebay", apiKeyOwner); // reduce quota by 1
+
+                /* Parse JSON request to SellerProducts */
+                if (response.IsSuccessStatusCode)
+                {
+                    /*
+                     * Newtonsoft.Json.Linq
+                     * JToken Hierarchy
+                     * Refer to: 
+                     * https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_Linq_JToken.htm
+                     * 
+                     * JToken is abstract. Allows ability to handle any type of JSON input.
+                     */
+                    string jsonEbayRes = await response.Content.ReadAsStringAsync();
+                    JToken jsonEbayResObj = JsonConvert.DeserializeObject<JToken>(jsonEbayRes);
+                    JToken jsonEbayItems = null;
+                    try
                     {
+                        jsonEbayItems = jsonEbayResObj["findItemsAdvancedResponse"][0]["searchResult"][0]["item"];
+                    }
+                    catch (NullReferenceException e)
+                    { }
 
-                        try
+                    if (jsonEbayItems is object) // check if any items were returned
+                    {
+                        int ebayItemId = 1;
+                        /*
+                         * JObject is use here instead of JToken since we know we're iterating through item objects.
+                         * JToken would also work, but JObject is more specific.
+                         */
+                        foreach (JObject item in jsonEbayItems)
                         {
-                            LocalProduct localProduct = new LocalProduct()
+
+                            try
                             {
-                                LocalProductId = ebayItemId,
-                                Category = "Item",
-                                Title = item.SelectToken("title[0]").ToString(),
-                                Price = item.SelectToken("sellingStatus[0].convertedCurrentPrice[0].__value__").ToString(),
-                                Description = item.SelectToken("primaryCategory[0].categoryName[0]").ToString(),
-                                ImageUrl = item.SelectToken("galleryURL[0]").ToString(),
-                                sellerId = ebaySeller.SellerId.ToString(),
-                                ProductUrl = item.SelectToken("viewItemURL[0]").ToString(),
-                                IsVisible = true,
-                                IsQuote = false
-                            };
-                            Seller seller = ebaySeller;
-                            SellerAddress sellerAddress = new SellerAddress();
+                                LocalProduct localProduct = new LocalProduct()
+                                {
+                                    LocalProductId = ebayItemId,
+                                    Category = "Item",
+                                    Title = item.SelectToken("title[0]").ToString(),
+                                    Price = item.SelectToken("sellingStatus[0].convertedCurrentPrice[0].__value__").ToString(),
+                                    Description = item.SelectToken("primaryCategory[0].categoryName[0]").ToString(),
+                                    ImageUrl = item.SelectToken("galleryURL[0]").ToString(),
+                                    sellerId = ebaySeller.SellerId.ToString(),
+                                    ProductUrl = item.SelectToken("viewItemURL[0]").ToString(),
+                                    IsVisible = true,
+                                    IsQuote = false
+                                };
+                                Seller seller = ebaySeller;
+                                SellerAddress sellerAddress = new SellerAddress();
 
-                            list.Add(new SellerProduct(localProduct, seller, sellerAddress));
+                                list.Add(new SellerProduct(localProduct, seller, sellerAddress));
 
-                            ebayItemId += 1;
+                                ebayItemId += 1;
+                            }
+                            catch (NullReferenceException e)
+                            { continue; }
                         }
-                        catch (NullReferenceException e)
-                        { continue; }
                     }
                 }
             }
+
             return list;
         }
 

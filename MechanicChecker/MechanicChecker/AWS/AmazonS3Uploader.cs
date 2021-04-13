@@ -7,15 +7,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-
 namespace MechanicChecker.AWS
 {
     public class AmazonS3Uploader
     {
-        public static string folder = "seller";
-        //private string bucketName = "mechanic.checker";
+        private static string bucketName = "mechanic.checker";
 
-        public void UploadFile(string filename, IFormFile readStream,string bucketName)
+        public void UploadFile(string filename, IFormFile readStream, string folder)
         {
             string keyName = string.Format("{0}/{1}", folder, filename);
             var client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1);
@@ -46,15 +44,15 @@ namespace MechanicChecker.AWS
                 }
             }
         }
+
         //This is the method you will call in the account controller
-        public void AWSdelete( string filename,string bucketName)
+        public void AWSdelete( string filename,string folder)
         {
             var client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1);
-            deleteFile(filename,bucketName).Wait();
+            deleteFile(filename,folder).Wait();
         }
 
-
-        private static async Task deleteFile(string filename,string bucketName)
+        private static async Task deleteFile(string filename,string folder)
         {
             string keyName = string.Format("{0}/{1}", folder, filename);
             var client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1);
@@ -78,6 +76,5 @@ namespace MechanicChecker.AWS
                 Console.WriteLine("Unknown encountered on server. Message:'{0}' when deleting an object", e.Message);
             }
         }
-
     }
 }

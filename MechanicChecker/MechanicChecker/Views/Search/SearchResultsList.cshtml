@@ -21,9 +21,13 @@
 
 
 
-
 <div class="row">
+    <div class="row" style="float:right">
+        <button type="submit" action="SearchCompareTwoParts" contoller="Search">Compare 2 Parts or Services</button>
+       <br /> <label>2 items selected</label>
+    </div>
     <div class="col-sm-2">
+        <br />
 
 
         <div class="sidenav">
@@ -37,6 +41,7 @@
             <br />
             <h3 class="h3 text-success ">&nbsp;&nbsp;Filter Options</h3>
             <br />
+
 
 
             @*category drop down list*@
@@ -316,10 +321,6 @@
                                                     <span>@product.distance  to @product.sellerAddress.Address</span>
                                                 }
                                             </p>-->
-                                           
-                                            
-                                            
-                                            
                                             @*New code start*@
                                             @{ string output2 = Newtonsoft.Json.JsonConvert.SerializeObject(product).ToString();}
                                             @using (Html.BeginForm("Details", "Search"))
@@ -331,8 +332,8 @@
 
 
                                             @*<p>
-                                                  @Newtonsoft.Json.JsonConvert.DeserializeObject(output).ToString()
-                                            </p>*@
+                                                      @Newtonsoft.Json.JsonConvert.DeserializeObject(output).ToString()
+                                                </p>*@
                                             <p class="card-text">
                                                 @if (product.distance != null)
                                                 {

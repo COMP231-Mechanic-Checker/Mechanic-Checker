@@ -113,7 +113,7 @@ namespace MechanicChecker.Controllers
             }
             catch (Exception e)
             {
-                awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/seller/default/unnamed.jpg";
+                awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/product/default/unnamed.jpg";
             }
 
             //string sellerWebsiteUrl = "https://michaelasemota.netlify.app/";
@@ -126,8 +126,8 @@ namespace MechanicChecker.Controllers
                 Description = formCollection["Description"].ToString().Trim(),
                 ImageUrl = awsS3CompanyLogoUrl,
                 ProductUrl = formCollection["ProductUrl"].ToString().Trim(),
-                IsQuote = true,
-                IsVisible = true,//Convert.ToBoolean(formCollection["IsVisible"])
+                IsQuote = Convert.ToBoolean(formCollection["IsQuote"].ToString().Split(',')[0]),
+                IsVisible = true,
                 sellerId = formCollection["SellerId"].ToString()
             };
 

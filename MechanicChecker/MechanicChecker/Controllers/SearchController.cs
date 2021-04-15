@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MechanicChecker.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -134,11 +135,27 @@ namespace MechanicChecker.Controllers
             return View("SearchViewDetails", product);
         }
 
+        //[HttpPost]
+        //public IActionResult CompareTwoParts(string product1)
+        //{
+        //    var pr = product1;
 
-    public IActionResult SearchCompareTwoParts()
-    {
-        return View("SearchCompareTwoParts");
-    }
+        //    return View("SearchCompareTwoParts", product1);
+        //}
+
+        [HttpPost]
+        public IActionResult CompareTwoParts(string product1, string product2)
+        {
+
+            SellerProduct prod1 = JsonConvert.DeserializeObject<SellerProduct>(product1);
+            SellerProduct prod2 = JsonConvert.DeserializeObject<SellerProduct>(product2);
+
+            List<SellerProduct> products = new List<SellerProduct>();
+            products.Add(prod1);
+            products.Add(prod2);
+
+            return View("SearchCompareTwoParts", products);
+        }
 
     }
 

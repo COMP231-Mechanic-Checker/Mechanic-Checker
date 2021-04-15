@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<MechanicChecker.Models.SellerProduct>
+
 @{
     ViewData["Title"] = "SearchCompareTwoParts";
 }
@@ -25,7 +26,7 @@
 
 <div>
     <a onclick="history.back()" class="previous">&laquo; Previous</a>
-    
+
 </div>
 <div class="header center-block">
 
@@ -38,23 +39,41 @@
                 <li class="w3-padding-10">
                     <img src="~/images/steering.jpg" alt="Auto Parts Logo" height="200" width="200" class="center-block">
                 </li>
-                <li class="w3-black w3-xlarge w3-padding-8">Steering</li>
-                <li class="w3-padding-14"><b>Price:</b> $180.00</li>
-                <li class="w3-light-grey w3-padding-20">
-                    <span><button class="btn btn-primary">Product link</button></span>
-                    <span><button class="btn btn-primary">Company Web Site</button></span>
-                </li>
-                <li class="w3-padding-14"><b>Company Name:</b> eBay</li>
-                <li class="w3-padding-14"><img src="~/images/eBay.png" alt="eBay Logo" style="float: inherit;" height="50" width="70" class="rg"></li>
-                <li class="w3-padding-14"><b>Description:</b><br /> Super Rare Genuine TRD Emblem 3 Spokes MOMO Steering Wheel oem used KBA70068</li>
+                <li class="w3-black w3-xlarge w3-padding-8">@Model.First().localProduct.Title</li>
                 <li class="w3-padding-14">
-                    <h3> 1 km</h3>
-                    <span class="w3-opacity"><b>Distance</b></span>
+                    <b>Price:</b>
+                    @{
+                        if (@Model.First().localProduct.Price.Contains("-") || @Model.First().localProduct.Price == "0" || @Model.First().localProduct.Price == "")
+                        {
+                            <text>Contact seller for price</text>
+                        }
+                        else
+                        {
+                            <text>$ @Model.First().localProduct.Price</text>
+                        }
+                    }
                 </li>
-                <li class="w3-padding-14"><b>Category:</b> Auto Parts </li>
-                <li class="w3-padding-14"><b>Company Address:</b><br />2640 Midland Ave, Toronto, ON, M1P2PS</li>
-                <li class="w3-padding-14"><b>Phone:</b> 6473853056</li>
-                <li class="w3-padding-14"><b>Account Type:</b> Big box store</li>
+                <li class="w3-light-grey w3-padding-20">
+                    <span><a href="@Model.First().localProduct.ProductUrl" class="btn btn-primary">Product link</a></span>
+                    <span><a href="@Model.First().seller.WebsiteUrl" class="btn btn-primary">Company Web Site</a></span>
+                </li>
+                <li class="w3-padding-14"><b>Company Name:</b>@Model.First().seller.UserName</li>
+                <li class="w3-padding-14"><img src="@Model.First().seller.CompanyLogoUrl" alt="eBay Logo" style="float: inherit;" height="50" width="70" class="rg"></li>
+                <li class="w3-padding-14"><b>Description:</b><br />@Model.First().localProduct.Description</li>
+                <li class="w3-padding-14">
+                  
+                        @if (Model.First().distance != null)
+                        {
+
+                             <h3>@Model.First().distance  to @Model.First().sellerAddress.Address</h3>
+                       
+                             <span class="w3-opacity"><b>Distance</b></span> 
+                        }
+                </li>
+                <li class="w3-padding-14"><b>Category:</b> @Model.First().localProduct.Category</li>
+                <li class="w3-padding-14"><b>Company Address:</b><br />@Model.First().sellerAddress.Address</li>
+                <li class="w3-padding-14"><b>Phone:</b> @Model.First().seller.BusinessPhone</li>
+                <li class="w3-padding-14"><b>Account Type:</b> @Model.First().seller.AccountType</li>
             </ul>
         </div>
     </div>
@@ -65,23 +84,41 @@
                 <li class="w3-padding-14">
                     <img src="~/images/steering2.jpg" alt="Auto Parts Logo" height="200" width="200" class="center-block">
                 </li>
-                <li class="w3-black w3-xlarge w3-padding-8">Steering</li>
-                <li class="w3-padding-14"><b>Price:</b> $100.00</li>
-                <li class="w3-light-grey w3-padding-20">
-                    <span><button class="btn btn-primary">Product link</button></span>
-                    <span><button class="btn btn-primary">Company Web Site</button></span>
-                </li>
-                <li class="w3-padding-14"><b>Company Name:</b> eBay</li>
-                <li class="w3-padding-10"><img src="~/images/AmazonLogo.jpg" alt="Amazon Logo" style="float: inherit;" height="50" width="70" class="rg"></li>
-                <li class="w3-padding-14"><b>Description:</b><br /> 1968 - 1975 / 1977-1982 Corvette C3 Mahogany Steering Wheel w/ 3 Chrome Spokes</li>
+                <li class="w3-black w3-xlarge w3-padding-8">@Model.Last().localProduct.Title</li>
                 <li class="w3-padding-14">
-                    <h3> 1 km</h3>
-                    <span class="w3-opacity"><b>Distance</b></span>
+                    <b>Price:</b>
+
+                    @{
+                        if (@Model.Last().localProduct.Price.Contains("-") || @Model.Last().localProduct.Price == "0" || @Model.Last().localProduct.Price == "")
+                        {
+                            <text>Contact seller for price</text>
+                        }
+                        else
+                        {
+                            <text>$ @Model.Last().localProduct.Price</text>
+                        }
+                    }
                 </li>
-                <li class="w3-padding-14"><b>Category:</b> Auto Parts </li>
-                <li class="w3-padding-14"><b>Company Address:</b><br />2640 Midland Ave, Toronto, ON, M1P2PS</li>
-                <li class="w3-padding-14"><b>Phone:</b> 6473853056</li>
-                <li class="w3-padding-14"><b>Account Type:</b> Big box store</li>
+                <li class="w3-light-grey w3-padding-20">
+                    <span><a  href="@Model.Last().localProduct.ProductUrl" class="btn btn-primary">Product link</a></span>
+                    <span><a href="@Model.Last().seller.WebsiteUrl" class="btn btn-primary">Company Web Site</a></span>
+                </li>
+                <li class="w3-padding-14"><b>Company Name:</b> @Model.Last().seller.UserName</li>
+                <li class="w3-padding-10"><img src="@Model.Last().seller.CompanyLogoUrl" style="float: inherit;" height="50" width="70" class="rg"></li>
+                <li class="w3-padding-14"><b>Description:</b><br />@Model.Last().localProduct.Description</li>
+                <li class="w3-padding-14">
+                    @if (Model.Last().distance != null)
+                    {
+
+                        <h3>@Model.Last().distance  to @Model.Last().sellerAddress.Address</h3>
+                        <span class="w3-opacity"><b>Distance</b></span>
+                    }
+
+                </li>
+                <li class="w3-padding-14"><b>Category:</b>@Model.Last().localProduct.Category </li>
+                <li class="w3-padding-14"><b>Company Address:</b><br />@Model.Last().sellerAddress.Address</li>
+                <li class="w3-padding-14"><b>Phone:</b> @Model.Last().seller.BusinessPhone</li>
+                <li class="w3-padding-14"><b>Account Type:</b>@Model.Last().seller.AccountType</li>
             </ul>
         </div>
     </div>

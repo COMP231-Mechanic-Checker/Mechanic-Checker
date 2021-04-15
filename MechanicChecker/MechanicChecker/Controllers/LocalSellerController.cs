@@ -128,5 +128,13 @@ namespace MechanicChecker.Controllers
                 return View();
             }
         }
+
+
+        public IActionResult SellerDeletePage()
+        {
+            return View("SellerDeletePage");
+        }
+
     }
 }
+

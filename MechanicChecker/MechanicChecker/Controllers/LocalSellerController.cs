@@ -178,6 +178,11 @@ namespace MechanicChecker.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult SellerDeletePage()
+        {
+            return View("SellerDeletePage");
+        }
 
     }
 }
+

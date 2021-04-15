@@ -22,9 +22,16 @@
 
 
 <div class="row">
-    <div class="row" style="float:right">
-        <button type="submit" action="SearchCompareTwoParts" contoller="Search">Compare 2 Parts or Services</button>
-       <br /> <label>2 items selected</label>
+    <div class="row" style="float:right">        
+        <label>Select 2 items to compare</label>
+        <form id="compareform" method="post"style="display:none;" action="CompareTwoParts" contoller="Search">
+
+            <input hidden="hidden" name="product1" value="numb1" id="prod1" />
+            <input hidden="hidden" name="product2" value="numb2" id="prod2" />
+            <button type="submit" value="" id="btnCompare">Compare 2 Parts or Services</button>
+            <br /> 
+        </form>
+        
     </div>
     <div class="col-sm-2">
         <br />
@@ -253,7 +260,7 @@
 
         <br />
         <br />
-        <table height="600" class="table table-sm table-striped table-bordered scrollable-menu" style="width:700px; background-color: #FFFFFF;">
+        <table id="productTable" height="600" class="table table-sm table-striped table-bordered scrollable-menu" style="width:700px; background-color: #FFFFFF;">
             <tbody>
                 <!--shows each car part/service from the product list model (recived from the controller via model) in the table below-->
                 @*TODO: update the model*@
@@ -261,7 +268,12 @@
                 {
                     <tr>
                         <td>
-                            <input type="checkbox" id="@product.localProduct.LocalProductId" name="@product.localProduct.LocalProductId" value="@product.localProduct.LocalProductId" style="width:20px; height:20px">
+                            @{
+
+                            }
+                            @{ string compareProducts = Newtonsoft.Json.JsonConvert.SerializeObject(product).ToString();}
+                            <input type="checkbox" id="@product.localProduct.LocalProductId" name="compare" value="@compareProducts" style="width:20px; height:20px">
+
                             <div class="card flex-row flex-wrap ">
 
 
@@ -314,13 +326,13 @@
                                             <!--<p class="card-text">-->
                                             @*TODO: add action and controller to switch to product details view*@
                                             <!--@Html.ActionLink("Click to view details", "#", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " })
-                                            </p>
-                                            <p class="card-text">
-                                                @if (product.distance != null)
-                                                {
-                                                    <span>@product.distance  to @product.sellerAddress.Address</span>
-                                                }
-                                            </p>-->
+                    </p>
+                    <p class="card-text">
+                        @if (product.distance != null)
+                        {
+                            <span>@product.distance  to @product.sellerAddress.Address</span>
+                        }
+                    </p>-->
                                             @*New code start*@
                                             @{ string output2 = Newtonsoft.Json.JsonConvert.SerializeObject(product).ToString();}
                                             @using (Html.BeginForm("Details", "Search"))
@@ -332,8 +344,8 @@
 
 
                                             @*<p>
-                                                      @Newtonsoft.Json.JsonConvert.DeserializeObject(output).ToString()
-                                                </p>*@
+                              @Newtonsoft.Json.JsonConvert.DeserializeObject(output).ToString()
+                        </p>*@
                                             <p class="card-text">
                                                 @if (product.distance != null)
                                                 {
@@ -385,7 +397,83 @@
                 }
             });
         }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var checkboxes = document.querySelectorAll('input[type=checkbox][name=compare]');
+            
+            var count = 0;
+            var list = [];
+            for (var checkbox of checkboxes) {
+                checkbox.addEventListener('change', function (event) {
+
+                    if (event.target.checked) {
+
+                        if (count < 2) {
+
+                           // alert(`${event.target.value} is checked. position ${count}`);
+                            list[count] = event.target;
+                            count++;
+                        }
+                        else {
+                            var first = list[0]
+                            first.checked = false;
+                            var second = list[1];
+                            list[0] = second;
+                            list[1] = event.target;
+                           // alert(`${event.target.value} is checked first: ${list[0].value},  second: ${list[1].value}`);
+                        }
+
+                    } else {
+                        if (list[0] == event.target) {
+                            list.shift();//remove first
+                        }
+
+                        if (list[1] == event.target) {
+                            list.pop();//remove last
+                        }
+                       // alert(`${event.target.value} is unchecked`);
+                    }
+                    var compForm = document.getElementById("compareform");
+                    if (list.length == 2) {
+                        compForm.style.display = "block";
+                    }
+                    else {
+                        compForm.style.display = "none";
+                    }
+                });
+            }
+
+
+            
+            $("body").on("click", "#btnCompare", function () {
+                //Loop through the Table rows and build a JSON array.
+
+
+                var products = new Array();
+                var checkboxes = document.querySelectorAll('input[type=checkbox][name=compare]');
+                var input1 = document.getElementById("prod1");
+                var input2 = document.getElementById("prod2");
+               
+                
+                for (var checkbox of checkboxes) {
+
+                    if (checkbox.checked) {                        
+                        products.push(checkbox.value);                        
+                    }
+                }  
+
+                if (products.length == 2) {
+                    input1.value = products[0];
+                    input2.value = products[1];
+                }
+            });
+        }, false);
+
+
+
     </script>
+}
 
 
 }

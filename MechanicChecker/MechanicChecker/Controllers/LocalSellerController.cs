@@ -164,6 +164,17 @@ namespace MechanicChecker.Controllers
             localProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
             var result = localProductContext.deleteProduct(sellerID, productId);
 
+            // To delete product image from aws
+            string productUrlToDelete = "https://s3.amazonaws.com/mechanic.checker/product/HEq6c8yaf9DYtHkvUcNcrpYzfHnTPlR13X7gSQ3VJ7sxrJfyPN.jpg";
+            string filenameToDelete = productUrlToDelete.Split('/').Last<string>();
+            AmazonS3Uploader s3Upload = new AmazonS3Uploader();
+            try
+            {
+                s3Upload.AWSdelete(filenameToDelete, "product");
+            }
+            catch (Exception e)
+            { }
+
             return RedirectToAction("Index");
         }
 

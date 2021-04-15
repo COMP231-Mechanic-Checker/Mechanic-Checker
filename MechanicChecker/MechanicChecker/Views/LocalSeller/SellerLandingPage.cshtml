@@ -84,11 +84,13 @@
                     </td>
                     @if (Context.Session.GetString("username") != null)
                     {
-                        <td>
-                            @Html.ActionLink("Details", "Details", new { sellerID = item.localProduct.sellerId, id = item.localProduct.LocalProductId /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " }) |
-                            @Html.ActionLink("Edit", "Edit", new { sellerID = item.localProduct.sellerId, id = item.localProduct.LocalProductId /* id=item.PrimaryKey */ }, new { @class = "btn btn-warning " }) |
-                            @Html.ActionLink("Delete", "Delete", new { sellerID = item.localProduct.sellerId, id =item.localProduct.LocalProductId /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger " })
-                        </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { sellerID = item.localProduct.sellerId, id = item.localProduct.LocalProductId /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " }) |
+                    @Html.ActionLink("Edit", "Edit", new { sellerID = item.localProduct.sellerId, id = item.localProduct.LocalProductId /* id=item.PrimaryKey */ }, new { @class = "btn btn-warning " }) |
+                    @Html.ActionLink("Delete", "Delete", new { sellerID = item.localProduct.sellerId, productId = item.localProduct.LocalProductId /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger " })
+                    @*@Html.ActionLink("Delete", "Delete", new { onclick= "return confirm('Are you sure you want to delete id=item.localProduct.sellerId, productId = item.localProduct.LocalProductId /* id=item.PrimaryKey )*/ "}, new { @class = "btn btn-danger " })*@
+                    @*<input type="submit" value="Delete" onclick="return confirm" ('Are you sure you want to delete id="@item.localProduct.LocalProductId)" />*@
+                </td>
                     }
 
                 </tr>

@@ -87,13 +87,13 @@ namespace MechanicChecker.Models
             }
             return isPassed;
         }
-
-        public bool deleteProduct(LocalProduct localProduct)
+       
+        //Delete item from seller list
+        public bool deleteProduct(int selllerId, int productId)
         {
-            bool isPassed = true;
             try
             {
-                string stringCmd = "DELETE Product( SellerId, Category, Title, Price, Description, ImageUrl, ProductUrl, IsQuote, IsVisible)";
+                string stringCmd = $"DELETE FROM Product WHERE SellerId={selllerId} AND ProductId={productId}";
 
                 Debug.WriteLine(stringCmd);
                 MySqlConnection myConnection = GetConnection();
@@ -106,10 +106,9 @@ namespace MechanicChecker.Models
             }
             catch (Exception e)
             {
-                isPassed = false;
-                return isPassed;
+                return false;
             }
-            return isPassed;
+            return true;
         }
     }
 }

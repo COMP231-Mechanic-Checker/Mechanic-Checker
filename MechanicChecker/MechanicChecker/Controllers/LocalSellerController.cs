@@ -60,16 +60,14 @@ namespace MechanicChecker.Controllers
         }
 
 
-        // GET: LocalSellerController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         // GET: LocalSellerController/Create
-        public ActionResult Create()
+        public ActionResult Create(int id, string sellerID)
         {
-            return View();
+            context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            currentSellerProducts = (List<SellerProduct>)context.GetAllSellerProducts();
+            ViewBag.CurrentSeller = currentSellerProducts.FirstOrDefault().seller.UserName;
+            return View("Create");
         }
 
         // POST: LocalSellerController/Create
@@ -79,7 +77,7 @@ namespace MechanicChecker.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return View("Create");
             }
             catch
             {
@@ -87,46 +85,6 @@ namespace MechanicChecker.Controllers
             }
         }
 
-        // GET: LocalSellerController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: LocalSellerController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LocalSellerController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: LocalSellerController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }

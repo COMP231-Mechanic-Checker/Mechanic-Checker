@@ -87,5 +87,28 @@ namespace MechanicChecker.Models
             }
             return isPassed;
         }
+       
+        //Delete item from seller list
+        public bool deleteProduct(int selllerId, int productId)
+        {
+            try
+            {
+                string stringCmd = $"DELETE FROM Product WHERE SellerId={selllerId} AND ProductId={productId}";
+
+                Debug.WriteLine(stringCmd);
+                MySqlConnection myConnection = GetConnection();
+                MySqlCommand myCommand = new MySqlCommand(stringCmd);
+                myCommand.Connection = myConnection;
+                myConnection.Open();
+                myCommand.ExecuteNonQuery(); // ExecuteNonQuery is required to update, insert and delete from the DB
+                myCommand.Connection.Close();
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

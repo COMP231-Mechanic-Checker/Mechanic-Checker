@@ -158,6 +158,14 @@ namespace MechanicChecker.Controllers
             }
 
         }
+        //Delete item from seller account
+        public IActionResult Delete(int sellerID, int productId)
+        {
+            localProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
+            var result = localProductContext.deleteProduct(sellerID, productId);
+
+            return RedirectToAction("Index");
+        }
 
 
     }

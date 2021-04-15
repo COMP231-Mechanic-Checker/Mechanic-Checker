@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MechanicChecker.AWS;
 using MechanicChecker.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,22 +13,21 @@ namespace MechanicChecker.Controllers
     {
         //global variables for the list of all the products belonging to the seller, and context
         private List<SellerProduct> currentSellerProducts = new List<SellerProduct>();
-        private SellerProductContext context;
+        private SellerProductContext sellerProductContext;
+        private SellerContext sellerContext;
+        private LocalProductContext localProductContext;
 
         // GET: LocalSellerController
-        public ActionResult Index(string userName)
+        public ActionResult Index()
         {
-
-            SellerProductContext sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
-            SellerContext sellerContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
-
+            string userName = HttpContext.Session.GetString("username");
+            sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            sellerContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
             Seller seller = sellerContext.GetSeller(userName);
             var allSellerProducts = sellerProductContext.GetAllSellerProducts();
             var sellerProducts = allSellerProducts.Where(p => p.seller.UserName.Equals(seller.UserName));
             return View("../LocalSeller/SellerLandingPage", sellerProducts);
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -36,8 +36,8 @@ namespace MechanicChecker.Controllers
             try
             {
 
-                context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
-                currentSellerProducts = (List<SellerProduct>)context.GetAllSellerProducts();
+                sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+                currentSellerProducts = (List<SellerProduct>)sellerProductContext.GetAllSellerProducts();
                 IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
                 if (keyword != null)
                 {
@@ -60,31 +60,81 @@ namespace MechanicChecker.Controllers
         }
 
 
-
         // GET: LocalSellerController/Create
-        public ActionResult Create(int id, string sellerID)
+        public ActionResult Create(string username)
         {
-            context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
-            currentSellerProducts = (List<SellerProduct>)context.GetAllSellerProducts();
-            ViewBag.CurrentSeller = currentSellerProducts.FirstOrDefault().seller.UserName;
-            return View("Create");
+            sellerContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            Seller seller = sellerContext.GetSeller(username);
+            LocalProduct localProduct = new LocalProduct()
+            {
+                sellerId = seller.SellerId.ToString()
+            };
+            //localProduct = 
+            return View(localProduct);
         }
 
         // POST: LocalSellerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(IFormCollection formCollection)
         {
-            try
+            localProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
+            LocalProduct newProduct = CreateProduct(formCollection);
+            //TODO: If saving to database fails need to delete the uploaded s3 company logo image
+            if (localProductContext.saveProduct(newProduct))
             {
-                return View("Create");
+                TempData["CreateProduct"] = "Your product has been added!";
+                return RedirectToAction("Index", "LocalSeller");
             }
-            catch
+            else
             {
-                return View();
+                //TODO: Need useful error messages to tell the user what is wrong
+                ViewData["CreateErrorMsg"] = "Something went wrong! Please review your product information.";
+                return View("Create");
+
             }
         }
 
-       
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public LocalProduct CreateProduct(IFormCollection formCollection)
+        {
+            //IFormFile imageUrlStream = formCollection.Files.FirstOrDefault();
+            IFormFile companyImgStream = formCollection.Files.FirstOrDefault();
+            S3FileUploader s3Upload = new S3FileUploader();
+            string awsS3CompanyLogoUrl;
+
+            // if something goes wrong uploading to s3 use placeholder company logo url
+            try
+            {
+                //awsS3CompanyLogoUrl = s3Upload.value(imageUrlStream, "product");
+                awsS3CompanyLogoUrl = s3Upload.value(companyImgStream, "product");
+            }
+            catch (Exception e)
+            {
+                awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/seller/default/unnamed.jpg";
+            }
+
+            //string sellerWebsiteUrl = "https://michaelasemota.netlify.app/";
+
+            LocalProduct newProduct = new LocalProduct()
+            {
+                Category = formCollection["Category"].ToString().Trim(),
+                Title = formCollection["Title"].ToString().Trim(),
+                Price = formCollection["Price"].ToString().Trim(),
+                Description = formCollection["Description"].ToString().Trim(),
+                ImageUrl = awsS3CompanyLogoUrl,
+                ProductUrl = formCollection["ProductUrl"].ToString().Trim(),
+                IsQuote = true,
+                IsVisible = true,//Convert.ToBoolean(formCollection["IsVisible"])
+                sellerId = formCollection["SellerId"].ToString()
+            };
+
+            return newProduct;
+            // return View();
+
+        }
+
     }
 }

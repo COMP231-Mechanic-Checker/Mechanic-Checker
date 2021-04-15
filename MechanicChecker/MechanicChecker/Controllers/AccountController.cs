@@ -33,14 +33,11 @@ namespace MechanicChecker.Controllers
 
             if (isValidSeller)
             {
-                //var allSellerProducts = sellerProductContext.GetAllSellerProducts();
-                //var validSellerProducts = allSellerProducts.Where(p => p.seller.UserName.Equals(validSeller.UserName));
                 HttpContext.Session.SetString("username", validSeller.UserName);
                 HttpContext.Session.SetString("firstname", validSeller.FirstName);
                 HttpContext.Session.SetString("lastname", validSeller.LastName);
                 ViewBag.UserName = validSeller.UserName;
-                //return RedirectToAction("Index","LocalSeller",new { validSeller.UserName });
-                return RedirectToAction("Index", "LocalSeller", new { validSeller.UserName });
+                return RedirectToAction("Index", "LocalSeller");
             }
             else
             {

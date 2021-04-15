@@ -87,7 +87,7 @@ namespace MechanicChecker.Controllers
         // GET: LocalSellerController/Details/5
         public ActionResult Details(int id, string sellerID)
         {
-            context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            SellerProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
             currentSellerProducts = (List<SellerProduct>)context.GetAllSellerProducts();
             IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
             if (currentSellerProducts.Count() > 0)

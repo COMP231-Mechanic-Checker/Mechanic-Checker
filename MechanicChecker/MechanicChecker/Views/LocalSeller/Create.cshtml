@@ -11,52 +11,57 @@
 <div class="container " >
     <div class="row img-rounded" style=" background-color: rgba(123, 123, 123, 0.21); padding: 100px;">
         <div class="col">
-            <form asp-action="Create">
+            <h3>@ViewData["CreateErrorMsg"]</h3>
+            <form asp-controller="LocalSeller" asp-action="Create" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div hidden="hidden" class="form-group">
-                    <label asp-for="LocalProductId" class="control-label"></label>
-                    <input asp-for="LocalProductId" class="form-control" />
+                <div class="form-group">
+                    @*<label for="LocalProductId" class="control-label"></label>*@
+                    <input asp-for="LocalProductId" class="form-control" type="hidden" />
                     <span asp-validation-for="LocalProductId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Title" class="control-label"></label>
-                    <input asp-for="Title" class="form-control" />
+                    <label for="Title" class="control-label">Title</label>
+                    <input name="Title" class="form-control" required/>
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
+                    <label for="Price" class="control-label">Price</label>
+                    <input name="Price" class="form-control" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
-                        <label>
-                            <input asp-for="IsQuote" /> @Html.DisplayNameFor(model => model.IsQuote)
+                        @*<label for="IsQuote">Is Quote</label> 
+                        <input id="IsQuote" name="IsQuote" type="checkbox" class="checkbox" />*@
+                        <label for="IsQuote">
+                            @Html.CheckBox("IsQuote") @Html.DisplayNameFor(model => model.IsQuote)
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <textarea asp-for="Description" rows="10" cols="70" class="form-control" type="textarea"></textarea>
+                    <label for="Description" class="control-label">Description</label>
+                    <textarea name="Description" rows="10" cols="70" class="form-control" type="textarea" required></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ImageUrl" class="control-label"></label>
-                    <input type="file" asp-for="ImageUrl" class="form-control" />
+                    <label for="ImageUrl" class="control-label">Image Url</label>
+                    <input type="file" name="ImageUrl" class="form-control" required/>
                     <span asp-validation-for="ImageUrl" class="text-danger"></span>
                 </div>
                 <div class="form-group" hidden="hidden">
                     <div class="checkbox">
-                        <label>
-                            <input asp-for="IsVisible" checked/> @Html.DisplayNameFor(model => model.IsVisible)
-                        </label>
+                        <label for="IsVisible">Is Visible</label>
+                        <input id="IsVisible" name="IsVisible" type="checkbox" class="checkbox" checked />
+                        @*<label>
+                            <input asp-for="IsVisible" checked /> @Html.DisplayNameFor(model => model.IsVisible)
+                        </label>*@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Category" class="control-label"></label>
-                    <select asp-for="Category" class="form-control">
-                        <option value="Part">
-                            Part
+                    <label for="Category" class="control-label">Category</label>
+                    <select name="Category" class="form-control" required>
+                        <option value="Item">
+                            Item
                         </option>
                         <option value="Service">
                             Service
@@ -65,18 +70,19 @@
                     <span asp-validation-for="Category" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ProductUrl" class="control-label"></label>
-                    <input asp-for="ProductUrl" class="form-control" />
+                    <label for="ProductUrl" class="control-label">Product Url</label>
+                    <input name="ProductUrl" class="form-control" />
                     <span asp-validation-for="ProductUrl" class="text-danger"></span>
                 </div>
 
                 <div hidden="hidden" class="form-group">
                     <label asp-for="sellerId" class="control-label"></label>
-                    <input asp-for="sellerId" class="form-control" />
+                    <input asp-for="sellerId" class="form-control" value="@Model.sellerId" />
                     <span asp-validation-for="sellerId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    @*<input type="submit" value="Create" class="btn btn-default" />*@
+                    <button class="btn btn-primary" type="submit">Create</button>
                 </div>
             </form>
         </div>

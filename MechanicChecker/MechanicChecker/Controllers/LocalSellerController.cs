@@ -135,6 +135,30 @@ namespace MechanicChecker.Controllers
             // return View();
 
         }
+        // GET: LocalSellerController/Details/5
+        public ActionResult Details(int id, string sellerID)
+        {
+            SellerProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            currentSellerProducts = (List<SellerProduct>)context.GetAllSellerProducts();
+            IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
+            if (currentSellerProducts.Count() > 0)
+            {
+
+                //searchedSellerProducts = currentSellerProducts ;
+                searchedSellerProducts = currentSellerProducts.Where(
+                   product =>
+                   product.localProduct.LocalProductId == id && product.localProduct.sellerId == sellerID
+                   );
+                ViewBag.CurrentSeller = searchedSellerProducts.FirstOrDefault().seller.UserName;
+                return View("Details", searchedSellerProducts.FirstOrDefault().localProduct);
+            }
+            else
+            {
+                return View("SellerLandingPage", searchedSellerProducts);
+            }
+
+        }
+
 
     }
 }

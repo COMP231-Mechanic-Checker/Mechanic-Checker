@@ -23,6 +23,8 @@ namespace MechanicChecker
                     return await GetEbayProducts(contextSeller, contextAPIs, query);
                 case "3":
                     return await GetAmazonProducts(contextSeller, contextAPIs, query);
+                case "4":
+                    return await GetAlibabaProducts(contextSeller, contextAPIs, query);
                 default:
                     return new List<SellerProduct>();
             }
@@ -36,7 +38,8 @@ namespace MechanicChecker
             await Task.WhenAll(
                     // call all ecommerce apis
                     GetEbayProducts(contextSeller, contextAPIs, query),
-                    GetAmazonProducts(contextSeller, contextAPIs, query)
+                    GetAmazonProducts(contextSeller, contextAPIs, query),
+                    GetAlibabaProducts(contextSeller, contextAPIs, query)
                     )
                     // add to output list whenever an api call is done
                     .ContinueWith(apiRes =>
@@ -46,6 +49,123 @@ namespace MechanicChecker
                             list.AddRange(apiItems);
                         }
                     });
+
+            return list;
+        }
+
+        public static async Task<List<SellerProduct>> GetAlibabaProducts(SellerContext contextSeller, ExternalAPIsContext contextAPIs, string query)
+        {
+            /* 
+             * Send search request for products using the RapidAPI Axesso Alibaba API. 
+             * 
+             * RapidAPI Axesso Alibaba API Documentation: https://rapidapi.com/axesso/api/axesso-alibaba-data-service
+             * RapidAPI Axesso API General Documentation (Alibaba): http://api-doc.axesso.de/#api-Alibaba
+             * Access to use any RapidAPI API requires registration to RapidAPI: https://rapidapi.com/
+             * 
+             * The specific API function used is searchByKeyword: 
+             * https://rapidapi.com/axesso/api/axesso-alibaba-data-service?endpoint=apiendpoint_ee6cc691-5c7b-4c24-8dfc-7ce1d446cb6b
+             * 
+             * There are 2 API Keys required:
+             * x-rapidapi-key
+             * x-rapidapi-host
+             */
+
+            Seller alibabaSeller = contextSeller.GetSellerByCompanyName("Alibaba");
+            string apiKeyOwner = Startup.Configuration.GetSection("APIKeyOwners")["Alibaba"];
+            ExternalAPIs alibabaAPI = contextAPIs.GetApiByService("RapidAPI Alibaba", apiKeyOwner);
+            List<SellerProduct> list = new List<SellerProduct>(); // assume no items will be returned
+
+            if (alibabaAPI.IsEnabled && alibabaAPI.Quota > 0)
+            {
+                string alibabaRapidAPIEndpoint = "https://axesso-alibaba-data-service.p.rapidapi.com/alb/alibaba-search-by-keyword?";
+
+                string rapidAPIKey = alibabaAPI.APIKey;
+                string rapidAPIHost = alibabaAPI.APIHost;
+
+                string automotiveKeyword = "automotive";
+
+                Dictionary<string, string> alibabaParameters = new Dictionary<string, string>()
+                {
+                    //{"x-rapidapi-key", rapidAPIKey},
+                    //{"x-rapidapi-host", rapidAPIHost},
+                    //{"domainCode", "ca"},
+                    {"keyword", automotiveKeyword + " " + query},
+                    {"sortBy", "best_match"},
+                    {"page", "1"},
+                    {"type", "text"}
+                };
+                FormUrlEncodedContent encodedAlibabaParameters = new FormUrlEncodedContent(alibabaParameters);
+
+                string url = alibabaRapidAPIEndpoint + encodedAlibabaParameters.ReadAsStringAsync().Result;
+
+                // get amazon products
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("x-rapidapi-key", rapidAPIKey);
+                client.DefaultRequestHeaders.Add("x-rapidapi-host", rapidAPIHost);
+                client.DefaultRequestHeaders.Add("useQueryString", "true");
+                HttpResponseMessage response = await client.GetAsync(url);
+                contextAPIs.activateAPI("RapidAPI Alibaba", apiKeyOwner); // reduce quota by 1
+
+                /* Parse JSON request to SellerProducts */
+                if (response.IsSuccessStatusCode)
+                {
+                    /*
+                     * Newtonsoft.Json.Linq
+                     * JToken Hierarchy
+                     * Refer to: 
+                     * https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_Linq_JToken.htm
+                     * 
+                     * JToken is abstract. Allows ability to handle any type of JSON input.
+                     */
+                    string jsonAlibabaRes = await response.Content.ReadAsStringAsync();
+                    JToken jsonAlibabaResObj = JsonConvert.DeserializeObject<JToken>(jsonAlibabaRes);
+                    JToken jsonAlibabaItems = null;
+
+                    try
+                    {
+                        jsonAlibabaItems = jsonAlibabaResObj["foundProducts"];
+                    }
+                    catch (NullReferenceException e)
+                    { }
+
+                    if (jsonAlibabaItems is object) // check if any items were returned
+                    {
+                        int alibabaItemId = 1;
+                        /*
+                         * JObject is use here instead of JToken since we know we're iterating through item objects.
+                         * JToken would also work, but JObject is more specific.
+                         */
+                        foreach (JObject item in jsonAlibabaItems)
+                        {
+                            try
+                            {   // Alibaba API doesn't give us product image url or price (even if the product has a price)
+                                LocalProduct localProduct = new LocalProduct()
+                                {
+                                    LocalProductId = alibabaItemId,
+                                    Category = "Item",
+                                    Title = item.SelectToken("productName").ToString(),
+                                    Price = "",
+                                    Description = item.SelectToken("supplierName").ToString(),
+                                    ImageUrl = alibabaSeller.CompanyLogoUrl,
+                                    sellerId = alibabaSeller.SellerId.ToString(),
+                                    ProductUrl = "https:" + item.SelectToken("url").ToString(),
+                                    IsVisible = true,
+                                    IsQuote = false
+                                };
+
+                                Seller seller = alibabaSeller;
+                                SellerAddress sellerAddress = new SellerAddress();
+
+                                list.Add(new SellerProduct(localProduct, seller, sellerAddress));
+
+                                alibabaItemId += 1;
+                            }
+                            catch (NullReferenceException e)
+                            { continue; }
+                        }
+                    }
+                }
+            }
 
             return list;
         }

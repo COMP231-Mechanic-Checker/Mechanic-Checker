@@ -253,7 +253,7 @@
 
         <br />
         <br />
-        <table height="600" class="table table-sm table-striped table-bordered scrollable-menu" style="background-color: #FFFFFF;">
+        <table height="600" class="table table-sm table-striped table-bordered scrollable-menu" style="width:700px; background-color: #FFFFFF;">
             <tbody>
                 <!--shows each car part/service from the product list model (recived from the controller via model) in the table below-->
                 @*TODO: update the model*@
@@ -272,7 +272,7 @@
 
                                     <div class="card-header text-muted align-top">
                                         <h3 class="card-title">
-                                            @product.localProduct.Title
+                                            <a href="@product.localProduct.ProductUrl" target="_blank">@product.localProduct.Title</a>
                                         </h3>
                                     </div>
 

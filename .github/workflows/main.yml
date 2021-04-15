@@ -38,6 +38,7 @@ jobs:
             "GoogleMaps":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_GOOGLEMAPS }},
             "Ebay":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_EBAY }},
             "Amazon":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_AMAZON }},
+            "Alibaba":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_ALIBABA }},
             "SendGrid":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_SENDGRID }}
           }
         }

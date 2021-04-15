@@ -1,0 +1,102 @@
+﻿@model MechanicChecker.Models.LocalProduct
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+<h4>LocalProduct</h4>
+<hr />
+<div class="row">
+    <div class="col container" style="padding:50px; width:800px;">
+        <form asp-action="Edit" asp-route-sellerID="@Model.sellerId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LocalProductId" ReadOnly="true" class="control-label"></label>
+                <input asp-for="LocalProductId" ReadOnly="true" class="form-control" />
+                <span asp-validation-for="LocalProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" rows="10" cols="70" class="form-control" type="textarea"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label Name="Image" class="control-label">Image</label>
+                <img width="700px" class="img-rounded" src="@Model.ImageUrl" />
+            </div>
+            <div class="form-group" hidden="hidden">
+                <label asp-for="ImageUrl" hidden="hidden" ReadOnly="true" class="control-label"></label>
+                <input asp-for="ImageUrl" hidden="hidden" ReadOnly="true" class="form-control" />
+                <span asp-validation-for="ImageUrl" hidden="hidden" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input type="file" asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsVisible" /> @Html.DisplayNameFor(model => model.IsVisible)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category" class="form-control">
+                    <option value="Item">
+                        Part
+                    </option>
+                    <option value="Service">
+                        Service
+                    </option>
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductUrl" class="control-label"></label>
+                <input asp-for="ProductUrl" readonly="readonly" class="form-control" />
+                <span asp-validation-for="ProductUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsQuote" /> @Html.DisplayNameFor(model => model.IsQuote)
+                    </label>
+                </div>
+            </div>
+            <div hidden="hidden" class="form-group">
+                <label asp-for="sellerId" class="control-label"></label>
+                <input asp-for="sellerId" class="form-control" />
+                <span asp-validation-for="sellerId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default " style="margin-right:10px;" />
+                <a class="btn btn-success" asp-action="Index" asp-route-username="@ViewBag.CurrentSeller">Back to List</a>
+            </div>
+        </form>
+
+    </div>
+
+
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

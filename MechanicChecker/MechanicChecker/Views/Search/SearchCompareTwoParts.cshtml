@@ -37,7 +37,7 @@
         <div class="wrapper w3-card w3-margin">
             <ul class="w3-ul w3-white w3-center">
                 <li class="w3-padding-10">
-                    <img src="~/images/steering.jpg" alt="Auto Parts Logo" height="200" width="200" class="center-block">
+                    <img src="@Model.First().localProduct.ImageUrl" alt="Auto Parts Logo" height="200" width="200" class="center-block">
                 </li>
                 <li class="w3-black w3-xlarge w3-padding-8">@Model.First().localProduct.Title</li>
                 <li class="w3-padding-14">
@@ -57,7 +57,7 @@
                     <span><a href="@Model.First().localProduct.ProductUrl" class="btn btn-primary">Product link</a></span>
                     <span><a href="@Model.First().seller.WebsiteUrl" class="btn btn-primary">Company Web Site</a></span>
                 </li>
-                <li class="w3-padding-14"><b>Company Name:</b>@Model.First().seller.UserName</li>
+                <li class="w3-padding-14"><b>Company Name: </b>@Model.First().seller.CompanyName</li>
                 <li class="w3-padding-14"><img src="@Model.First().seller.CompanyLogoUrl" alt="eBay Logo" style="float: inherit;" height="50" width="70" class="rg"></li>
                 <li class="w3-padding-14"><b>Description:</b><br />@Model.First().localProduct.Description</li>
                 <li class="w3-padding-14">
@@ -82,7 +82,7 @@
         <div class="wrapper w3-card w3-margin">
             <ul class="w3-ul w3-white w3-center">
                 <li class="w3-padding-14">
-                    <img src="~/images/steering2.jpg" alt="Auto Parts Logo" height="200" width="200" class="center-block">
+                    <img src="@Model.Last().localProduct.ImageUrl" alt="Auto Parts Logo" height="200" width="200" class="center-block">
                 </li>
                 <li class="w3-black w3-xlarge w3-padding-8">@Model.Last().localProduct.Title</li>
                 <li class="w3-padding-14">
@@ -103,7 +103,7 @@
                     <span><a  href="@Model.Last().localProduct.ProductUrl" class="btn btn-primary">Product link</a></span>
                     <span><a href="@Model.Last().seller.WebsiteUrl" class="btn btn-primary">Company Web Site</a></span>
                 </li>
-                <li class="w3-padding-14"><b>Company Name:</b> @Model.Last().seller.UserName</li>
+                <li class="w3-padding-14"><b>Company Name:</b> @Model.Last().seller.CompanyName</li>
                 <li class="w3-padding-10"><img src="@Model.Last().seller.CompanyLogoUrl" style="float: inherit;" height="50" width="70" class="rg"></li>
                 <li class="w3-padding-14"><b>Description:</b><br />@Model.Last().localProduct.Description</li>
                 <li class="w3-padding-14">
@@ -118,7 +118,7 @@
                 <li class="w3-padding-14"><b>Category:</b>@Model.Last().localProduct.Category </li>
                 <li class="w3-padding-14"><b>Company Address:</b><br />@Model.Last().sellerAddress.Address</li>
                 <li class="w3-padding-14"><b>Phone:</b> @Model.Last().seller.BusinessPhone</li>
-                <li class="w3-padding-14"><b>Account Type:</b>@Model.Last().seller.AccountType</li>
+                <li class="w3-padding-14"><b>Account Type: </b>@Model.Last().seller.AccountType</li>
             </ul>
         </div>
     </div>

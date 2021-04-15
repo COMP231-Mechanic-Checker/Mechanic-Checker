@@ -43,11 +43,6 @@
                 <span asp-validation-for="ImageUrl" hidden="hidden" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input type="file" asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <div class="checkbox">
                     <label>
                         <input asp-for="IsVisible" /> @Html.DisplayNameFor(model => model.IsVisible)
@@ -68,7 +63,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProductUrl" class="control-label"></label>
-                <input asp-for="ProductUrl" readonly="readonly" class="form-control" />
+                <input asp-for="ProductUrl" class="form-control" />
                 <span asp-validation-for="ProductUrl" class="text-danger"></span>
             </div>
             <div class="form-group">

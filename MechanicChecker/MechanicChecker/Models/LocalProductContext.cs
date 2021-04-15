@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
@@ -52,6 +53,39 @@ namespace MechanicChecker.Models
                 }
             }
             return list;
+        }
+
+        public bool saveProduct(LocalProduct localProduct)
+        {
+            bool isPassed = true;
+            try
+            {
+                string stringCmd = "INSERT INTO Product( SellerId, Category, Title, Price, Description, ImageUrl, ProductUrl, IsQuote, IsVisible)" +
+                    "VALUES (" + Convert.ToInt32(localProduct.sellerId) + ", '" +
+                   localProduct.Category + "', '" +
+                   localProduct.Title + "', " +
+                    Convert.ToDecimal(localProduct.Price) + ", '" +
+                    localProduct.Description + "', '" +
+                    localProduct.ImageUrl + "', '" +
+                   localProduct.ProductUrl + "', " +
+                    Convert.ToInt32(localProduct.IsQuote) + ", " +
+                    Convert.ToInt32(localProduct.IsVisible) + ");";
+
+                Debug.WriteLine(stringCmd);
+                MySqlConnection myConnection = GetConnection();
+                MySqlCommand myCommand = new MySqlCommand(stringCmd);
+                myCommand.Connection = myConnection;
+                myConnection.Open();
+                myCommand.ExecuteNonQuery(); // ExecuteNonQuery is required to update, insert and delete from the DB
+                myCommand.Connection.Close();
+
+            }
+            catch (Exception e)
+            {
+                isPassed = false;
+                return isPassed;
+            }
+            return isPassed;
         }
     }
 }

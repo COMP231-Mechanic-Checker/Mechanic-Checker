@@ -87,5 +87,29 @@ namespace MechanicChecker.Models
             }
             return isPassed;
         }
+
+        public bool deleteProduct(LocalProduct localProduct)
+        {
+            bool isPassed = true;
+            try
+            {
+                string stringCmd = "DELETE Product( SellerId, Category, Title, Price, Description, ImageUrl, ProductUrl, IsQuote, IsVisible)";
+
+                Debug.WriteLine(stringCmd);
+                MySqlConnection myConnection = GetConnection();
+                MySqlCommand myCommand = new MySqlCommand(stringCmd);
+                myCommand.Connection = myConnection;
+                myConnection.Open();
+                myCommand.ExecuteNonQuery(); // ExecuteNonQuery is required to update, insert and delete from the DB
+                myCommand.Connection.Close();
+
+            }
+            catch (Exception e)
+            {
+                isPassed = false;
+                return isPassed;
+            }
+            return isPassed;
+        }
     }
 }

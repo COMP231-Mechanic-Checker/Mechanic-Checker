@@ -44,7 +44,7 @@ namespace MechanicChecker.Models
                      * Better to manually set the date dynamically on the website.
                      */
                     + seller.ApplicationDate.ToString("yyyy-MM-dd HH:mm:ss") + "', '"
-                    + seller.ActivationCode + "')"; 
+                    + seller.ActivationCode + "')";
 
                 MySqlConnection myConnection = GetConnection();
                 MySqlCommand myCommand = new MySqlCommand(stringCmd);
@@ -119,7 +119,7 @@ namespace MechanicChecker.Models
                 {
                     sellerName = null;
                 }
-                
+
             }
 
             return isPassed;
@@ -171,6 +171,30 @@ namespace MechanicChecker.Models
             return isPassed;
         }
 
+        public string GetUserIdByUserName(string userName)
+        {
+
+
+            string command = "SELECT SellerId from Seller where Username = '" + userName + "';";
+            string userId = null;
+
+            // send query to database
+            MySqlConnection myConnection = GetConnection();
+            MySqlCommand myCommand = new MySqlCommand(command);
+            myCommand.Connection = myConnection;
+            myConnection.Open();
+
+            // read response
+            using (var reader = myCommand.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    userId = reader["SellerId"].ToString();
+                }
+            }
+
+            return userId;
+        }
         public Seller GetSeller(string userId)
         {
             Seller seller = null;
@@ -255,5 +279,46 @@ namespace MechanicChecker.Models
             return seller;
         }
 
+        public Seller GetSellerByPhoneNumber(string phoneNumber)
+        {
+            Seller seller = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Seller " +
+                "where BusinessPhone = '" + phoneNumber + "';", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        seller = new Seller()
+                        {
+                            AccountType = reader["AccountType"].ToString(),
+                            Application = reader["Application"].ToString(),
+                            ApprovalDate = DateTime.Now,
+                            BusinessPhone = reader["BusinessPhone"].ToString(),
+                            CompanyLogoUrl = reader["CompanyLogoUrl"].ToString(),
+                            CompanyName = reader["CompanyName"].ToString(),
+                            Email = reader["Email"].ToString(),//"hellokitty@yahoo.ca",
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            IsApproved = Convert.ToBoolean(reader["IsApproved"]),//false,
+                            UserName = reader["Username"].ToString(),//"123hello",
+                            WebsiteUrl = reader["WebsiteUrl"].ToString(),
+                            ActivationCode = reader["ActivationCode"].ToString(),//Guid.NewGuid().ToString(),
+                            PasswordHash = reader["PasswordHash"].ToString(),//"password",
+                            ApplicationDate = DateTime.Now,
+                            SellerId = Convert.ToInt32(reader["SellerId"]),
+                            ResetPasswordCode = reader["ResetPasswordCode"].ToString()
+                        };
+
+                    }
+                }
+            }
+
+            return seller;
+        }
     }
 }

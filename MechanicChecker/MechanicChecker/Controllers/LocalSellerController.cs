@@ -183,6 +183,43 @@ namespace MechanicChecker.Controllers
             return View("SellerDeletePage");
         }
 
+        // GET: LocalSellerController/Edit/5
+        public ActionResult Edit(int id, string sellerID)
+        {
+            sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            currentSellerProducts = (List<SellerProduct>)sellerProductContext.GetAllSellerProducts();
+            IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
+            if (currentSellerProducts.Count() > 0)
+            {
+                //searchedSellerProducts = currentSellerProducts ;
+                searchedSellerProducts = currentSellerProducts.Where(
+                   product =>
+                   product.localProduct.LocalProductId == id && product.localProduct.sellerId == sellerID
+                   );
+                ViewBag.CurrentSeller = searchedSellerProducts.FirstOrDefault().seller.UserName;
+                return View("Edit", searchedSellerProducts.FirstOrDefault().localProduct);
+            }
+            else
+            {
+                return View("SellerLandingPage", searchedSellerProducts);
+            }
+        }
+
+        // POST: LocalSellerController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
     }
 }
 

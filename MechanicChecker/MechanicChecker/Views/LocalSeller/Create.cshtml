@@ -1,0 +1,92 @@
+﻿@model MechanicChecker.Models.LocalProduct
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Add a new product</h2>
+<hr />
+<div class="container " >
+    <div class="row img-rounded" style=" background-color: rgba(123, 123, 123, 0.21); padding: 100px;">
+        <div class="col">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div hidden="hidden" class="form-group">
+                    <label asp-for="LocalProductId" class="control-label"></label>
+                    <input asp-for="LocalProductId" class="form-control" />
+                    <span asp-validation-for="LocalProductId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IsQuote" /> @Html.DisplayNameFor(model => model.IsQuote)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" rows="10" cols="70" class="form-control" type="textarea"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageUrl" class="control-label"></label>
+                    <input type="file" asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group" hidden="hidden">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IsVisible" checked/> @Html.DisplayNameFor(model => model.IsVisible)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Category" class="control-label"></label>
+                    <select asp-for="Category" class="form-control">
+                        <option value="Part">
+                            Part
+                        </option>
+                        <option value="Service">
+                            Service
+                        </option>
+                    </select>
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductUrl" class="control-label"></label>
+                    <input asp-for="ProductUrl" class="form-control" />
+                    <span asp-validation-for="ProductUrl" class="text-danger"></span>
+                </div>
+
+                <div hidden="hidden" class="form-group">
+                    <label asp-for="sellerId" class="control-label"></label>
+                    <input asp-for="sellerId" class="form-control" />
+                    <span asp-validation-for="sellerId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-center h3" >
+        <a class="btn btn-lg btn-success" asp-action="Index" asp-route-userName="@ViewBag.CurrentSeller">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</div>

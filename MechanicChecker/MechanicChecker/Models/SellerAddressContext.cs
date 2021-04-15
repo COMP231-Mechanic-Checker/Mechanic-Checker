@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,5 +49,39 @@ namespace MechanicChecker.Models
             }
             return addressList;
         }
+
+        public bool SaveSellerAddress(SellerAddress sellerAddress)
+        {
+            bool isPassed = true;
+            try
+            {
+                // Note: The Application date can be null because it is being generated in the DB
+                string stringCmd =
+                    "INSERT INTO Address(SellerId, Address, City, Province, PostalCode) " +
+                    "VALUES ("
+                    + sellerAddress.SellerId + ", '"
+                    + sellerAddress.Address + "', '"
+                    + sellerAddress.City + "', '"
+                    + sellerAddress.Province + "', '"
+                    + sellerAddress.PostalCode + "')";
+
+                Debug.WriteLine(stringCmd);
+
+                MySqlConnection myConnection = GetConnection();
+                MySqlCommand myCommand = new MySqlCommand(stringCmd);
+                myCommand.Connection = myConnection;
+                myConnection.Open();
+                myCommand.ExecuteNonQuery(); // ExecuteNonQuery is required to update, insert and delete from the DB
+                myCommand.Connection.Close();
+
+            }
+            catch (Exception e)
+            {
+                isPassed = false;
+                return isPassed;
+            }
+            return isPassed;
+        }
+
     }
 }

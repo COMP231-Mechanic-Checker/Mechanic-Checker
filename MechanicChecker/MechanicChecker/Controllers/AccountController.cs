@@ -33,14 +33,11 @@ namespace MechanicChecker.Controllers
 
             if (isValidSeller)
             {
-                //var allSellerProducts = sellerProductContext.GetAllSellerProducts();
-                //var validSellerProducts = allSellerProducts.Where(p => p.seller.UserName.Equals(validSeller.UserName));
                 HttpContext.Session.SetString("username", validSeller.UserName);
                 HttpContext.Session.SetString("firstname", validSeller.FirstName);
                 HttpContext.Session.SetString("lastname", validSeller.LastName);
                 ViewBag.UserName = validSeller.UserName;
-                //return RedirectToAction("Index","LocalSeller",new { validSeller.UserName });
-                return RedirectToAction("Index", "LocalSeller", new { validSeller.UserName });
+                return RedirectToAction("Index", "LocalSeller");
             }
             else
             {
@@ -59,12 +56,12 @@ namespace MechanicChecker.Controllers
         [HttpPost]
         public IActionResult SignUp(IFormCollection formCollection)
         {
-            //TODO: Need form validation
+
 
             string hostUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             string websiteUrl = hostUrl + "/Account/ActivateEmail/";
             SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
-            ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
+            //ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
 
             Seller newSeller = RegisterSeller(formCollection);
 
@@ -72,25 +69,66 @@ namespace MechanicChecker.Controllers
 
             string toName = newSeller.FirstName;
             string email = newSeller.Email;
+            string username = newSeller.UserName;
+            string phone = newSeller.BusinessPhone;
+            string companyName = newSeller.CompanyName;
 
-            //TODO: If saving to database fails need to delete the uploaded s3 company logo image
-            if (context.saveSeller(newSeller))
+
+
+            if (context.GetSeller(email) != null)
             {
 
-                _ = EmailSender.SendActivationEmail(contextAPIs, activationLink, toName, email);
-                TempData["SignIn"] = "Congrats your account has been created! Check your email to verify your email account";
-
-                return RedirectToAction("SignIn");
+                ViewData["PostSignUp"] = "This Email Address has already been taken please use another";
+                return View("SignUp");
             }
             else
             {
-                //TODO: Need useful error messages to tell the user what is wrong
-                ViewData["PostSignUp"] = "Something went wrong! Please create your account again";
-                return View("SignUp");
 
+                if (context.GetSeller(username) != null)
+                {
+                    ViewData["PostSignUp"] = "This Username has already been taken please user another one";
+                    return View("SignUp");
+                }
+                else
+                {
+                    if (context.GetSellerByCompanyName(companyName) != null)
+                    {
+                        ViewData["PostSignUp"] = "This Company Name has already been taken please user another one";
+                        return View("SignUp");
+                    }
+                    else
+                    {
+                        if (context.GetSellerByPhoneNumber(phone) != null)
+                        {
+                            ViewData["PostSignUp"] = "This Phone Number has already been taken please user another one";
+                            return View("SignUp");
+                        }
+                        else
+                        {
+
+                            //TODO: If saving to database fails need to delete the uploaded s3 company logo image
+                            if (context.saveSeller(newSeller))
+                            {
+                                RegisterAddress(formCollection);
+
+                                _ = EmailSender.SendActivationEmail(/*contextAPIs,*/ activationLink, toName, email);
+                                TempData["SignIn"] = "Congrats your account has been created! Check your email to verify your email account";
+
+                                return RedirectToAction("SignIn");
+                            }
+                            else
+                            {
+                                //TODO: Need useful error messages to tell the user what is wrong
+                                ViewData["PostSignUp"] = "Something went wrong! Please create your account again";
+                                return View("SignUp");
+
+                            }
+                        }
+                    }
+                }
             }
-        }
 
+        }
         public IActionResult ActivateEmail(string id) //value gotten from the url
         {
             SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
@@ -132,9 +170,9 @@ namespace MechanicChecker.Controllers
             string resetPasswordLink = websiteUrl + resetPasswordCode;
 
             string sellerEmail = formCollection["Email"].ToString().Trim();
-            
+
             string sellerName;
-            
+
             if (context.verifyUserByEmail(sellerEmail, out sellerName))
             {
 
@@ -199,7 +237,7 @@ namespace MechanicChecker.Controllers
             {
                 awsS3CompanyLogoUrl = s3Upload.value(companyImgStream, "seller");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/seller/default/unnamed.jpg";
             }
@@ -236,8 +274,29 @@ namespace MechanicChecker.Controllers
 
         }
 
+        public void RegisterAddress(IFormCollection formCollection)
+        {
+            SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+
+            string sellerId = context.GetUserIdByUserName(formCollection["UserName"].ToString().Trim());
+            SellerAddress newSellerAddress = new SellerAddress()
+            {
+                Address = formCollection["Address"].ToString().Trim(),
+                City = formCollection["City"].ToString().Trim(),
+                PostalCode = formCollection["PostalCode"].ToString().Trim(),
+                Province = formCollection["Province"].ToString().Trim(),
+                SellerId = Convert.ToInt32(sellerId),
+
+            };
+
+            SellerAddressContext addressContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerAddressContext)) as SellerAddressContext;
+            addressContext.SaveSellerAddress(newSellerAddress);
+
+        }
+
+
     }
 }
-   
+
 
 

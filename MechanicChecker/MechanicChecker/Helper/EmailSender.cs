@@ -10,9 +10,12 @@ namespace MechanicChecker.Helper
 {
     public class EmailSender
     {
-        public static async Task<Response> SendActivationEmail(ExternalAPIsContext contextAPIs, string activateEmailLink, string toName, string toEmail)
+        //private static string sendgridAPIKey = Startup.Configuration.GetSection("APIKeys")["SendGrid"];
+        private static string sendgridAPIKey = "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";
+
+        public static async Task<Response> SendActivationEmail(string activateEmailLink, string toName, string toEmail)
         {
-            string sendgridAPIKey = GetSendGridAPIKey(contextAPIs);
+            //string sendgridAPIKey = GetSendGridAPIKey(contextAPIs);
 
             SendGridClient client = new SendGridClient(sendgridAPIKey);
             EmailAddress from = new EmailAddress("mechanicchecker@outlook.com", "Mechanic Checker");
@@ -34,7 +37,7 @@ namespace MechanicChecker.Helper
 
             SendGridMessage msg = MailHelper.CreateSingleTemplateEmail(from, to, "d-8a2852521a1c47578f046c1ef0ca0cf7", new { name = toName, link = resetPasswordLink });
             Response response = await client.SendEmailAsync(msg);
-  
+
             return response;
         }
 
@@ -45,7 +48,7 @@ namespace MechanicChecker.Helper
 
             // we assume that the key is active and sendgrid api has 100 max quota hard limit with daily reset
             contextAPIs.activateAPI("DeveloperAPI SendGrid", apiKeyOwner); // reduce quota by 1
-            
+
             return sendGridAPI.APIKey;
         }
     }

@@ -68,9 +68,7 @@ namespace MechanicChecker.Models
                             BusinessPhone = reader["BusinessPhone"].ToString(),
                             CompanyLogoUrl = reader["CompanyLogoUrl"].ToString(),
                             WebsiteUrl = reader["WebsiteUrl"].ToString(),
-                            Application = reader["Application"].ToString(),
-                            ApplicationDate = Convert.ToDateTime(reader["ApplicationDate"]),
-                            ApprovalDate = Convert.ToDateTime(reader["ApprovalDate"])
+                            Application = reader["Application"].ToString()
                         };
                         sellerAddress = new SellerAddress()
                         {

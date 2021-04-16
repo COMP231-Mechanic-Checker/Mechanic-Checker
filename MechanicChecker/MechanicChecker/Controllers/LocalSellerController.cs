@@ -143,7 +143,6 @@ namespace MechanicChecker.Controllers
             IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
             if (currentSellerProducts.Count() > 0)
             {
-
                 //searchedSellerProducts = currentSellerProducts ;
                 searchedSellerProducts = currentSellerProducts.Where(
                    product =>
@@ -159,7 +158,28 @@ namespace MechanicChecker.Controllers
 
         }
 
-        public IActionResult SellerDeletePage()
+       
+            //Delete item from seller account
+            public IActionResult Delete(string imageUrl, int sellerID, int productId)
+        {
+            localProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;            
+            var result = localProductContext.deleteProduct(sellerID, productId);
+     
+            // To delete product image from aws
+            string productUrlToDelete = imageUrl;
+            string filenameToDelete = productUrlToDelete.Split('/').Last<string>();
+            AmazonS3Uploader s3Upload = new AmazonS3Uploader();
+            try
+            {
+                s3Upload.AWSdelete(filenameToDelete, "product");
+            }
+            catch (Exception e)
+            { }
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteViewPage()
         {
             return View("SellerDeletePage");
         }
@@ -199,6 +219,32 @@ namespace MechanicChecker.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult DeletePage(int id, string sellerID)
+        {
+            sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            currentSellerProducts = (List<SellerProduct>)sellerProductContext.GetAllSellerProducts();
+            IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
+            if (currentSellerProducts.Count() > 0)
+            {
+                //searchedSellerProducts = currentSellerProducts ;
+                searchedSellerProducts = currentSellerProducts.Where(
+                product =>
+                product.localProduct.LocalProductId == id && product.localProduct.sellerId == sellerID
+                );
+                ViewBag.CurrentSeller = searchedSellerProducts.FirstOrDefault().seller.UserName;
+                return View("SellerDeletePage", searchedSellerProducts.FirstOrDefault().localProduct);
+            }
+            else
+            {
+                return View("SellerLandingPage", searchedSellerProducts);
+            }
+        }
+        [HttpPost]
+        public ActionResult DeleteItem(int sellerID, int productId)
+        {
+            return View("SellerDeletePage");
         }
 
     }

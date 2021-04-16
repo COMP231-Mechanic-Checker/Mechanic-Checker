@@ -14,91 +14,43 @@
         <br />
         <br />
         <h3>Are you sure you want to delete this part or service?</h3>
-
-        @*<span><img src="@Model.seller.CompanyLogoUrl" style="float: right;" height="200" width="200" class="rg"></span>*@
-        <span><img src="~/images/eBay.png" style="float: right;" height="100" width="180" class="rg"></span>
-       
-
+         
         <table>
             <tr>
                 <td>
-                    <img src="~/images/steering.jpg" style="border:solid; height:280px" alt="@Html.DisplayFor(model => model.Title)" />
+                    <img src="@Html.DisplayFor(model => model.ImageUrl)" style="border:solid; height:300px"/>                     
                     <br />
                     <br />
                 </td>
                 <td>&nbsp;</td>
-                <td style="vertical-align: top; text-align:left;">
-                    <span><br /><b>LocalProductId:</b> @Html.DisplayFor(model => model.LocalProductId)</span>
+                <td style="vertical-align: top; text-align:left;">                   
 
                     <span><br /><b>Title:</b> @Html.DisplayFor(model => model.Title)</span>
 
-
-                    @*@if (Model.localProduct.Price != "")
-        {*@
+         
                     <span><br /><b>Price:</b> @Html.DisplayFor(model => model.Price)</span>
                     @*}*@
                     <br />
-
-                    @*@if (Model.localProduct.Description != "")
-        {*@
-                    <b>Description:</b>
-                  
+         
+                    <b>Description:</b>              
                     <span> @Html.DisplayFor(model => model.Description)</span>
                     @*}*@
 
-
-
                     <span><br /><b>ImageUrl:</b>  @Html.DisplayFor(model => model.ImageUrl) </span>
 
-                    <span><br /><b>IsVisible:</b>  @Html.DisplayNameFor(model => model.IsVisible) </span>
-
-                    @*@if (Model.localProduct.Category != "")
-        {*@
+        
                     <span><br /><b>Category:</b>@Html.DisplayFor(model => model.Category) </span>
                     @*}*@
 
                     <span><br /><b>ProductUrl:</b>  @Html.DisplayFor(model => model.ProductUrl) </span>
 
                     <span><br /><b>IsQuote:</b>  @Html.DisplayFor(model => model.IsQuote) </span>
-
-                    <span><br /><b>SellerId:</b>  @Html.DisplayFor(model => model.sellerId) </span>
-
-
-
-                    @*@if (Model.distance != null)
-        {
-        <span><br /><b>Distance:</b> @(Model.distance)</span>
-        }*@
-
-                    @*@if (Model.seller.CompanyName != "")
-        {
-        <span><br /><b>Company Name:</b> @Model.seller.CompanyName</span>
-        }
-
-         @if (Model.sellerAddress.Address != "")
-        {
-        <span><br /><b>Company Address:</b> @Model.sellerAddress.Address</span>
-        }
-
-        @if (Model.seller.BusinessPhone != "")
-        {
-        <span><br /><b>Phone:</b> @Model.seller.BusinessPhone</span>
-        }
-
-        @if (Model.seller.AccountType != "")
-        {
-        <span><br /><b>Account Type:</b> @Model.seller.AccountType</span>
-        }*@
                     <br />
                     <br />
-                    @*@if (Model.localProduct.ProductUrl != "")
-        {*@
-                    <form asp-action="SellerDeletePage">
-                        <input type="submit" value="Delete" class="btn btn-default" /> |
-                        <input type="submit" value="Cancel" class="btn btn-default" />
-                    </form>
-                    <br />
-                    <br />
+                <form asp-action="SellerDeletePage">
+                    @Html.ActionLink("Delete", "Delete", new { imageUrl = Model.ImageUrl, sellerID = Model.sellerId, productId = Model.LocalProductId /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger " })|
+                    <input onclick="history.back()" value="Cancel" class="btn btn-default" />
+                </form>
                 </td>
             </tr>
         </table>

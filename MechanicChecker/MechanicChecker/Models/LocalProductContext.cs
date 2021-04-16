@@ -110,5 +110,73 @@ namespace MechanicChecker.Models
             }
             return true;
         }
+
+        public bool editProduct(LocalProduct localProduct)
+        {
+            bool isPassed = true;
+            try
+            {
+                string stringCmd = "UPDATE Product set " +
+                    "Category = '" + localProduct.Category + "' , " +
+                    "Title = '" + localProduct.Title + "' , " +
+                    "Price= '" + Convert.ToDecimal(localProduct.Price) + "' , " +
+                    "Description = '" + localProduct.Description + "' , " +
+                    "ImageUrl = '" + localProduct.ImageUrl + "' , " +
+                    "IsQuote = '" + Convert.ToInt32(localProduct.IsQuote) + "' , " +
+                    "ProductUrl = '" + localProduct.ProductUrl + "' where ProductId = " + localProduct.LocalProductId + ";";
+
+                Debug.WriteLine(stringCmd);
+                MySqlConnection myConnection = GetConnection();
+                MySqlCommand myCommand = new MySqlCommand(stringCmd);
+                myCommand.Connection = myConnection;
+                myConnection.Open();
+                myCommand.ExecuteNonQuery(); // ExecuteNonQuery is required to update, insert and delete from the DB
+                myCommand.Connection.Close();
+
+            }
+            catch (Exception e)
+            {
+                isPassed = false;
+                return isPassed;
+            }
+            return isPassed;
+        }
+
+        public LocalProduct getLocalProduct(int productId)
+        {
+            LocalProduct LocalProduct = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Product " +
+                    "where ProductId = " + productId + ";", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        LocalProduct = new LocalProduct()
+                        {
+
+                            LocalProductId = Convert.ToInt32(reader["ProductId"]),
+                            Category = reader["Category"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Price = reader["Price"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            ImageUrl = reader["ImageUrl"].ToString(),
+                            sellerId = reader["SellerId"].ToString(),
+                            ProductUrl = reader["ProductUrl"].ToString(),
+                            IsVisible = Convert.ToBoolean(reader["IsVisible"]),
+                            IsQuote = Convert.ToBoolean(reader["IsQuote"])
+                        };
+
+                    }
+                }
+            }
+
+            return LocalProduct;
+        }
+
     }
 }

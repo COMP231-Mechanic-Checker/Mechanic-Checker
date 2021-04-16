@@ -184,42 +184,7 @@ namespace MechanicChecker.Controllers
             return View("SellerDeletePage");
         }
 
-        // GET: LocalSellerController/Edit/5
-        public ActionResult Edit(int id, string sellerID)
-        {
-            sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
-            currentSellerProducts = (List<SellerProduct>)sellerProductContext.GetAllSellerProducts();
-            IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
-            if (currentSellerProducts.Count() > 0)
-            {
-                //searchedSellerProducts = currentSellerProducts ;
-                searchedSellerProducts = currentSellerProducts.Where(
-                   product =>
-                   product.localProduct.LocalProductId == id && product.localProduct.sellerId == sellerID
-                   );
-                ViewBag.CurrentSeller = searchedSellerProducts.FirstOrDefault().seller.UserName;
-                return View("Edit", searchedSellerProducts.FirstOrDefault().localProduct);
-            }
-            else
-            {
-                return View("SellerLandingPage", searchedSellerProducts);
-            }
-        }
-
-        // POST: LocalSellerController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
 
         public ActionResult DeletePage(int id, string sellerID)
         {
@@ -245,6 +210,90 @@ namespace MechanicChecker.Controllers
         public ActionResult DeleteItem(int sellerID, int productId)
         {
             return View("SellerDeletePage");
+        }
+
+        // GET: LocalSellerController/Create
+        public ActionResult Edit(int id, string sellerID)
+        {
+            SellerProductContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            currentSellerProducts = (List<SellerProduct>)context.GetAllSellerProducts();
+            IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
+            if (currentSellerProducts.Count() > 0)
+            {
+
+                //searchedSellerProducts = currentSellerProducts ;
+                searchedSellerProducts = currentSellerProducts.Where(
+                   product =>
+                   product.localProduct.LocalProductId == id && product.localProduct.sellerId == sellerID
+                   );
+                ViewBag.CurrentSeller = searchedSellerProducts.FirstOrDefault().seller.UserName;
+                return View(searchedSellerProducts.FirstOrDefault().localProduct);
+            }
+            else
+            {
+                return View("SellerLandingPage", searchedSellerProducts);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(IFormCollection formCollection)
+        {
+            localProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
+            LocalProduct editedProduct = EditProduct(formCollection);
+            //TODO: If saving to database fails need to delete the uploaded s3 company logo image
+            if (localProductContext.editProduct(editedProduct))
+            {
+                LocalProduct updatedProduct = localProductContext.getLocalProduct(editedProduct.LocalProductId);
+                TempData["CreateProduct"] = "Your product information has been updated successfully!";
+                return View("Details", updatedProduct);
+            }
+            else
+            {
+                //TODO: Need useful error messages to tell the user what is wrong
+                ViewData["CreateErrorMsg"] = "Something went wrong! Please review your product information.";
+                return View("Details");
+
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public LocalProduct EditProduct(IFormCollection formCollection)
+        {
+            IFormFile companyImgStream = formCollection.Files.FirstOrDefault();
+            S3FileUploader s3Upload = new S3FileUploader();
+            string awsS3CompanyLogoUrl;
+            // if something goes wrong uploading to s3 use placeholder company logo url
+            try
+            {
+                awsS3CompanyLogoUrl = s3Upload.value(companyImgStream, "product");
+            }
+            catch (Exception e)
+            {
+                awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/product/default/unnamed.jpg";
+            }
+
+            //string sellerWebsiteUrl = "https://michaelasemota.netlify.app/";
+
+            LocalProduct updatedProduct = new LocalProduct()
+            {
+                LocalProductId = Convert.ToInt32(formCollection["LocalProductId"].ToString()),
+                Category = formCollection["Category"].ToString().Trim(),
+                Title = formCollection["Title"].ToString().Trim(),
+                Price = formCollection["Price"].ToString().Trim(),
+                Description = formCollection["Description"].ToString().Trim(),
+                ImageUrl = awsS3CompanyLogoUrl,
+                ProductUrl = formCollection["ProductUrl"].ToString().Trim(),
+                IsQuote = Convert.ToBoolean(formCollection["IsQuote"].ToString().Split(',')[0]),
+                IsVisible = true,
+                sellerId = formCollection["SellerId"].ToString()
+            };
+
+            return updatedProduct;
+            // return View();
+
         }
 
         [HttpGet]

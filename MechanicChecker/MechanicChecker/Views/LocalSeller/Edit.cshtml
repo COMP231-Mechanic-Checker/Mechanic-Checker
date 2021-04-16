@@ -1,21 +1,20 @@
 ﻿@model MechanicChecker.Models.LocalProduct
 
 @{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewData["Title"] = "Edit";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-
+​​<h2>Edit</h2>
 <h4>LocalProduct</h4>
 <hr />
 <div class="row">
     <div class="col container" style="padding:50px; width:800px;">
-        <form asp-action="Edit" asp-route-sellerID="@Model.sellerId">
+        <form asp-controller="LocalSeller" asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div hidden="hidden" class="form-group">
-                <label asp-for="LocalProductId" ReadOnly="true" class="control-label"></label>
-                <input asp-for="LocalProductId" ReadOnly="true" class="form-control" />
+                <label asp-for="LocalProductId" class="control-label"></label>
+                <input asp-for="LocalProductId" class="form-control" readonly />
                 <span asp-validation-for="LocalProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,6 +36,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
+                @*<input asp-for="Description" class="form-control" />*@
                 <textarea asp-for="Description" rows="10" cols="70" class="form-control" type="textarea"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
@@ -46,8 +46,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" type="file" class="form-control" />
-                <span asp-validation-for="ImageUrl" hidden="hidden" class="text-danger"></span>
+
+                @*<input asp-for="ImageUrl" class="form-control" readonly/>*@
+                <input type="file" asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+
             </div>
             <div hidden="hidden" class="form-group">
                 <div class="checkbox">
@@ -70,34 +73,31 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProductUrl" class="control-label"></label>
-                <input asp-for="ProductUrl" readonly="readonly" class="form-control" />
-                <span asp-validation-for="ProductUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductUrl" class="control-label"></label>
                 <input asp-for="ProductUrl" class="form-control" />
                 <span asp-validation-for="ProductUrl" class="text-danger"></span>
             </div>
+
+            @*<div class="form-group">
+                    <label asp-for="ProductUrl" class="control-label"></label>
+                    <input asp-for="ProductUrl" class="form-control" />
+                    <span asp-validation-for="ProductUrl" class="text-danger"></span>
+        </div> *@
 
             <div hidden="hidden" class="form-group">
                 <label asp-for="sellerId" class="control-label"></label>
                 <input asp-for="sellerId" class="form-control" />
                 <span asp-validation-for="sellerId" class="text-danger"></span>
-            </div>
-
+            </div>          
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default " style="margin-right:10px;" />
+                @*<a asp-action="Index">Back to List</a>*@
                 <a class="btn btn-success" asp-action="Index" asp-route-username="@ViewBag.CurrentSeller">Back to List</a>
             </div>
         </form>
-
-    </div>
-
-
+     </div>
 </div>
 
-
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    {​​await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

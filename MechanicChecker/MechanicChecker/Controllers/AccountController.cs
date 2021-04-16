@@ -28,21 +28,40 @@ namespace MechanicChecker.Controllers
 
             Seller validSeller = sellerContext.GetSeller(userId);
 
-            Utility u = new Utility();
-            bool isValidSeller = u.verifyPassword(password, validSeller.PasswordHash);
-
-            if (isValidSeller)
+            if (validSeller != null)
             {
-                HttpContext.Session.SetString("username", validSeller.UserName);
-                HttpContext.Session.SetString("firstname", validSeller.FirstName);
-                HttpContext.Session.SetString("lastname", validSeller.LastName);
-                ViewBag.UserName = validSeller.UserName;
-                return RedirectToAction("Index", "LocalSeller");
+                if (validSeller.IsApproved)
+                {
+
+                    Utility u = new Utility();
+                    bool isValidSeller = u.verifyPassword(password, validSeller.PasswordHash);
+
+                    if (isValidSeller)
+                    {
+                        HttpContext.Session.SetString("username", validSeller.UserName);
+                        HttpContext.Session.SetString("firstname", validSeller.FirstName);
+                        HttpContext.Session.SetString("lastname", validSeller.LastName);
+                        ViewBag.UserName = validSeller.UserName;
+                        return RedirectToAction("Index", "LocalSeller");
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Username or password is invalid.";
+                        return View("../Account/SignIn");
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = "Please Verify your account through your email";
+                    return View("../Account/SignIn");
+                }
             }
             else
             {
+               
                 ViewBag.Error = "Username or password is invalid.";
                 return View("../Account/SignIn");
+               
             }
 
         }
@@ -61,11 +80,12 @@ namespace MechanicChecker.Controllers
             string hostUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             string websiteUrl = hostUrl + "/Account/ActivateEmail/";
             SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
-            ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
+            //ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
 
             Seller newSeller = RegisterSeller(formCollection);
 
             string activationLink = websiteUrl + newSeller.ActivationCode;
+            ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
 
             string toName = newSeller.FirstName;
             string email = newSeller.Email;
@@ -244,8 +264,11 @@ namespace MechanicChecker.Controllers
 
             //TODO: Replace when form validation for signup page is fixed
             // placeholder to prevent application crash
-            string sellerWebsiteUrl = "https://michaelasemota.netlify.app/";
-
+            string urlWebsite = "http://mechanicchecker.us-east-1.elasticbeanstalk.com/";
+            if (!string.IsNullOrEmpty(formCollection["WebsiteUrl"].ToString()))
+            {
+                urlWebsite = formCollection["WebsiteUrl"].ToString().Trim();
+            }
             Seller newSeller = new Seller()
             {
                 UserName = formCollection["UserName"].ToString().Trim(),
@@ -260,7 +283,7 @@ namespace MechanicChecker.Controllers
                 CompanyLogoUrl = awsS3CompanyLogoUrl,
                 CompanyName = formCollection["CompanyName"].ToString().Trim(),
                 IsApproved = false,
-                WebsiteUrl = sellerWebsiteUrl.ToString().Trim(),
+                WebsiteUrl = urlWebsite,
                 ActivationCode = Guid.NewGuid().ToString()
             };
             return newSeller;

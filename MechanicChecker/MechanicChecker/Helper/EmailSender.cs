@@ -34,7 +34,7 @@ namespace MechanicChecker.Helper
 
             SendGridMessage msg = MailHelper.CreateSingleTemplateEmail(from, to, "d-8a2852521a1c47578f046c1ef0ca0cf7", new { name = toName, link = resetPasswordLink });
             Response response = await client.SendEmailAsync(msg);
-  
+
             return response;
         }
 
@@ -45,7 +45,7 @@ namespace MechanicChecker.Helper
 
             // we assume that the key is active and sendgrid api has 100 max quota hard limit with daily reset
             contextAPIs.activateAPI("DeveloperAPI SendGrid", apiKeyOwner); // reduce quota by 1
-            
+
             return sendGridAPI.APIKey;
         }
     }

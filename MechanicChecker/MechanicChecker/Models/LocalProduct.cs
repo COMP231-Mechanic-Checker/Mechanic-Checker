@@ -20,7 +20,7 @@ namespace MechanicChecker.Models
         [Required(ErrorMessage = "Please enter description your product")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Please attach an image of your product")]
-        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$", ErrorMessage = "Only Image files allowed.")]
+        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif|.PNG|.JPG|.GIF)$", ErrorMessage = "Only Image files allowed.")]
         public string ImageUrl { get; set; }
         public bool IsVisible { get; set; }
         public string Category { get; set; }

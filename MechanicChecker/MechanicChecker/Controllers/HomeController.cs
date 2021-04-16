@@ -1,4 +1,6 @@
-﻿using MechanicChecker.Models;
+﻿using MechanicChecker.Helper;
+using MechanicChecker.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -11,12 +13,12 @@ namespace MechanicChecker.Controllers
 {
     public class HomeController : Controller
     {
+        
         public IActionResult Index()
         {
 
-            SellerAddressContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerAddressContext)) as SellerAddressContext;
-            ExternalAPIsContext eContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
-
+            SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            Debug.WriteLine("User Id " + context.GetUserIdByUserName("jhjh"));
             //var data = eContext.activateAPI("DeveloperAPI Ebay");
             //Debug.WriteLine("API " + data);
 

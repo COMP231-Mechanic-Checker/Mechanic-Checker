@@ -80,6 +80,18 @@ namespace MechanicChecker
                 routes.MapRoute(
                     name: "",
                     template: "{controller=Search}/{action=Search}");
+
+                routes.MapRoute(
+                    name: "",
+                    template: "{controller=Account}/{action=UpdatePassword}/{id?}");
+
+                routes.MapRoute(
+                 name: "",
+                 template: "{controller=Account}/{action=ActivationEmail}/{id?}");
+
+                routes.MapRoute(
+                 name: "",
+                 template: "{controller=LocalSeller}/{action=SearchProducts}/{id?}");
             });
         }
     }

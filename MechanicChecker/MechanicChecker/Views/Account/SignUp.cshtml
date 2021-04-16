@@ -16,7 +16,7 @@
         </div>
         <h2>Welcome</h2>
         <h3>Seller's Sign Up here</h3>
-        <form asp-controller="Account" asp-action="SignUp" method="post" enctype="multipart/form-data" name="registration">
+        <form asp-controller="Account" asp-action="SignUp" method="post" enctype="multipart/form-data" name="registration" id="registerForm">
 
             <div class="form-group">
                 <label for="UserName">Username</label>
@@ -116,8 +116,8 @@
                 <textarea id="Application" name="Application" rows="4" cols="50" class="form-control" placeholder="Write here the reasons for wanting to sign up with Mechanic Checker"></textarea>
             </div>
             <div class="form-group">
-                <button asp-controller="Home" asp-action="Index" type="submit">Cancel</button>
-                <button asp-controller="Account" asp-action="SignUp" method="post" type="submit">Sign Up</button>
+                <button onclick="history.back()">Cancel</button>
+                <button asp-controller="Account" asp-action="SignUp" method="post" type="submit" id="submitBtn">Sign Up</button>
             </div>
         </form>
         <h5>You agree to Mechanic Checker App's terms and condiitons. </h5>
@@ -132,10 +132,13 @@
 
 
     <script>
-        //for debuggin purposes doesnt submit form
-        //jQuery.validator.setDefaults({
-        //    debug: true,
-        //    success: "valid"
+        
+        //$('input').on('blur', function () {
+        //    if ($("#registerForm").valid()) {
+        //        $('#submitBtn').prop('disabled', false);
+        //    } else {
+        //        $('#submitBtn').prop('disabled', 'disabled');
+        //    }
         //});
 
         //Method to validate canadian postal code
@@ -216,12 +219,17 @@
                 // Make sure the form is submitted to the destination defined
                 // in the "action" attribute of the form when valid
 
-
-                submitHandler: function (form) {
+                submitHandler: function (form, event) {
+                    //event.preventDefault();
                     form.submit();
                 }
+
+                
             });
         });
+
+        
+
     </script>
     <script>
         $(document).ready(function () {

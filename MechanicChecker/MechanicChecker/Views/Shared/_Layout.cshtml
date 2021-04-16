@@ -135,7 +135,7 @@
                                 @*<a asp-controller="LocalSeller" asp-action="Index">View Account</a>
                         <a asp-controller="LocalSeller" asp-action="Index">View Products</a>
                         <a asp-controller="Account" asp-action="SignOut">Logout</a>*@
-                                <a href="@Url.Action("Index", "LocalSeller", new { userName = Context.Session.GetString("username") })">View Account</a>
+                                <a href="@Url.Action("EditAccount", "LocalSeller", new { userName = Context.Session.GetString("username") })">View Account</a>
                                 <a href="@Url.Action("Index", "LocalSeller", new { userName = Context.Session.GetString("username") })">View Products</a>
                                 <a asp-controller="Account" asp-action="SignOut">Logout</a>
                             </div>

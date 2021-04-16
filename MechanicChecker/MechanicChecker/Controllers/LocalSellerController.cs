@@ -201,6 +201,128 @@ namespace MechanicChecker.Controllers
             }
         }
 
+        public ActionResult Delete(int id, string sellerID)
+        {
+            sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            currentSellerProducts = (List<SellerProduct>)sellerProductContext.GetAllSellerProducts();
+            IEnumerable<SellerProduct> searchedSellerProducts = new List<SellerProduct>();
+            if (currentSellerProducts.Count() > 0)
+            {
+                //searchedSellerProducts = currentSellerProducts ;
+                searchedSellerProducts = currentSellerProducts.Where(
+                   product =>
+                   product.localProduct.LocalProductId == id && product.localProduct.sellerId == sellerID
+                   );
+                ViewBag.CurrentSeller = searchedSellerProducts.FirstOrDefault().seller.UserName;
+                return View("Delete", searchedSellerProducts.FirstOrDefault().localProduct);
+            }
+            else
+            {
+                return View("SellerLandingPage", searchedSellerProducts);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult EditAccount(string userName) //value gotten from the url
+        {
+            sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            sellerContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            Seller seller = sellerContext.GetSeller(userName);
+            currentSellerProducts = (List<SellerProduct>)sellerProductContext.GetAllSellerProducts();
+            ViewBag.CurrentSellerAddress = currentSellerProducts.Where(s => s.seller.UserName.Equals(userName)).FirstOrDefault().sellerAddress;
+            return View("EditAccount", seller);
+        }
+
+        
+        //public Seller EditAccount(IFormCollection formCollection)
+        //{
+
+        //    IFormFile companyImgStream = formCollection.Files.First();
+        //    S3FileUploader s3Upload = new S3FileUploader();
+        //    string awsS3CompanyLogoUrl;
+
+        //    // if something goes wrong uploading to s3 use placeholder company logo url
+        //    try
+        //    {
+        //        awsS3CompanyLogoUrl = s3Upload.value(companyImgStream, "seller");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/seller/default/unnamed.jpg";
+        //    }
+
+        //    //TODO: Replace when form validation for signup page is fixed
+        //    // placeholder to prevent application crash
+        //    string sellerWebsiteUrl = "https://michaelasemota.netlify.app/";
+
+        //    Seller newSeller = new Seller()
+        //    {
+        //        UserName = formCollection["UserName"].ToString().Trim(),
+        //        AccountType = formCollection["AccountType"].ToString().Trim(),
+        //        FirstName = formCollection["FirstName"].ToString().Trim(),
+        //        LastName = formCollection["LastName"].ToString().Trim(),
+        //        Email = formCollection["Email"].ToString().Trim(),
+        //        //PasswordHash = Utility.encryptPassword(formCollection["Password"]),
+        //        //Application = formCollection["Application"].ToString().Trim(),
+        //        BusinessPhone = formCollection["BusinessPhone"].ToString().Trim(),
+        //        //ApplicationDate = DateTime.Now,
+        //        CompanyLogoUrl = awsS3CompanyLogoUrl,
+        //        CompanyName = formCollection["CompanyName"].ToString().Trim(),
+        //        //IsApproved = false,
+        //        WebsiteUrl = sellerWebsiteUrl.ToString().Trim(),
+        //        //ActivationCode = Guid.NewGuid().ToString()
+        //    };
+        //    return newSeller;
+        //}
+
+
+        //public SellerAddress EditAddress(IFormCollection formCollection)
+        //{
+
+        //    SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+
+        //    SellerAddress newSellerAddress = new SellerAddress()
+        //    {
+        //        Address = formCollection["Address"].ToString().Trim(),
+        //        City = formCollection["City"].ToString().Trim(),
+        //        PostalCode = formCollection["PostalCode"].ToString().Trim(),
+        //        Province = formCollection["Province"].ToString().Trim(),
+        //        SellerId = Convert.ToInt32(formCollection["SellerId"].ToString().Trim()),
+
+        //    };
+
+        //    return newSellerAddress;
+        //}
+
+        //[HttpPost]
+        //public IActionResult EditSellerAccount(IFormCollection formCollection)
+        //{
+
+        //    SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+        //    ExternalAPIsContext contextAPIs = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.ExternalAPIsContext)) as ExternalAPIsContext;
+
+        //    Seller newSeller = EditAccount(formCollection);
+
+        //    SellerAddressContext addressContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerAddressContext)) as SellerAddressContext;
+        //    addressContext.SaveSellerAddress(EditAddress(formCollection));
+
+        //    //TODO: If saving to database fails need to delete the uploaded s3 company logo image
+        //    if (context.saveSeller(newSeller))
+        //    {
+        //        EditAddress(formCollection);
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        ViewBag.CurrentSellerAddress = EditAddress(formCollection);
+        //        //TODO: Need useful error messages to tell the user what is wrong
+        //        return View("EditAccount", newSeller);
+
+        //    }
+
+        //}
     }
+    
 }
 

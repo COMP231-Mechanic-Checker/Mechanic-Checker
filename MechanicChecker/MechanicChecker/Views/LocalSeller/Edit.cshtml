@@ -46,9 +46,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="ImageUrl" class="control-label"></label>
+
                 @*<input asp-for="ImageUrl" class="form-control" readonly/>*@
                 <input type="file" asp-for="ImageUrl" class="form-control" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
+
             </div>
             <div hidden="hidden" class="form-group">
                 <div class="checkbox">
@@ -74,11 +76,13 @@
                 <input asp-for="ProductUrl" class="form-control" />
                 <span asp-validation-for="ProductUrl" class="text-danger"></span>
             </div>
+
             @*<div class="form-group">
                     <label asp-for="ProductUrl" class="control-label"></label>
                     <input asp-for="ProductUrl" class="form-control" />
                     <span asp-validation-for="ProductUrl" class="text-danger"></span>
         </div> *@
+
             <div hidden="hidden" class="form-group">
                 <label asp-for="sellerId" class="control-label"></label>
                 <input asp-for="sellerId" class="form-control" />

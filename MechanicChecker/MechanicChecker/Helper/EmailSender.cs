@@ -10,7 +10,7 @@ namespace MechanicChecker.Helper
 {
     public class EmailSender
     {
-        private static string sendgridAPIKey = Startup.Configuration.GetSection("APIKeys")["SendGrid"];
+        private static string sendgridAPIKey = Startup.Configuration.GetSection("APIKeyOwners")["SendGrid"];
 
         public static async Task<Response> SendActivationEmail(ExternalAPIsContext contextAPIs, string activateEmailLink, string toName, string toEmail)
         {

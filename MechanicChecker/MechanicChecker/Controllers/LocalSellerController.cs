@@ -307,6 +307,17 @@ namespace MechanicChecker.Controllers
             return View("EditAccount", seller);
         }
 
+        [HttpGet]
+        public IActionResult EditAccount(string userName) //value gotten from the url
+        {
+            sellerProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerProductContext)) as SellerProductContext;
+            sellerContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
+            Seller seller = sellerContext.GetSeller(userName);
+            currentSellerProducts = (List<SellerProduct>)sellerProductContext.GetAllSellerProducts();
+            ViewBag.CurrentSellerAddress = currentSellerProducts.Where(s => s.seller.UserName.Equals(userName)).FirstOrDefault().sellerAddress;
+            return View("EditAccount", seller);
+        }
+
     }
 }
 

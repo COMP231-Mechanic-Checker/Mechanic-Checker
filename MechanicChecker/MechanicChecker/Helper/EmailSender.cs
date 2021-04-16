@@ -40,7 +40,7 @@ namespace MechanicChecker.Helper
 
         private static string GetSendGridAPIKey(ExternalAPIsContext contextAPIs)
         {
-            string apiKeyOwner = Startup.Configuration.GetSection("APIKeyOwner")["SendGrid"];
+            string apiKeyOwner = Startup.Configuration.GetSection("APIKeyOwners")["SendGrid"];
             ExternalAPIs sendGridAPI = contextAPIs.GetApiByService("DeveloperAPI SendGrid", apiKeyOwner);
 
             // we assume that the key is active and sendgrid api has 100 max quota hard limit with daily reset

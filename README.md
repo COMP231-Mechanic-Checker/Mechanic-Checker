@@ -6,7 +6,11 @@ For additional documentation please refer to our [Mechanic Checker Wiki](https:/
 
 The Mechanic Checker Web Application allows Canadian users located in the Greater Toronto Area (GTA) to compare auto part-related items and automotive-related services, from local stores and major retailers, i.e. Ebay, Amazon, and Alibaba, with plans for adding support for more major retailers, e.g. Walmart. Local stores can create an account to post their auto part-related items and automotive-related services listings. Additionally for local stores users can filter search results based on local stores near their location via the Google Maps API. For the major retailers, the Mechanic Checker uses product APIs provided by said retailers to obtain their auto part-related items listings. 
 
-The tech stack consists of [.NET Core 2.1](https://docs.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-2.1?view=aspnetcore-5.0), and [Nodejs](https://nodejs.org/en/), where Nodejs is used in the .NET Core 2.1 application as middleware.
+![image](https://user-images.githubusercontent.com/30096267/114967002-ac8e4580-9e41-11eb-85ee-0f0a96682e61.png)
+
+*The Mechanic Checker Home Page.*
+
+The Mechanic Checker website is built on [.NET Core 2.1](https://docs.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-2.1?view=aspnetcore-5.0).
 
 This is Phase 1 of a 2-Phase [Centennial College](https://www.centennialcollege.ca/) capstone project for created for [Software Development Project 1 (COMP-231)](https://www.centennialcollege.ca/programs-courses/full-time/course/software-development-project-i/), for the professor Jake Nesovic. Phase 2 of the Mechanic Checker project will be done in [Software Development Project 2 (COMP-313)](https://www.centennialcollege.ca/programs-courses/full-time/course/software-development-project-2-COMP-313/).
 
@@ -70,7 +74,7 @@ The Mechanic Checker is hosted on [Amazon Web Services (AWS)](https://aws.amazon
 
 ### Deployment Diagram
 
-![Deployment Diagram v4](https://user-images.githubusercontent.com/30096267/112782808-e37bf300-901b-11eb-8018-62993253d93a.png)
+![deployment-diagram-v5](https://user-images.githubusercontent.com/30096267/114967191-fa0ab280-9e41-11eb-9c50-f368ed9d8a47.png)
 
 ## License
 

@@ -155,7 +155,7 @@ namespace MechanicChecker.Controllers
             products.Add(prod2);
 
             return View("SearchCompareTwoParts", products);
-        }
+        }        
 
     }
 

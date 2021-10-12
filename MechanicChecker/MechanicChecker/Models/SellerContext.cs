@@ -18,6 +18,20 @@ namespace MechanicChecker.Models
         {
             return new MySqlConnection(ConnectionString);
         }
+        public void DeleteSellerByCompanyName(string companyName)
+        {
+            string command = "DELETE FROM Seller WHERE CompanyName = '" + companyName + "';";
+
+            // send query to database
+            MySqlConnection myConnection = GetConnection();
+            MySqlCommand myCommand = new MySqlCommand(command);
+            myCommand.Connection = myConnection;
+            myConnection.Open();
+            myCommand.ExecuteNonQuery(); // ExecuteNonQuery is required to update, insert and delete from the DB
+            myCommand.Connection.Close();
+
+        }
+
         public bool saveSeller(Seller seller)
         {
             bool isPassed = true;
@@ -27,18 +41,18 @@ namespace MechanicChecker.Models
                 string stringCmd =
                     "INSERT INTO Seller(Username, FirstName, LastName, Email, PasswordHash, AccountType, IsApproved, CompanyName, BusinessPhone, CompanyLogoUrl, WebsiteUrl, Application, ApplicationDate, ActivationCode) " +
                     "VALUES ('"
-                    + seller.UserName + "', '"
-                    + seller.FirstName + "', '"
-                    + seller.LastName + "', '"
-                    + seller.Email + "', '"
+                    + seller.UserName.Replace("'", "''") + "', '"
+                    + seller.FirstName.Replace("'", "''") + "', '"
+                    + seller.LastName.Replace("'", "''") + "', '"
+                    + seller.Email.Replace("'", "''") + "', '"
                     + seller.PasswordHash + "', '"
                     + seller.AccountType + "', "
                     + Convert.ToInt32(seller.IsApproved) + ", '"
-                    + seller.CompanyName + "', '"
+                    + seller.CompanyName.Replace("'", "''") + "', '"
                     + seller.BusinessPhone + "', '"
                     + seller.CompanyLogoUrl + "', '"
                     + seller.WebsiteUrl + "', '"
-                    + seller.Application + "', '"
+                    + seller.Application.Replace("'", "''") + "', '"
                     /*
                      * Even though application date is automatically generated via the database the database operates with a different timezone.
                      * Better to manually set the date dynamically on the website.

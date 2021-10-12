@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MechanicChecker</title>
-
+    <link rel="shortcut icon" href="../images/MechanicCheckerLogoFavicon.png" />
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/css/style.css" rel="stylesheet" />
@@ -93,15 +93,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">MechanicChecker</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand" style="color: white; font-weight: bold; ">MechanicChecker</a>
             </div>
             <div class="navbar-collapse collapse">
                 @if (Context.Session.GetString("username") == null)
                 {
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index" style="color: white;">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About" style="color: white;">About</a></li>
+                        @*<li><a asp-area="" asp-controller="Home" asp-action="Contact" style="color: white;">Contact</a></li>*@
                     </ul>
                     <div class="navbarbtn">
 
@@ -114,7 +114,7 @@
                 {
                     if (Context.Request.Path.ToString().Contains("/LocalSeller"))
                     {
-                    <div class="col-sm-8 justify-content-center">
+                    <div class="col-sm-7 justify-content-center">
                         <form asp-controller="LocalSeller" asp-action="SearchProducts" class="navbar-form form-horizontal" method="post" style="">
                             <div class="form-group">
                                 <input type="text" hidden="hidden" name="username" value="@Context.Session.GetString("username")" />
@@ -124,7 +124,7 @@
                         </form>
                     </div>
                     }
-                    <div class="col-sm">
+                    <div class="col-sm-1">
                         <div class="dropdown inline-block navbar-btn col" style="">
                             <button class="btn btn-success">
                                 <img src="~/images/contact-icon.png" width="12" height="15"> &nbsp;

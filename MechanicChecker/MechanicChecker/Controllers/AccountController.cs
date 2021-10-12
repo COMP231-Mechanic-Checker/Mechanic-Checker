@@ -129,17 +129,37 @@ namespace MechanicChecker.Controllers
                             //TODO: If saving to database fails need to delete the uploaded s3 company logo image
                             if (context.saveSeller(newSeller))
                             {
-                                RegisterAddress(formCollection);
+                                if (RegisterAddress(formCollection))
+                                {
+                                    _ = EmailSender.SendActivationEmail(contextAPIs, activationLink, toName, email);
+                                    TempData["SignIn"] = "Congrats your account has been created! Check your email to verify your email account";
 
-                                _ = EmailSender.SendActivationEmail(contextAPIs, activationLink, toName, email);
-                                TempData["SignIn"] = "Congrats your account has been created! Check your email to verify your email account";
+                                    return RedirectToAction("SignIn");
+                                }
+                                else
+                                {
 
-                                return RedirectToAction("SignIn");
+                                    // To delete company logo image from aws
+                                    string productUrlToDelete = newSeller.CompanyLogoUrl;
+                                    string filenameToDelete = productUrlToDelete.Split('/').Last<string>();
+                                    AmazonS3Uploader s3Upload = new AmazonS3Uploader();
+                                    try
+                                    {
+                                        s3Upload.AWSdelete(filenameToDelete, "seller");
+                                    }
+                                    catch (Exception e)
+                                    { }
+                                    context.DeleteSellerByCompanyName(companyName);
+
+                                    //TODO: Need useful error messages to tell the user what is wrong
+                                    ViewData["PostSignUp"] = "Invalid Postal Code!";
+                                    return View("SignUp");
+                                }
                             }
                             else
                             {
                                 //TODO: Need useful error messages to tell the user what is wrong
-                                ViewData["PostSignUp"] = "Something went wrong! Please create your account again";
+                                ViewData["PostSignUp"] = "Something went wrong! Please review your account information and try again.";
                                 return View("SignUp");
 
                             }
@@ -259,7 +279,7 @@ namespace MechanicChecker.Controllers
             }
             catch (Exception e)
             {
-                awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/seller/default/unnamed.jpg";
+                awsS3CompanyLogoUrl = "https://mechanicchecker.s3.amazonaws.com/seller/default/unnamed.jpg";
             }
 
             //TODO: Replace when form validation for signup page is fixed
@@ -297,7 +317,7 @@ namespace MechanicChecker.Controllers
 
         }
 
-        public void RegisterAddress(IFormCollection formCollection)
+        public bool RegisterAddress(IFormCollection formCollection)
         {
             SellerContext context = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerContext)) as SellerContext;
 
@@ -313,7 +333,7 @@ namespace MechanicChecker.Controllers
             };
 
             SellerAddressContext addressContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.SellerAddressContext)) as SellerAddressContext;
-            addressContext.SaveSellerAddress(newSellerAddress);
+            return addressContext.SaveSellerAddress(newSellerAddress);
 
         }
 

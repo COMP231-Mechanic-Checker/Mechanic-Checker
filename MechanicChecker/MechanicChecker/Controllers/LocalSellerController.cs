@@ -154,7 +154,7 @@ namespace MechanicChecker.Controllers
             }
             catch (Exception e)
             {
-                awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/product/default/unnamed.jpg";
+                awsS3CompanyLogoUrl = "https://mechanicchecker.s3.amazonaws.com/product/default/unnamed.jpg";
             }
 
             //string sellerWebsiteUrl = "https://michaelasemota.netlify.app/";
@@ -316,17 +316,41 @@ namespace MechanicChecker.Controllers
         {
             localProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
             LocalProduct editedProduct = EditProduct(formCollection);
+
+            LocalProduct originalProduct = localProductContext.getLocalProduct(editedProduct.LocalProductId);
             //TODO: If saving to database fails need to delete the uploaded s3 company logo image
             if (localProductContext.editProduct(editedProduct))
             {
+                // To delete original product image from aws
+                string productUrlToDelete = originalProduct.ImageUrl;
+                string filenameToDelete = productUrlToDelete.Split('/').Last<string>();
+                AmazonS3Uploader s3Upload = new AmazonS3Uploader();
+                try
+                {
+                    s3Upload.AWSdelete(filenameToDelete, "product");
+                }
+                catch (Exception e)
+                { }
+
                 LocalProduct updatedProduct = localProductContext.getLocalProduct(editedProduct.LocalProductId);
                 TempData["CreateProduct"] = "Your product information has been updated successfully!";
                 return View("Details", updatedProduct);
             }
             else
             {
+                // To delete new product image from aws
+                string productUrlToDelete = editedProduct.ImageUrl;
+                string filenameToDelete = productUrlToDelete.Split('/').Last<string>();
+                AmazonS3Uploader s3Upload = new AmazonS3Uploader();
+                try
+                {
+                    s3Upload.AWSdelete(filenameToDelete, "product");
+                }
+                catch (Exception e)
+                { }
+
                 //TODO: Need useful error messages to tell the user what is wrong
-                ViewData["CreateErrorMsg"] = "Something went wrong! Please review your product information.";
+                ViewData["CreateErrorMsg"] = "Something went wrong! Please review your product information and try again.";
                 return View("Details");
 
             }
@@ -338,7 +362,7 @@ namespace MechanicChecker.Controllers
         public LocalProduct EditProduct(IFormCollection formCollection)
         {
             localProductContext = HttpContext.RequestServices.GetService(typeof(MechanicChecker.Models.LocalProductContext)) as LocalProductContext;
-            string awsS3CompanyLogoUrl;
+            string awsS3ProductImageUrl;
 
             if (formCollection.Files.FirstOrDefault() != null)
             {
@@ -349,16 +373,16 @@ namespace MechanicChecker.Controllers
                 // if something goes wrong uploading to s3 use placeholder company logo url
                 try
                 {
-                    awsS3CompanyLogoUrl = s3Upload.value(companyImgStream, "product");
+                    awsS3ProductImageUrl = s3Upload.value(companyImgStream, "product");
                 }
                 catch (Exception e)
                 {
-                    awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/product/default/unnamed.jpg";
+                    awsS3ProductImageUrl = "https://mechanicchecker.s3.amazonaws.com/product/default/unnamed.jpg";
                 }
             }
             else
             {
-                awsS3CompanyLogoUrl = localProductContext.getLocalProduct(Convert.ToInt32(formCollection["LocalProductId"].ToString())).ImageUrl;
+                awsS3ProductImageUrl = localProductContext.getLocalProduct(Convert.ToInt32(formCollection["LocalProductId"].ToString())).ImageUrl;
             }
 
             //string sellerWebsiteUrl = "https://michaelasemota.netlify.app/";
@@ -370,7 +394,7 @@ namespace MechanicChecker.Controllers
                 Title = formCollection["Title"].ToString().Trim(),
                 Price = formCollection["Price"].ToString().Trim(),
                 Description = formCollection["Description"].ToString().Trim(),
-                ImageUrl = awsS3CompanyLogoUrl,
+                ImageUrl = awsS3ProductImageUrl,
                 ProductUrl = formCollection["ProductUrl"].ToString().Trim(),
                 IsQuote = Convert.ToBoolean(formCollection["IsQuote"].ToString().Split(',')[0]),
                 IsVisible = true,

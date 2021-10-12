@@ -6,17 +6,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Configuration;
+using Amazon.Runtime;
+using Amazon;
 
 namespace MechanicChecker.AWS
 {
     public class AmazonS3Uploader
     {
-        private static string bucketName = "mechanic.checker";
+        private static string bucketName = "mechanicchecker";
 
         public void UploadFile(string filename, IFormFile readStream, string folder)
         {
             string keyName = string.Format("{0}/{1}", folder, filename);
-            var client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1);
+            BasicAWSCredentials awsCredentials = new BasicAWSCredentials(
+                    Startup.Configuration.GetSection("AWSCredentials")["AccessKeyID"],
+                    Startup.Configuration.GetSection("AWSCredentials")["Secretaccesskey"]
+                );
+            var client = new AmazonS3Client(awsCredentials, RegionEndpoint.USEast1);
             var transferUtility = new TransferUtility(client);
 
             try
@@ -48,14 +55,22 @@ namespace MechanicChecker.AWS
         //This is the method you will call in the account controller
         public void AWSdelete( string filename,string folder)
         {
-            var client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1);
+            BasicAWSCredentials awsCredentials = new BasicAWSCredentials(
+                    Startup.Configuration.GetSection("AWSCredentials")["AccessKeyID"],
+                    Startup.Configuration.GetSection("AWSCredentials")["Secretaccesskey"]
+                );
+            var client = new AmazonS3Client(awsCredentials, RegionEndpoint.USEast1);
             deleteFile(filename,folder).Wait();
         }
 
         private static async Task deleteFile(string filename,string folder)
         {
             string keyName = string.Format("{0}/{1}", folder, filename);
-            var client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1);
+            BasicAWSCredentials awsCredentials = new BasicAWSCredentials(
+                    Startup.Configuration.GetSection("AWSCredentials")["AccessKeyID"],
+                    Startup.Configuration.GetSection("AWSCredentials")["Secretaccesskey"]
+                );
+            var client = new AmazonS3Client(awsCredentials, RegionEndpoint.USEast1);
             try
             {
                 var deleteObjectRequest = new DeleteObjectRequest

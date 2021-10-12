@@ -22,16 +22,19 @@
 
 
 <div class="row">
-    <div class="row" style="float:right">        
-        <label>Select 2 items to compare</label>
-        <form id="compareform" method="post"style="display:none;" action="CompareTwoParts" contoller="Search">
+    <div class="row" style="float:right">
+        <div style="position: fixed;">
+            <div style="position: absolute; right: 5px; top: 200px;">
+                <label style="white-space: nowrap;">Select 2 items to compare</label>
+                <form id="compareform" method="post" style="display:block;" action="CompareTwoParts" contoller="Search">
 
-            <input hidden="hidden" name="product1" value="numb1" id="prod1" />
-            <input hidden="hidden" name="product2" value="numb2" id="prod2" />
-            <button type="submit" value="" id="btnCompare">Compare 2 Parts or Services</button>
-            <br /> 
-        </form>
-        
+                    <input hidden="hidden" name="product1" value="numb1" id="prod1" />
+                    <input hidden="hidden" name="product2" value="numb2" id="prod2" />
+                    <button type="submit" value="" id="btnCompare" disabled>Compare 2 Parts or Services</button>
+                    <br />
+                </form>
+            </div>
+        </div>
     </div>
     <div class="col-sm-2">
         <br />
@@ -73,8 +76,8 @@
                 @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
                 {
                     <form>
-                        <div>
-                            <br />Max Price:
+                        <div style="color: #818181; font-size: 20px; padding-top: 10px; padding-bottom: 15px; padding-left: 15px;">
+                            Max Price:
                             <br />
                             <input type="number" name="maxPrice" value="@ViewBag.maxPrice" style="width:100px; height:20px" />
 
@@ -85,7 +88,7 @@
                             <input name="filterType" value="price" hidden="hidden">
                             <input name="homeAddress" value="@ViewBag.PostalCode" hidden="hidden">
                             <input name="vendorFilter" value="@ViewBag.VendorFilter" hidden="hidden">
-                            <button><i class="fas fa-search"></i>Submit</button>
+                            <button style="margin-top: 10px;"><i class="fas fa-search"></i>Submit</button>
                         </div>
                     </form>
 
@@ -110,14 +113,12 @@
                 Seller
             </button>
             <div class="dropdown-container scrollable-menu" height="120">
-                <br />
                 @foreach (var s in sellers.Distinct())
                 {
                     <a href="@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "seller", seller = s.allCompanies})">
                         <input onclick="window.location.assign('@Url.Action("SearchLocalSellersProducts", "Search", new {homeAddress = ViewBag.PostalCode, vendorFilter = ViewBag.VendorFilter, query = ViewBag.SearchQuery, filterType = "seller", seller = s.allCompanies})')" type="checkbox" id="@s.selId" name="@s.selId" value="@s.selId" style="width:20px; height:20px">&nbsp;&nbsp;@s.allCompanies (@(sellers.Where(d => d.allCompanies == s.allCompanies).Count()) items)
                     </a>
                 }
-                <br />
 
             </div>
 
@@ -326,13 +327,13 @@
                                             <!--<p class="card-text">-->
                                             @*TODO: add action and controller to switch to product details view*@
                                             <!--@Html.ActionLink("Click to view details", "#", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-success " })
-                    </p>
-                    <p class="card-text">
-                        @if (product.distance != null)
-                        {
-                            <span>@product.distance  to @product.sellerAddress.Address</span>
-                        }
-                    </p>-->
+                                            </p>
+                                            <p class="card-text">
+                                                @if (product.distance != null)
+                                                {
+                                                    <span>@product.distance  to @product.sellerAddress.Address</span>
+                                                }
+                                            </p>-->
                                             @*New code start*@
                                             @{ string output2 = Newtonsoft.Json.JsonConvert.SerializeObject(product).ToString();}
                                             @using (Html.BeginForm("Details", "Search"))
@@ -344,8 +345,8 @@
 
 
                                             @*<p>
-                              @Newtonsoft.Json.JsonConvert.DeserializeObject(output).ToString()
-                        </p>*@
+                                                      @Newtonsoft.Json.JsonConvert.DeserializeObject(output).ToString()
+                                                </p>*@
                                             <p class="card-text">
                                                 @if (product.distance != null)
                                                 {
@@ -376,7 +377,11 @@
     </div>
 </div>
 
-
+<style>
+    .green {
+        background-color: green;
+    }
+</style>
 
 @section Scripts
     {
@@ -401,17 +406,18 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             var checkboxes = document.querySelectorAll('input[type=checkbox][name=compare]');
-            
+
             var count = 0;
             var list = [];
             for (var checkbox of checkboxes) {
+
                 checkbox.addEventListener('change', function (event) {
 
                     if (event.target.checked) {
 
                         if (count < 2) {
 
-                           // alert(`${event.target.value} is checked. position ${count}`);
+                            /*                           alert(`${event.target.value} is checked. position ${count}`);*/
                             list[count] = event.target;
                             count++;
                         }
@@ -421,31 +427,37 @@
                             var second = list[1];
                             list[0] = second;
                             list[1] = event.target;
-                           // alert(`${event.target.value} is checked first: ${list[0].value},  second: ${list[1].value}`);
+                            /*                           alert(`${event.target.value} is checked first: ${list[0].value},  second: ${list[1].value}`);*/
                         }
 
                     } else {
                         if (list[0] == event.target) {
                             list.shift();//remove first
+                            count -= 1;
                         }
 
                         if (list[1] == event.target) {
                             list.pop();//remove last
+                            count -= 1;
                         }
-                       // alert(`${event.target.value} is unchecked`);
+                        /*                       alert(`${event.target.value} is unchecked`);*/
                     }
-                    var compForm = document.getElementById("compareform");
+                    /*var compForm = document.getElementById("#btnCompare");*/
                     if (list.length == 2) {
-                        compForm.style.display = "block";
+                        $("#btnCompare").prop("disabled", false);
+                        $("#btnCompare").addClass("green");
+                        $("#btnCompare").css("color", "white");
                     }
                     else {
-                        compForm.style.display = "none";
+                        $("#btnCompare").prop("disabled", true);
+                        $("#btnCompare").removeClass("green");
+                        $("#btnCompare").css("color", "black");
                     }
                 });
             }
 
 
-            
+
             $("body").on("click", "#btnCompare", function () {
                 //Loop through the Table rows and build a JSON array.
 
@@ -454,20 +466,33 @@
                 var checkboxes = document.querySelectorAll('input[type=checkbox][name=compare]');
                 var input1 = document.getElementById("prod1");
                 var input2 = document.getElementById("prod2");
-               
-                
+
+
                 for (var checkbox of checkboxes) {
 
-                    if (checkbox.checked) {                        
-                        products.push(checkbox.value);                        
+                    if (checkbox.checked) {
+                        products.push(checkbox.value);
                     }
-                }  
+                }
 
                 if (products.length == 2) {
                     input1.value = products[0];
                     input2.value = products[1];
                 }
             });
+
+
+            $("#compareform").on("submit", function (e) {
+                e.preventDefault();
+
+                // reset all checkboxes
+                $('input[type=checkbox][name=compare]').each(function () {
+                    this.checked = false;
+                });
+
+                e.currentTarget.submit();
+            });
+
         }, false);
 
 

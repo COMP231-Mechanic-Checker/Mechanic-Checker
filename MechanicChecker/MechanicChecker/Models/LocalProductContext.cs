@@ -63,9 +63,9 @@ namespace MechanicChecker.Models
                 string stringCmd = "INSERT INTO Product( SellerId, Category, Title, Price, Description, ImageUrl, ProductUrl, IsQuote, IsVisible)" +
                     "VALUES (" + Convert.ToInt32(localProduct.sellerId) + ", '" +
                    localProduct.Category + "', '" +
-                   localProduct.Title + "', " +
+                   localProduct.Title.Replace("'", "''") + "', " +
                     Convert.ToDecimal(localProduct.Price) + ", '" +
-                    localProduct.Description + "', '" +
+                    localProduct.Description.Replace("'", "''") + "', '" +
                     localProduct.ImageUrl + "', '" +
                    localProduct.ProductUrl + "', " +
                     Convert.ToInt32(localProduct.IsQuote) + ", " +

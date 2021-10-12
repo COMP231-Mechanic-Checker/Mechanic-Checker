@@ -25,8 +25,9 @@
 
 
 <div>
-    <a onclick="history.back()" class="previous">&laquo; Previous</a>
-
+    <a onclick="window.history.back()" style="cursor: pointer;" class="previous">&laquo; Previous</a>
+    <br />
+    <br />
 </div>
 <div class="header center-block">
 
@@ -115,7 +116,7 @@
                     }
 
                 </li>
-                <li class="w3-padding-14"><b>Category:</b>@Model.Last().localProduct.Category </li>
+                <li class="w3-padding-14"><b>Category:</b> @Model.Last().localProduct.Category </li>
                 <li class="w3-padding-14"><b>Company Address:</b><br />@Model.Last().sellerAddress.Address</li>
                 <li class="w3-padding-14"><b>Phone:</b> @Model.Last().seller.BusinessPhone</li>
                 <li class="w3-padding-14"><b>Account Type: </b>@Model.Last().seller.AccountType</li>

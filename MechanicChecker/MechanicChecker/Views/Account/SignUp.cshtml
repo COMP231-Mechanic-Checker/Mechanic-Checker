@@ -132,22 +132,13 @@
 
 
     <script>
-        
-        //$('input').on('blur', function () {
-        //    if ($("#registerForm").valid()) {
-        //        $('#submitBtn').prop('disabled', false);
-        //    } else {
-        //        $('#submitBtn').prop('disabled', 'disabled');
-        //    }
-        //});
-
-        //Method to validate canadian postal code
+        // Method to validate canadian postal code
         jQuery.validator.addMethod("cdnPostal", function (postal, element) {
             return this.optional(element) ||
                 postal.match(/^[a-zA-Z][0-9][a-zA-Z](-| |)[0-9][a-zA-Z][0-9]$/);
         }, "Please specify a valid postal code.");
 
-        //
+        // Method to validate canadian phone number
         jQuery.validator.addMethod("phoneCdn", function (phone_number, element) {
             phone_number = phone_number.replace(/\s+/g, "");
             return this.optional(element) || phone_number.length == 10 &&
@@ -195,10 +186,7 @@
                     WebsiteUrl: {
                         url: true
                     },
-                    CompanyLogoUrl: {
-                        required: true,
-                        extension: "png|jpg|jpeg"
-                    }
+                    CompanyLogoUrl: "required"
                 },
 
                 //// Specify validation error messages
@@ -220,17 +208,15 @@
                 // in the "action" attribute of the form when valid
 
                 submitHandler: function (form, event) {
-                    //event.preventDefault();
+                    // event.preventDefault();
                     form.submit();
                 }
 
                 
             });
         });
-
-        
-
     </script>
+
     <script>
         $(document).ready(function () {
             var vendorFilter = $("#vendorFilter");

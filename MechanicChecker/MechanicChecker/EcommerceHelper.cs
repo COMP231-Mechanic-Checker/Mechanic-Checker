@@ -86,9 +86,6 @@ namespace MechanicChecker
 
                 Dictionary<string, string> alibabaParameters = new Dictionary<string, string>()
                 {
-                    //{"x-rapidapi-key", rapidAPIKey},
-                    //{"x-rapidapi-host", rapidAPIHost},
-                    //{"domainCode", "ca"},
                     {"keyword", automotiveKeyword + " " + query},
                     {"sortBy", "best_match"},
                     {"page", "1"},
@@ -98,12 +95,20 @@ namespace MechanicChecker
 
                 string url = alibabaRapidAPIEndpoint + encodedAlibabaParameters.ReadAsStringAsync().Result;
 
-                // get amazon products
+                // get alibaba products
                 HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("x-rapidapi-key", rapidAPIKey);
-                client.DefaultRequestHeaders.Add("x-rapidapi-host", rapidAPIHost);
-                client.DefaultRequestHeaders.Add("useQueryString", "true");
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpRequestMessage request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri(url),
+                    Headers =
+                    {
+                        { "x-rapidapi-host", rapidAPIHost },
+                        { "x-rapidapi-key", rapidAPIKey },
+                    },
+                };
+
+                HttpResponseMessage response = await client.SendAsync(request);
                 contextAPIs.activateAPI("RapidAPI Alibaba", apiKeyOwner); // reduce quota by 1
 
                 /* Parse JSON request to SellerProducts */

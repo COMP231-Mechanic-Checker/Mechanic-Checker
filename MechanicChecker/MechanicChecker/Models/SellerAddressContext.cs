@@ -60,8 +60,8 @@ namespace MechanicChecker.Models
                     "INSERT INTO Address(SellerId, Address, City, Province, PostalCode) " +
                     "VALUES ("
                     + sellerAddress.SellerId + ", '"
-                    + sellerAddress.Address + "', '"
-                    + sellerAddress.City + "', '"
+                    + sellerAddress.Address.Replace("'", "''") + "', '"
+                    + sellerAddress.City.Replace("'", "''") + "', '"
                     + sellerAddress.Province + "', '"
                     + sellerAddress.PostalCode + "')";
 

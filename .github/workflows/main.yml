@@ -32,18 +32,18 @@ jobs:
         APPSETTINGS_JSON_STR=$(cat << EOF
         { 
           "ConnectionStrings": {
-            "DefaultConnectionString": ${{ secrets.NETCORE_APPSETTINGS_DEFAULTCONNECTIONSTRING }}
+            "DefaultConnectionString": "${{ secrets.NETCORE_APPSETTINGS_DEFAULTCONNECTIONSTRING }}"
           },
           "APIKeyOwners": {
-            "GoogleMaps":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_GOOGLEMAPS }},
-            "Ebay":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_EBAY }},
-            "Amazon":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_AMAZON }},
-            "Alibaba":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_ALIBABA }},
-            "SendGrid":  ${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_SENDGRID }}
+            "GoogleMaps":  "${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_GOOGLEMAPS }}",
+            "Ebay":  "${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_EBAY }}",
+            "Amazon":  "${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_AMAZON }}",
+            "Alibaba":  "${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_ALIBABA }}",
+            "SendGrid":  "${{ secrets.NETCORE_APPSETTINGS_APIKEYOWNERS_SENDGRID }}"
           },
           "AWSCredentials": {
-            "AccessKeyID": ${{ secrets.AWS_ACCESS_KEY_ID }},
-            "Secretaccesskey": ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            "AccessKeyID": "${{ secrets.AWS_ACCESS_KEY_ID }}",
+            "Secretaccesskey": "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
           }
         }
         EOF

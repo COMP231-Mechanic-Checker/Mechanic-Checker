@@ -146,54 +146,55 @@
                 <div class="col-lg-8">
                     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
                     {
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" name="homeAddress" placeholder="Postal Code" value="@ViewBag.PostalCode" aria-label="location">
-                            <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" value="@ViewBag.SearchQuery" aria-label="Search" required>
-                            <select name="vendorFilter">
-                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 0)
-                                {
-                                    <option selected value="0"> All </option>
-                                }
-                                else
-                                {
-                                    <option value="0"> All </option>
-                                }
-                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 1)
-                                {
-                                    <option selected value="1">Local Sellers</option>
-                                }
-                                else
-                                {
-                                    <option value="1">Local Sellers</option>
-                                }
-                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 2)
-                                {
-                                    <option selected value="2">Ebay</option>
-                                }
-                                else
-                                {
-                                    <option value="2">Ebay</option>
-                                }
-                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 3)
-                                {
-                                    <option selected value="3">Amazon</option>
-                                }
-                                else
-                                {
-                                    <option value="3">Amazon</option>
-                                }
-                                @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 4)
-                                {
-                                    <option selected value="4">Alibaba</option>
-                                }
-                                else
-                                {
-                                    <option value="4">Alibaba</option>
-                                }
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" name="homeAddress" placeholder="Postal Code" value="@ViewBag.PostalCode" aria-label="location">
+                        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" value="@ViewBag.SearchQuery" aria-label="Search" required>
+                        <p style="font-weight: bold;">NOTICE: Alibaba Search is disabled as the API used to get Alibaba search results has very high latency (e.g. over 40 seconds)</p>
+                        <select name="vendorFilter">
+                            @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 0)
+                            {
+                                <option selected value="0"> All </option>
+                            }
+                            else
+                            {
+                                <option value="0"> All </option>
+                            }
+                            @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 1)
+                            {
+                                <option selected value="1">Local Sellers</option>
+                            }
+                            else
+                            {
+                                <option value="1">Local Sellers</option>
+                            }
+                            @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 2)
+                            {
+                                <option selected value="2">Ebay</option>
+                            }
+                            else
+                            {
+                                <option value="2">Ebay</option>
+                            }
+                            @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 3)
+                            {
+                                <option selected value="3">Amazon</option>
+                            }
+                            else
+                            {
+                                <option value="3">Amazon</option>
+                            }
+                            @if (ViewBag.VendorFilter != null && Convert.ToInt32(ViewBag.VendorFilter) == 4)
+                            {
+                                <option selected value="4">Alibaba</option>
+                            }
+                            else
+                            {
+                                <option value="4">Alibaba</option>
+                            }
 
-                            </select>
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
+                        </select>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
                     }
                 </div>
 

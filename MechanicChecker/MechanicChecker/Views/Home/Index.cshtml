@@ -23,7 +23,8 @@
 
 <div class="wrapper">
     @using (Html.BeginForm("SearchLocalSellersProducts", "Search", FormMethod.Get))
-    {
+    {<p style="font-weight: bold;">NOTICE: Alibaba Search is disabled as the API used to get Alibaba search results has very high latency (e.g. over 40 seconds)</p>
+        <p style="font-weight: bold;">NOTICE: Test Demo Account Credentials is provided for users upon going to the sign in page so that no sign up is required to test Mechanic Checker's Seller Account features.</p>
         <div class="search_box">
             <div class="input_postalcode">
                 <input type="text" class="input" id="homeAddress" name="homeAddress" placeholder="Postal Code">

@@ -10,7 +10,7 @@ namespace MechanicChecker.AWS
     public class S3FileUploader
     {
         private int filenameLength = 50;
-        private string awsS3BucketUrlBase = "https://mechanicchecker.s3.amazonaws.com/";
+        private string awsS3BucketUrlBase = "https://s3.amazonaws.com/mechanic.checker/";
         public string value(IFormFile file, string folder)
         {
             string awsS3BucketUrl = awsS3BucketUrlBase + folder + "/";

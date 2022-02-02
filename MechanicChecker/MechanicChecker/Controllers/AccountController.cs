@@ -279,7 +279,7 @@ namespace MechanicChecker.Controllers
             }
             catch (Exception e)
             {
-                awsS3CompanyLogoUrl = "https://mechanicchecker.s3.amazonaws.com/seller/default/unnamed.jpg";
+                awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/seller/default/unnamed.jpg";
             }
 
             //TODO: Replace when form validation for signup page is fixed

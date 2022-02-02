@@ -14,7 +14,7 @@ namespace MechanicChecker.AWS
 {
     public class AmazonS3Uploader
     {
-        private static string bucketName = "mechanicchecker";
+        private static string bucketName = "mechanic.checker";
 
         public void UploadFile(string filename, IFormFile readStream, string folder)
         {

@@ -154,7 +154,7 @@ namespace MechanicChecker.Controllers
             }
             catch (Exception e)
             {
-                awsS3CompanyLogoUrl = "https://mechanicchecker.s3.amazonaws.com/product/default/unnamed.jpg";
+                awsS3CompanyLogoUrl = "https://s3.amazonaws.com/mechanic.checker/product/default/unnamed.jpg";
             }
 
             //string sellerWebsiteUrl = "https://michaelasemota.netlify.app/";
@@ -377,7 +377,7 @@ namespace MechanicChecker.Controllers
                 }
                 catch (Exception e)
                 {
-                    awsS3ProductImageUrl = "https://mechanicchecker.s3.amazonaws.com/product/default/unnamed.jpg";
+                    awsS3ProductImageUrl = "https://s3.amazonaws.com/mechanic.checker/product/default/unnamed.jpg";
                 }
             }
             else

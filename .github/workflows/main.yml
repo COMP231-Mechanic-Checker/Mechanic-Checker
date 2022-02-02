@@ -17,8 +17,8 @@ jobs:
       id: deployment
       with:
         token: "${{ github.token }}"
-        target_url: http://mechanicchecker-env.eba-jt2kzyvz.us-east-1.elasticbeanstalk.com/
-        environment_url: http://mechanicchecker-env.eba-jt2kzyvz.us-east-1.elasticbeanstalk.com/
+        target_url: http://mechanicchecker-env-1.eba-q734qnyr.us-east-1.elasticbeanstalk.com/
+        environment_url: http://mechanicchecker-env-1.eba-q734qnyr.us-east-1.elasticbeanstalk.com/
         description: "Mechanic Checker Website"
         environment: mechanic-checker-netcore
 
@@ -82,8 +82,8 @@ jobs:
       uses: chrnorm/deployment-status@releases/v1
       with:
         token: "${{ github.token }}"
-        target_url: http://mechanicchecker-env.eba-jt2kzyvz.us-east-1.elasticbeanstalk.com/
-        environment_url: http://mechanicchecker-env.eba-jt2kzyvz.us-east-1.elasticbeanstalk.com/
+        target_url: http://mechanicchecker-env-1.eba-q734qnyr.us-east-1.elasticbeanstalk.com/
+        environment_url: http://mechanicchecker-env-1.eba-q734qnyr.us-east-1.elasticbeanstalk.com/
         description: "Mechanic Checker Website"
         state: "success"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
@@ -93,8 +93,8 @@ jobs:
       uses: chrnorm/deployment-status@releases/v1
       with:
         token: "${{ github.token }}"
-        target_url: http://mechanicchecker-env.eba-jt2kzyvz.us-east-1.elasticbeanstalk.com/
-        environment_url: http://mechanicchecker-env.eba-jt2kzyvz.us-east-1.elasticbeanstalk.com/
+        target_url: http://mechanicchecker-env-1.eba-q734qnyr.us-east-1.elasticbeanstalk.com/
+        environment_url: http://mechanicchecker-env-1.eba-q734qnyr.us-east-1.elasticbeanstalk.com/
         description: "Mechanic Checker Website"
         state: "failure"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}

@@ -72,7 +72,7 @@ jobs:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: mechanicchecker
-        environment_name: Mechanicchecker-env
+        environment_name: Mechanicchecker-env-1
         version_label: "${{ github.run_id }}-${{ github.run_number }}-${{ github.actor }}"
         region: us-east-1
         deployment_package: MechanicChecker/MechanicChecker/deploy_bundle.zip

@@ -1,6 +1,6 @@
 # Mechanic Checker
 
-The Mechanic Checker Web Application is live on this URL: http://mechanicchecker.us-east-1.elasticbeanstalk.com/
+The Mechanic Checker Web Application is live on this URL: http://mechanicchecker-env-1.eba-q734qnyr.us-east-1.elasticbeanstalk.com/
 
 For additional documentation please refer to our [Mechanic Checker Wiki](https://github.com/COMP231W21-G5/Mechanic-Checker/wiki)!
 
